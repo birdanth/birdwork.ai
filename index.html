@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birdwork AI — AI Operations for Small & Mid-Size Business</title>
+<meta name="description" content="Birdwork AI builds agent fleets and hardens existing AI tools for SMBs. Architecture, security, and adoption — whether you're starting from zero or scaling what you have.">
+<link rel="icon" href="/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+:root{
+  --bg:#FAFAF5;
+  --fg:#2D2A26;
+  --fg-mid:#6B6560;
+  --fg-dim:#A09A92;
+  --accent:#3A3A6A;
+  --accent-warm:#8B7355;
+  --accent-green:#6B7C5E;
+  --border:#E8E4DC;
+  --card-bg:#fff;
+  --nav-bg:rgba(250,250,245,0.88);
+  --results-bg:linear-gradient(135deg,#2D2A26 0%,#3D3833 100%);
+  --results-fg:#FAFAF5;
+  --results-mid:#C4B89C;
+  --results-dim:#A09A92;
+  --results-card-bg:rgba(255,255,255,.04);
+  --results-card-border:rgba(196,184,156,.15);
+  --theirs-bg:#F5F3EE;
+  --noise-blend:multiply;
+  --noise-opacity:0.02;
+}
+
+[data-theme="dark"]{
+  --bg:#141416;
+  --fg:#DCDCDC;
+  --fg-mid:#B8B8BD;
+  --fg-dim:#888890;
+  --accent:#9090C0;
+  --accent-warm:#C4A876;
+  --accent-green:#8FA87A;
+  --border:#2A2A2E;
+  --card-bg:rgba(22,22,26,0.8);
+  --nav-bg:rgba(18,18,22,0.9);
+  --results-bg:linear-gradient(135deg,#0C0C0E 0%,#1A1A1E 100%);
+  --results-fg:#F0F0F0;
+  --results-mid:#C4B89C;
+  --results-dim:#888890;
+  --results-card-bg:rgba(255,255,255,.04);
+  --results-card-border:rgba(200,200,200,.08);
+  --theirs-bg:rgba(28,28,32,0.6);
+  --noise-blend:screen;
+  --noise-opacity:0.015;
+}
+
+body{
+  background:var(--bg);
+  color:var(--fg);
+  font-family:'Inter',sans-serif;
+  font-weight:400;
+  line-height:1.6;
+  font-size:16px;
+  overflow-x:hidden;
+}
+
+body::after{
+  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+  opacity:var(--noise-opacity);
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size:128px 128px;
+  mix-blend-mode:var(--noise-blend);
+}
+
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:600;color:var(--fg)}
+h1{font-size:3.2rem;line-height:1.1;letter-spacing:0.01em}
+h2{font-size:2.2rem;margin-bottom:1rem}
+h3{font-size:1.3rem}
+.mono{font-family:'JetBrains Mono',monospace}
+
+a{color:var(--accent-warm);text-decoration:none;transition:all .2s}
+a:hover{color:var(--fg)}
+
+.container{max-width:1100px;margin:0 auto;padding:0 2rem}
+.divider{width:100%;max-width:1100px;margin:0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--border) 20%,var(--border) 80%,transparent)}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.04)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo img{height:32px;width:auto}
+.nav-logo span{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--fg)}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{font-size:.9rem;color:var(--fg-mid);font-weight:400;border-bottom:1.5px solid transparent;padding-bottom:2px;transition:all .2s}
+.nav-links a:hover{color:var(--fg);border-bottom-color:var(--accent-warm)}
+.nav-cta{font-size:.85rem;font-weight:500;color:var(--bg)!important;background:var(--fg);padding:.5rem 1.25rem;border-radius:6px;transition:all .2s;border:1.5px solid var(--fg)}
+.nav-cta:hover{background:transparent;color:var(--fg)!important}
+
+/* Buttons */
+.btn-primary{display:inline-block;font-size:.95rem;font-weight:500;color:var(--bg);background:var(--fg);padding:.75rem 2rem;border-radius:8px;transition:all .2s;border:1.5px solid var(--fg)}
+.btn-primary:hover{background:transparent;color:var(--fg)}
+.btn-secondary{display:inline-block;font-size:.95rem;font-weight:400;color:var(--fg-mid);padding:.75rem 2rem;border-radius:8px;border:1.5px solid var(--border);transition:all .2s}
+.btn-secondary:hover{border-color:var(--fg-mid);color:var(--fg)}
+
+/* Section */
+section{padding:5rem 0}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent-warm);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem}
+
+/* Hero */
+.hero{padding:10rem 2rem 6rem;text-align:center;position:relative}
+.hero-badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--accent-warm);letter-spacing:.1em;text-transform:uppercase;padding:.4rem 1rem;border:1px solid var(--border);border-radius:20px;margin-bottom:1.5rem}
+.hero h1{max-width:800px;margin:0 auto}
+.hero p{font-size:1.15rem;color:var(--fg-mid);max-width:660px;margin:1.25rem auto 0;font-weight:300;line-height:1.7}
+.hero-line{width:80px;height:2px;background:linear-gradient(90deg,var(--accent-warm),var(--accent-green));margin:2.5rem auto 0;border-radius:1px}
+.hero-ctas{display:flex;gap:1rem;justify-content:center;margin-top:2.5rem;flex-wrap:wrap}
+
+/* Path chooser */
+.path-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2rem}
+.path-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:2.25rem;transition:all .25s;cursor:pointer}
+.path-card:hover{box-shadow:0 4px 24px rgba(0,0,0,.06)}
+.path-card.path-build{border-left:3px solid var(--accent-green)}
+.path-card.path-harden{border-left:3px solid var(--accent-warm)}
+.path-card .path-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.75rem}
+.path-card.path-build .path-label{color:var(--accent-green)}
+.path-card.path-harden .path-label{color:var(--accent-warm)}
+.path-card h3{margin-bottom:.5rem}
+.path-card p{font-size:.92rem;color:var(--fg-mid);line-height:1.65;margin-bottom:1.25rem}
+.path-card .path-link{font-size:.88rem;font-weight:500}
+
+/* Security grid */
+.sec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.25rem;margin-top:2rem}
+.sec-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:1.5rem;text-align:center}
+.sec-card .sec-icon{font-size:1.5rem;margin-bottom:.5rem}
+.sec-card h4{font-family:'Cormorant Garamond',serif;font-size:1.05rem;margin-bottom:.35rem}
+.sec-card p{font-size:.85rem;color:var(--fg-mid);line-height:1.5}
+
+/* Agent cards */
+.agents-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;margin-top:2rem}
+.agent-card{background:var(--card-bg);border:1px solid var(--border);border-left:3px solid var(--accent-green);border-radius:10px;padding:2rem;transition:all .25s;cursor:pointer}
+.agent-card:hover,.agent-card.active{box-shadow:0 4px 24px rgba(0,0,0,.06);border-color:rgba(107,124,94,.4);border-left-color:var(--accent-green)}
+.agent-card.active{background:#FAFDF8}
+.agent-card .card-number{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent-green);letter-spacing:.06em;margin-bottom:.75rem}
+.agent-card h3{margin-bottom:.5rem}
+.agent-card p{font-size:.9rem;color:var(--fg-mid);line-height:1.6}
+[data-theme="dark"] .agent-card{background:var(--card-bg);border-color:var(--border);border-left-color:var(--accent-green)}
+[data-theme="dark"] .agent-card:hover,[data-theme="dark"] .agent-card.active{box-shadow:0 4px 24px rgba(0,0,0,.3);border-color:rgba(143,168,122,.4);border-left-color:var(--accent-green)}
+[data-theme="dark"] .agent-card.active{background:rgba(143,168,122,.06)}
+
+/* Insight box */
+.insight-box{background:var(--card-bg);border:2px solid var(--border);border-radius:10px;padding:2rem;margin-top:2.5rem;max-width:760px;transition:all .3s}
+.insight-box .insight-title{font-size:1rem;color:var(--fg);font-weight:500;margin-bottom:.5rem;font-family:'Cormorant Garamond',serif;font-size:1.2rem}
+.insight-box .insight-body{font-size:.9rem;color:var(--fg-mid);line-height:1.6;margin:0}
+.insight-box .insight-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent-green);letter-spacing:.06em;margin-bottom:.5rem}
+[data-theme="dark"] .insight-box{background:var(--card-bg);border-color:var(--border)}
+
+/* Ownership grid */
+.own-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.25rem;margin-top:2rem}
+.own-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:1.5rem;text-align:center}
+.own-card .own-icon{font-size:1.5rem;margin-bottom:.5rem}
+.own-card h4{font-family:'Cormorant Garamond',serif;font-size:1.05rem;margin-bottom:.35rem}
+.own-card p{font-size:.85rem;color:var(--fg-mid);line-height:1.5}
+[data-theme="dark"] .own-card{background:var(--card-bg);border-color:var(--border)}
+
+/* Service rows */
+.service-row{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:2.5rem;margin-top:1.5rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start;transition:all .25s}
+.service-row:hover{box-shadow:0 4px 24px rgba(0,0,0,.04)}
+.service-row .service-tag{font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:300;color:var(--border);line-height:1;text-align:right;white-space:nowrap}
+.service-row .service-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-warm);margin-bottom:.5rem}
+.service-row h3{font-size:1.4rem;margin-bottom:.5rem}
+.service-row p{font-size:.92rem;color:var(--fg-mid);line-height:1.65;max-width:700px}
+.service-row .service-price{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--accent-green);margin-top:.75rem}
+
+/* Architecture stats */
+.arch-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin:2.5rem 0}
+.arch-stat{text-align:center}
+.arch-stat .number{font-family:'JetBrains Mono',monospace;font-size:2.8rem;font-weight:500;color:var(--accent-green);line-height:1}
+.arch-stat .label{font-size:.85rem;color:var(--fg-dim);margin-top:.25rem}
+
+/* Results / Case Study */
+.results-banner{background:var(--results-bg);color:var(--results-fg);padding:5rem 0;position:relative;overflow:hidden}
+.results-banner::before{content:'';position:absolute;top:0;right:0;width:400px;height:100%;background:linear-gradient(90deg,transparent,rgba(107,124,94,.08));pointer-events:none}
+.results-banner .container{position:relative;z-index:1}
+.results-banner h2{color:var(--results-fg)}
+.results-banner .section-label{color:var(--accent-green)}
+.results-banner p{color:var(--results-mid)}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2rem;margin:2.5rem 0}
+.stat-card{text-align:center}
+.stat-card .number{font-family:'JetBrains Mono',monospace;font-size:2.8rem;font-weight:500;color:var(--accent-green);line-height:1}
+.stat-card .label{font-size:.85rem;color:var(--results-dim);margin-top:.25rem}
+.case-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.25rem;margin-top:2rem}
+.case-feature{background:var(--results-card-bg);border:1px solid var(--results-card-border);border-radius:8px;padding:1.25rem}
+.case-feature h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--results-fg);margin-bottom:.3rem}
+.case-feature p{font-size:.85rem;color:var(--results-dim);line-height:1.5}
+.case-feature .accent{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--accent-green);margin-top:.4rem}
+
+/* Efficiency table */
+.eff-table{width:100%;border-collapse:collapse;margin-top:1.5rem}
+.eff-table th{font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-dim);padding:.75rem 1rem;text-align:left;border-bottom:2px solid var(--border)}
+.eff-table td{padding:.75rem 1rem;font-size:.9rem;color:var(--fg-mid);border-bottom:1px solid var(--border);vertical-align:top}
+.eff-table .eff-before{color:var(--fg-dim)}
+.eff-table .eff-after{color:var(--fg)}
+
+/* Process steps */
+.process-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2rem;counter-reset:step}
+.process-step{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:1.75rem;position:relative}
+.process-step::before{counter-increment:step;content:counter(step,decimal-leading-zero);font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--accent-warm);letter-spacing:.04em;display:block;margin-bottom:.75rem}
+.process-step h3{font-size:1.15rem;margin-bottom:.4rem}
+.process-step p{font-size:.88rem;color:var(--fg-mid);line-height:1.55}
+
+/* Differentiators */
+.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2rem}
+.diff-card{padding:1.75rem;border-radius:10px}
+.diff-card.theirs{background:var(--theirs-bg);border:1px solid var(--border)}
+.diff-card.ours{background:var(--card-bg);border:2px solid var(--accent-green)}
+.diff-card h3{font-size:1.1rem;margin-bottom:.75rem}
+.diff-card ul{list-style:none;padding:0}
+.diff-card ul li{padding:.35rem 0;font-size:.9rem;color:var(--fg-mid)}
+
+/* CTA */
+.cta-section{text-align:center;padding:6rem 2rem}
+.cta-section h2{font-size:2.5rem;margin-bottom:1rem}
+.cta-section p{font-size:1.05rem;color:var(--fg-mid);max-width:600px;margin:0 auto 2rem}
+
+/* Footer */
+footer{border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;color:var(--fg-dim);font-size:.85rem}
+footer a{color:var(--fg-mid)}
+footer a:hover{color:var(--fg)}
+
+/* Theme toggle */
+.theme-toggle{background:none;border:1.5px solid var(--border);border-radius:8px;padding:.35rem .5rem;cursor:pointer;color:var(--fg-mid);font-size:1rem;line-height:1;transition:all .2s;display:flex;align-items:center;justify-content:center;width:36px;height:36px}
+.theme-toggle:hover{border-color:var(--accent-warm);color:var(--fg)}
+.theme-toggle .icon-sun,.theme-toggle .icon-moon{display:none}
+:root .theme-toggle .icon-moon{display:inline}
+[data-theme="dark"] .theme-toggle .icon-sun{display:inline}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none}
+
+/* Dark mode overrides */
+[data-theme="dark"] nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.3)}
+[data-theme="dark"] .btn-primary{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+[data-theme="dark"] .btn-primary:hover{background:transparent;color:var(--fg)}
+[data-theme="dark"] .nav-cta{background:var(--fg);color:var(--bg)!important;border-color:var(--fg)}
+[data-theme="dark"] .nav-cta:hover{background:transparent;color:var(--fg)!important}
+[data-theme="dark"] .path-card,[data-theme="dark"] .sec-card,[data-theme="dark"] .service-row,[data-theme="dark"] .process-step{background:var(--card-bg);border-color:var(--border)}
+[data-theme="dark"] .path-card:hover,[data-theme="dark"] .service-row:hover{box-shadow:0 4px 24px rgba(0,0,0,.2)}
+[data-theme="dark"] .diff-card.theirs{background:var(--theirs-bg);border-color:var(--border)}
+[data-theme="dark"] .diff-card.ours{background:var(--card-bg);border-color:var(--accent-green)}
+[data-theme="dark"] .nav-logo img{filter:brightness(0) invert(1) opacity(.9)}
+[data-theme="dark"] .service-row .service-tag{color:var(--border)}
+
+/* Responsive */
+@media(max-width:768px){
+  h1{font-size:2.2rem}
+  h2{font-size:1.7rem}
+  .hero{padding:7rem 1.5rem 4rem}
+  .path-grid,.diff-grid{grid-template-columns:1fr}
+  .service-row{grid-template-columns:1fr}
+  .service-row .service-tag{text-align:left;font-size:1.5rem}
+  .arch-stats{grid-template-columns:1fr}
+  .nav-links a:not(.nav-cta){display:none}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .eff-table{font-size:.82rem}
+  .eff-table td,.eff-table th{padding:.5rem .6rem}
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav id="navbar">
+<div class="nav-inner">
+  <a href="#" class="nav-logo">
+    <img src="/logo.png" alt="Birdwork AI">
+    <span>Birdwork AI</span>
+  </a>
+  <div class="nav-links">
+    <a href="#services">What We Do</a>
+    <a href="#security">Security</a>
+    <a href="#results">Results</a>
+    <a href="#contact" class="nav-cta">Book a Call</a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+      <span class="icon-moon">🌙</span>
+      <span class="icon-sun">☀️</span>
+    </button>
+  </div>
+</div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="top">
+  <div class="hero-badge">AI Operations for Small &amp; Mid-Size Business</div>
+  <h1>Your AI tools should be working harder than you are.</h1>
+  <p>We build agent fleets from scratch, and we fix the ones you already have. Architecture, security, and adoption — for teams that run on Copilot, Cursor, OpenClaw, or nothing yet.</p>
+  <div class="hero-line"></div>
+  <div class="hero-ctas">
+    <a href="#contact" class="btn-primary">Book a Free Assessment</a>
+    <a href="#services" class="btn-secondary">See How It Works</a>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- Meet You Where You Are -->
+<section id="paths">
+<div class="container">
+  <div class="section-label">Any Stage of AI Maturity</div>
+  <h2>We meet you where you are.</h2>
+  <div class="path-grid">
+    <a href="#agents" class="path-card path-build" style="text-decoration:none;color:inherit">
+      <div class="path-label">Ready to start</div>
+      <h3>Build an agent fleet</h3>
+      <p>No agents yet? We design, build, and deploy a dedicated fleet — on your infrastructure, trained on your data, running 24/7. From first agent to full fleet.</p>
+      <span class="path-link" style="color:var(--accent-green)">See what agents do →</span>
+    </a>
+    <a href="#services" class="path-card path-harden" style="text-decoration:none;color:inherit">
+      <div class="path-label">Already in motion</div>
+      <h3>Harden &amp; optimize</h3>
+      <p>Running Copilot, Cursor, Claude Code, Replit, or other agentic tools? We make them secure, efficient, and actually adopted — wherever your team is today.</p>
+      <span class="path-link" style="color:var(--accent-warm)">See how we optimize →</span>
+    </a>
+  </div>
+</div>
+</section>
+<div class="divider"></div>
+
+<!-- Personalized Always-On Agents -->
+<section id="agents">
+<div class="container">
+  <div class="section-label">The Core Idea</div>
+  <h2>Personalized always-on agents for your team</h2>
+  <p style="font-size:1.05rem;color:var(--fg-mid);max-width:760px;line-height:1.7;margin-bottom:1rem">Every team member gets a dedicated AI agent that knows their role, remembers context, and learns from every interaction — always on, nights, weekends, holidays. As new capabilities ship, each agent inherits them automatically. Your agent workforce compounds in value without retraining.</p>
+  <p style="font-size:.95rem;color:var(--fg-mid);max-width:760px;line-height:1.7;margin-bottom:2.5rem">This isn't a generic tool bolted onto your workflow. It's a custom agentic technology stack built inside your infrastructure, trained on your data, and designed for how your team actually works.</p>
+
+  <div class="agents-grid">
+    <div class="agent-card active" data-agent="strategic">
+      <div class="card-number">Agent → Your CEO</div>
+      <h3>Strategic Assistant</h3>
+      <p>Business strategy, pipeline analysis, competitive research. Knows your priorities and communication style. Prepares briefings before you ask.</p>
+    </div>
+    <div class="agent-card" data-agent="concierge">
+      <div class="card-number">Agent → Your Team</div>
+      <h3>Data Concierge</h3>
+      <p>Natural language queries for everyone — ask anything about customers, orders, revenue, or inventory. No SQL, no training. Just ask in plain English.</p>
+    </div>
+    <div class="agent-card" data-agent="ops">
+      <div class="card-number">Agent → Operations</div>
+      <h3>Ops Monitor</h3>
+      <p>System health, compliance tracking, infrastructure alerts. Proactive agentic monitoring that surfaces issues before they escalate — 24/7, without headcount.</p>
+    </div>
+    <div class="agent-card" data-agent="projects">
+      <div class="card-number">Agent → Projects</div>
+      <h3>Project Coordinator</h3>
+      <p>Milestone tracking, sprint planning, automated reporting. Keeps everything on track and visible — from daily standups to executive summaries.</p>
+    </div>
+  </div>
+
+  <div class="insight-box" id="agentInsight">
+    <div class="insight-tag" id="insightTag">Strategic Assistant</div>
+    <p class="insight-title" id="insightTitle">Every decision gets sharper. Every briefing gets more relevant.</p>
+    <p class="insight-body" id="insightBody">Your strategic agent learns your priorities, tracks your pipeline, and builds context over weeks and months. It doesn't reset between sessions — it remembers last quarter's goals, knows your communication style, and proactively flags what needs your attention. The longer it runs, the less you need to explain.</p>
+  </div>
+</div>
+</section>
+<div class="divider"></div>
+
+<!-- Security -->
+<section id="security">
+<div class="container">
+  <div class="section-label">Security</div>
+  <h2>Secure by default. Not bolted on after.</h2>
+  <p style="font-size:1.05rem;color:var(--fg-mid);max-width:760px;line-height:1.7;margin-bottom:2rem">AI agents are powerful — but most teams deploy them without thinking about what they can access, leak, or execute. We've spent the last year hardening agent fleets against real threats: supply chain attacks, credential exposure, uncontrolled tool calls, PII leakage.</p>
+
+  <div class="sec-grid">
+    <div class="sec-card">
+      <div class="sec-icon">🔒</div>
+      <h4>Environment Isolation</h4>
+      <p>Every agent runs sandboxed. No cross-contamination between tools, projects, or data sources.</p>
+    </div>
+    <div class="sec-card">
+      <div class="sec-icon">🛡️</div>
+      <h4>Approval Gating</h4>
+      <p>Agents ask before executing sensitive actions. No autonomous access to production without human review.</p>
+    </div>
+    <div class="sec-card">
+      <div class="sec-icon">🔐</div>
+      <h4>Credential Controls</h4>
+      <p>API keys, tokens, and passwords in vaults — never in agent context, never in logs.</p>
+    </div>
+    <div class="sec-card">
+      <div class="sec-icon">👁️</div>
+      <h4>PII Protection</h4>
+      <p>Sensitive data masked before it reaches any model. Customer names, SSNs, financials — redacted by default.</p>
+    </div>
+    <div class="sec-card">
+      <div class="sec-icon">⚡</div>
+      <h4>Controlled Tool Calling</h4>
+      <p>Every tool an agent can use is explicitly allowed. No surprise installs, no unreviewed code execution.</p>
+    </div>
+    <div class="sec-card">
+      <div class="sec-icon">📋</div>
+      <h4>Audit Logging</h4>
+      <p>Full trace of every action every agent takes. Who did what, when, with what data. Compliance-ready.</p>
+    </div>
+  </div>
+</div>
+</section>
+<div class="divider"></div>
+
+<!-- What We Do -->
+<section id="services">
+<div class="container">
+  <div class="section-label">What We Do</div>
+  <h2>Three ways we work with teams.</h2>
+
+  <div class="service-row">
+    <div>
+      <div class="service-label">Build</div>
+      <h3>Agent Fleets</h3>
+      <p>We design and deploy coordinated AI agent fleets on your infrastructure. Each agent owns a function — data queries, operations monitoring, project coordination, customer communication. They share context, learn from each other, and improve every week.</p>
+      <div class="service-price">Starting at $500/mo for a single agent · Full fleets from $2,500/mo</div>
+    </div>
+    <div class="service-tag">BUILD</div>
+  </div>
+
+  <div class="service-row">
+    <div>
+      <div class="service-label">Harden</div>
+      <h3>Security &amp; Optimization</h3>
+      <p>Already running Copilot, Cursor, OpenClaw, or other AI tools? We audit your setup for security gaps and token waste, then lock it down. Sandboxing, credential management, PII protection, prompt caching, model routing.</p>
+      <div class="service-price">Audits from $750 · Ongoing hardening from $1,500/mo</div>
+    </div>
+    <div class="service-tag">HARDEN</div>
+  </div>
+
+  <div class="service-row">
+    <div>
+      <div class="service-label">Coach</div>
+      <h3>Adoption &amp; Training</h3>
+      <p>The best AI tools fail when the team doesn't use them. We drive adoption through hands-on training, weekly office hours, best-practices coaching, and continuous updates on what's new and what matters for your stack.</p>
+      <div class="service-price">Included in Accelerate ($3,000/mo) or available standalone</div>
+    </div>
+    <div class="service-tag">COACH</div>
+  </div>
+</div>
+</section>
+<div class="divider"></div>
+
+<!-- Ownership -->
+<section id="ownership">
+<div class="container">
+  <div class="section-label">Complete Ownership</div>
+  <h2>Your agents. Your infrastructure. Your rules.</h2>
+  <p style="font-size:1.05rem;color:var(--fg-mid);max-width:760px;line-height:1.7;margin-bottom:.5rem">Every agent in your fleet runs on infrastructure you control. You own the stack, the data, the access privileges, and the code. No vendor holds the keys to your AI workforce — you do.</p>
+  <p style="font-size:.95rem;color:var(--fg-mid);max-width:760px;line-height:1.7;margin-bottom:2rem">Manage your agents using the tools your team already uses. No new dashboards to learn, no proprietary portals to navigate.</p>
+
+  <div class="own-grid">
+    <div class="own-card">
+      <div class="own-icon">💬</div>
+      <h4>Chat Tools</h4>
+      <p>Talk to your agents in Slack, Microsoft Teams, Discord, or any messaging platform your team already lives in.</p>
+    </div>
+    <div class="own-card">
+      <div class="own-icon">📋</div>
+      <h4>Project Management</h4>
+      <p>Agents integrate with Jira, Asana, Linear, Notion — wherever your tasks live. They read tickets, update status, and report progress.</p>
+    </div>
+    <div class="own-card">
+      <div class="own-icon">🔧</div>
+      <h4>Dev &amp; Ops Tools</h4>
+      <p>GitHub, GitLab, CI/CD pipelines, cloud consoles. Your agents operate through the same toolchain your engineers use.</p>
+    </div>
+    <div class="own-card">
+      <div class="own-icon">🛡️</div>
+      <h4>Full Access Control</h4>
+      <p>You decide what each agent can see, do, and access. Role-based permissions, audit logs, and kill switches — all under your control.</p>
+    </div>
+    <div class="own-card">
+      <div class="own-icon">🏠</div>
+      <h4>On Your Infrastructure</h4>
+      <p>Agents run on your servers, your cloud, or your laptop. No data leaves your environment. Open-source stack you can inspect and modify.</p>
+    </div>
+    <div class="own-card">
+      <div class="own-icon">🔑</div>
+      <h4>You Own Everything</h4>
+      <p>The code, the models, the configurations, the data. If you part ways with us, your agent fleet keeps running. Zero lock-in.</p>
+    </div>
+  </div>
+</div>
+</section>
+<div class="divider"></div>
+
+<!-- Architecture Matters -->
+<section id="architecture">
+<div class="container">
+  <div class="section-label">Why Architecture</div>
+  <h2>The tool matters less than how it's configured.</h2>
+  <p style="font-size:1.05rem;color:var(--fg-mid);max-width:760px;line-height:1.7">A Stanford/MIT study found that changing the harness around the same AI model produces a 6× performance gap on identical tasks. Most teams pick a model and hope for the best. We engineer the architecture around it.</p>
+
+  <div class="arch-stats">
+    <div class="arch-stat">
+      <div class="number">6×</div>
+      <div class="label">Performance gap from harness engineering alone</div>
+    </div>
+    <div class="arch-stat">
+      <div class="number">50%+</div>
+      <div class="label">Token savings from proper context management</div>
+    </div>
+    <div class="arch-stat">
+      <div class="number">3 days</div>
+      <div class="label">Average time from audit to first improvement</div>
+    </div>
+  </div>
+
+  <p style="font-size:.95rem;color:var(--fg-mid);max-width:760px;line-height:1.7">We work across the harness landscape — OpenClaw, Cursor, Copilot, Claude Code, Hermes, and custom builds. We know when to use each, how to configure them, and where they break.</p>
+</div>
+</section>
+<div class="divider"></div>
+
+<!-- Results Banner -->
+<div class="results-banner" id="results">
+<div class="container">
+  <div class="section-label">Case Study</div>
+  <h2>Ally Logistics — Agent Fleet in Production</h2>
+  <p style="max-width:700px;font-size:1.05rem;line-height:1.7">A mid-size logistics brokerage needed to unlock insights from millions of Salesforce records without hiring analysts. We deployed a custom AI agent fleet — from zero to production in under a month.</p>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="number">5.7M</div>
+      <div class="label">Records connected &amp; queryable</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">5</div>
+      <div class="label">Coordinated agents in production</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">30</div>
+      <div class="label">Days from kickoff to production</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">24/7</div>
+      <div class="label">Autonomous operation since January</div>
+    </div>
+  </div>
+
+  <div class="case-features">
+    <div class="case-feature">
+      <h4>Natural Language Queries</h4>
+      <p>Team members ask questions in plain English — carrier counts, load volumes, revenue breakdowns — and get instant answers with auto-generated charts.</p>
+      <div class="accent">Slack-native · no training required</div>
+    </div>
+    <div class="case-feature">
+      <h4>Coordinated Agent Fleet</h4>
+      <p>Five agents — data concierge, strategic assistant, ops monitor, project coordinator, and clerk — each assigned to specific roles and sharing context.</p>
+      <div class="accent">Multi-agent · memory-persistent</div>
+    </div>
+    <div class="case-feature">
+      <h4>Fully Owned &amp; Private</h4>
+      <p>The entire fleet runs on Ally's own infrastructure. They control the stack, the access, and the data. No vendor dependency.</p>
+      <div class="accent">Zero lock-in · open source</div>
+    </div>
+    <div class="case-feature">
+      <h4>Self-Improving</h4>
+      <p>The fleet audits its own capabilities, captures operational learnings, and propagates improvements. Agents get smarter every week without manual tuning.</p>
+      <div class="accent">3+ months autonomous · zero downtime</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Token Efficiency -->
+<section id="efficiency">
+<div class="container">
+  <div class="section-label">Efficiency</div>
+  <h2>Stop burning money on API calls.</h2>
+  <p style="font-size:1.05rem;color:var(--fg-mid);max-width:760px;line-height:1.7;margin-bottom:.5rem">Most teams overspend on AI by 5–20×. Wrong model for the task. No prompt caching. Context windows full of stale data. We configure model routing, implement caching, and prune context — so every token counts.</p>
+
+  <table class="eff-table">
+    <thead>
+      <tr><th>Before</th><th>After</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="eff-before">Every query hits frontier models ($15/MTok)</td>
+        <td class="eff-after">Routine queries hit local or mid-tier models ($0–$1/MTok)</td>
+      </tr>
+      <tr>
+        <td class="eff-before">Context window at 98% — output quality degrades</td>
+        <td class="eff-after">Context pruned at 70% — output stays sharp</td>
+      </tr>
+      <tr>
+        <td class="eff-before">No prompt caching — repeat tokens billed every call</td>
+        <td class="eff-after">Cache hit rate &gt;60% — same quality, half the cost</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</section>
+<div class="divider"></div>
+
+<!-- How It Works -->
+<section id="process">
+<div class="container">
+  <div class="section-label">Process</div>
+  <h2>How it starts.</h2>
+  <div class="process-steps">
+    <div class="process-step">
+      <h3>Assessment</h3>
+      <p>A 30-minute call. We learn what you're running, what's working, what isn't. No pitch — just diagnosis. You'll leave with actionable next steps whether or not we work together.</p>
+    </div>
+    <div class="process-step">
+      <h3>Scope &amp; Build</h3>
+      <p>We scope the engagement — audit, fleet build, or both — deploy within days to weeks depending on complexity, and iterate based on real usage, not a spec doc.</p>
+    </div>
+    <div class="process-step">
+      <h3>Compound</h3>
+      <p>Your agents or tools get better every week. New capabilities ship as they mature. Monthly reviews keep everything aligned with where your business is heading.</p>
+    </div>
+  </div>
+</div>
+</section>
+<div class="divider"></div>
+
+<!-- Differentiator -->
+<section id="compare">
+<div class="container">
+  <div class="section-label">Built Different</div>
+  <h2>What we do that others don't.</h2>
+  <div class="diff-grid">
+    <div class="diff-card theirs">
+      <h3 style="color:var(--fg-dim)">Typical AI Vendors</h3>
+      <ul>
+        <li>✕ One-size-fits-all SaaS tools</li>
+        <li>✕ Your data on their servers</li>
+        <li>✕ No security hardening, no audit trail</li>
+        <li>✕ "AI strategy" decks that never ship</li>
+        <li>✕ 6-month timelines, 12-month invoices</li>
+        <li>✕ Lock-in by design</li>
+      </ul>
+    </div>
+    <div class="diff-card ours">
+      <h3 style="color:var(--accent-green)">Birdwork AI</h3>
+      <ul>
+        <li style="color:var(--fg)">→ Configured for your specific stack and tools</li>
+        <li style="color:var(--fg)">→ Everything runs on your infrastructure</li>
+        <li style="color:var(--fg)">→ Security-first: sandboxed, gated, logged</li>
+        <li style="color:var(--fg)">→ Working systems in days to weeks</li>
+        <li style="color:var(--fg)">→ You own the code, the agents, the data</li>
+        <li style="color:var(--fg)">→ We know the tools because we run them daily</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+<div class="divider"></div>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="section-label">Start Here</div>
+  <h2>Book a free 30-minute assessment.</h2>
+  <p>We'll review what you're running (or want to run), identify the biggest gaps and opportunities, and give you a clear next step. No slides. No pressure.</p>
+  <a href="mailto:bird@birdwork.ai" class="btn-primary" style="font-size:1rem;padding:.85rem 2.5rem">bird@birdwork.ai</a>
+  <p style="margin-top:1rem;font-size:.85rem;color:var(--fg-dim)">or call <a href="tel:+16166060643" class="mono" style="font-size:.85rem">(616) 606-0643</a></p>
+</section>
+
+<!-- Footer -->
+<footer>
+<div class="container">
+  <p style="margin-bottom:.5rem">© 2026 Birdwork AI — Grand Rapids, Michigan</p>
+  <p style="font-size:.8rem;font-style:italic;color:var(--fg-dim)">AI operations for businesses that make things happen.</p>
+</div>
+</footer>
+
+<script>
+// Theme toggle
+const themeToggle=document.getElementById('themeToggle');
+const savedTheme=localStorage.getItem('birdwork-theme');
+if(savedTheme){document.documentElement.setAttribute('data-theme',savedTheme)}
+else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches){document.documentElement.setAttribute('data-theme','dark')}
+themeToggle.addEventListener('click',()=>{
+  const current=document.documentElement.getAttribute('data-theme');
+  const next=current==='dark'?'light':'dark';
+  if(next==='light'){document.documentElement.removeAttribute('data-theme')}
+  else{document.documentElement.setAttribute('data-theme','dark')}
+  localStorage.setItem('birdwork-theme',next);
+});
+
+// Nav scroll
+const nav=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>20)});
+
+// Dynamic insight box for agent cards
+const insights={
+  strategic:{
+    tag:'Strategic Assistant',
+    title:'Every decision gets sharper. Every briefing gets more relevant.',
+    body:'Your strategic agent learns your priorities, tracks your pipeline, and builds context over weeks and months. It doesn\'t reset between sessions — it remembers last quarter\'s goals, knows your communication style, and proactively flags what needs your attention. The longer it runs, the less you need to explain.'
+  },
+  concierge:{
+    tag:'Data Concierge',
+    title:'Every query teaches the system. Every workflow makes the next one faster.',
+    body:'Your data concierge agent learns what questions your team asks most, what formats they prefer, and what follow-ups they usually need. Unlike off-the-shelf tools that stay static between vendor updates, this agent evolves continuously — because it\'s yours.'
+  },
+  ops:{
+    tag:'Ops Monitor',
+    title:'Every alert gets more precise. Every false positive disappears.',
+    body:'Your ops agent learns your infrastructure\'s normal patterns and baseline behavior. Over time, it stops flagging noise and starts predicting real problems — compliance expirations before they lapse, capacity issues before they spike, system anomalies before they cascade.'
+  },
+  projects:{
+    tag:'Project Coordinator',
+    title:'Every project runs tighter. Every report writes itself.',
+    body:'Your project agent learns your sprint cadence, your team\'s velocity patterns, and your reporting preferences. It generates standup summaries, flags blockers before standups, tracks milestones across tools, and drafts executive updates in your voice.'
+  }
+};
+document.querySelectorAll('.agent-card').forEach(card=>{
+  const handler=()=>{
+    document.querySelectorAll('.agent-card').forEach(c=>c.classList.remove('active'));
+    card.classList.add('active');
+    const key=card.dataset.agent;
+    const data=insights[key];
+    if(data){
+      document.getElementById('insightTag').textContent=data.tag;
+      document.getElementById('insightTitle').textContent=data.title;
+      document.getElementById('insightBody').textContent=data.body;
+    }
+  };
+  card.addEventListener('mouseenter',handler);
+  card.addEventListener('click',handler);
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}
+  });
+});
+</script>
+</body>
+</html>
