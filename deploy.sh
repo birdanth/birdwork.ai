@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Deploy birdwork.com to Cloudflare Pages via Direct Upload API
+# Deploy birdwork.ai to Cloudflare Pages via Direct Upload API (v2 manifest format)
 set -euo pipefail
 
 CF_ACCOUNT_ID="5fb1be728b47c260542d53c6cb07d7aa"
@@ -14,16 +14,49 @@ fi
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 DEPLOY_DIR="$SCRIPT_DIR"
 
-echo "==> Creating deployment..."
-DEPLOY_RESPONSE=$(curl -s -X POST \
-  "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects/${CF_PROJECT}/deployments" \
-  -H "Authorization: Bearer ${CF_TOKEN}" \
-  -H "Content-Type: multipart/form-data" \
-  -F "index.html=@${DEPLOY_DIR}/index.html;type=text/html" \
-  -F "favicon.ico=@${DEPLOY_DIR}/favicon.ico;type=image/x-icon" \
-  -F "logo.png=@${DEPLOY_DIR}/logo.png;type=image/png" \
-  -F "logo-white.png=@${DEPLOY_DIR}/logo-white.png;type=image/png" \
-  -F "logo-dark.png=@${DEPLOY_DIR}/logo-dark.png;type=image/png")
+# Build manifest: hash each file, upload via the newer direct-upload flow
+# Step 1: Create hashes for each file
+echo "==> Hashing files..."
+declare -A FILE_HASHES
+MANIFEST="{"
+FIRST=true
+for f in index.html favicon.ico logo.png logo-white.png logo-dark.png; do
+  FILEPATH="${DEPLOY_DIR}/${f}"
+  if [ ! -f "$FILEPATH" ]; then
+    echo "WARNING: $f not found, skipping"
+    continue
+  fi
+  HASH=$(sha256sum "$FILEPATH" | cut -d' ' -f1)
+  FILE_HASHES["$f"]="$HASH"
+  if [ "$FIRST" = true ]; then
+    FIRST=false
+  else
+    MANIFEST+=","
+  fi
+  MANIFEST+="\"/${f}\":\"${HASH}\""
+done
+MANIFEST+="}"
+
+echo "==> Manifest: $MANIFEST"
+
+# Step 2: Upload files and create deployment with manifest
+echo "==> Uploading and deploying..."
+
+# Build the curl command with manifest + all files
+CURL_CMD="curl -s -X POST \
+  \"https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects/${CF_PROJECT}/deployments\" \
+  -H \"Authorization: Bearer ${CF_TOKEN}\" \
+  -F \"manifest=${MANIFEST}\""
+
+for f in index.html favicon.ico logo.png logo-white.png logo-dark.png; do
+  FILEPATH="${DEPLOY_DIR}/${f}"
+  if [ -f "$FILEPATH" ]; then
+    HASH="${FILE_HASHES[$f]}"
+    CURL_CMD+=" -F \"${HASH}=@${FILEPATH}\""
+  fi
+done
+
+DEPLOY_RESPONSE=$(eval $CURL_CMD)
 
 SUCCESS=$(echo "$DEPLOY_RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('success', False))" 2>/dev/null || echo "parse_error")
 URL=$(echo "$DEPLOY_RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('result',{}).get('url',''))" 2>/dev/null || echo "")
