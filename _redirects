@@ -1,0 +1,7 @@
+# Legacy single-purpose routes → single-page portfolio
+/pricing      /  301
+/pricing/     /  301
+/assessment   /  301
+/assessment/  /  301
+/audit        /  301
+/audit/       /  301

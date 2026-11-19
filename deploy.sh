@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # Deploy birdwork.ai to Cloudflare Pages via Direct Upload API (v2 manifest format)
+# Dynamic: every deployable file is discovered, so new assets (headshot, og-image,
+# _redirects, _headers, SEO files) are never silently skipped.
 set -euo pipefail
 
 CF_ACCOUNT_ID="5fb1be728b47c260542d53c6cb07d7aa"
@@ -12,51 +14,54 @@ if [ -z "$CF_TOKEN" ]; then
 fi
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-DEPLOY_DIR="$SCRIPT_DIR"
+cd "$SCRIPT_DIR"
 
-# Build manifest: hash each file, upload via the newer direct-upload flow
-# Step 1: Create hashes for each file
-echo "==> Hashing files..."
+# Collect deployable files: everything except VCS/metadata
+list_files() {
+  find . -type f \
+    -not -path './.git/*' \
+    -not -path './.github/*' \
+    -not -name '.gitignore' \
+    -not -name '.gitattributes' \
+    -not -name 'deploy.sh' \
+    -not -name '.DS_Store' \
+    -not -name 'Thumbs.db' \
+    -not -name '*.Zone.Identifier' \
+    | sed 's|^\./||' | sort
+}
+
+mapfile -t FILES < <(list_files)
+if [ "${#FILES[@]}" -eq 0 ]; then
+  echo "ERROR: no files to deploy"
+  exit 1
+fi
+
+echo "==> ${#FILES[@]} files to deploy"
+
 declare -A FILE_HASHES
 MANIFEST="{"
 FIRST=true
-for f in index.html favicon.ico logo.png logo-white.png logo-dark.png; do
-  FILEPATH="${DEPLOY_DIR}/${f}"
-  if [ ! -f "$FILEPATH" ]; then
-    echo "WARNING: $f not found, skipping"
-    continue
-  fi
-  HASH=$(sha256sum "$FILEPATH" | cut -d' ' -f1)
+for f in "${FILES[@]}"; do
+  HASH=$(sha256sum "$f" | cut -d' ' -f1)
   FILE_HASHES["$f"]="$HASH"
-  if [ "$FIRST" = true ]; then
-    FIRST=false
-  else
-    MANIFEST+=","
-  fi
+  if [ "$FIRST" = true ]; then FIRST=false; else MANIFEST+=","; fi
   MANIFEST+="\"/${f}\":\"${HASH}\""
 done
 MANIFEST+="}"
 
-echo "==> Manifest: $MANIFEST"
+echo "==> Manifest built"
 
-# Step 2: Upload files and create deployment with manifest
-echo "==> Uploading and deploying..."
-
-# Build the curl command with manifest + all files
 CURL_CMD="curl -s -X POST \
   \"https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects/${CF_PROJECT}/deployments\" \
   -H \"Authorization: Bearer ${CF_TOKEN}\" \
   -F \"manifest=${MANIFEST}\""
 
-for f in index.html favicon.ico logo.png logo-white.png logo-dark.png; do
-  FILEPATH="${DEPLOY_DIR}/${f}"
-  if [ -f "$FILEPATH" ]; then
-    HASH="${FILE_HASHES[$f]}"
-    CURL_CMD+=" -F \"${HASH}=@${FILEPATH}\""
-  fi
+for f in "${FILES[@]}"; do
+  CURL_CMD+=" -F \"${FILE_HASHES[$f]}=@${SCRIPT_DIR}/${f}\""
 done
 
-DEPLOY_RESPONSE=$(eval $CURL_CMD)
+echo "==> Uploading and deploying..."
+DEPLOY_RESPONSE=$(eval "$CURL_CMD")
 
 SUCCESS=$(echo "$DEPLOY_RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('success', False))" 2>/dev/null || echo "parse_error")
 URL=$(echo "$DEPLOY_RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('result',{}).get('url',''))" 2>/dev/null || echo "")
