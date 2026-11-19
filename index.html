@@ -4,662 +4,442 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tony Bird — Enterprise AI Architecture &amp; Agentic Systems</title>
-<meta name="description" content="Enterprise AI architecture, agentic systems, and technical transformation. I design, build, and harden production agent fleets — architecture, security, and cost engineering for AI systems at scale.">
+<meta name="description" content="Enterprise AI architecture, agentic systems, and technical transformation. Production multi-agent fleets, zero-trust context systems, and LLM FinOps on client infrastructure.">
 <link rel="icon" href="/favicon.ico">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-
 :root{
   --bg:#FAFAF5;
   --fg:#2D2A26;
   --fg-mid:#6B6560;
-  --fg-dim:#A09A92;
+  --fg-dim:#8F8981;
   --accent:#3A3A6A;
   --accent-warm:#8B7355;
   --accent-green:#6B7C5E;
   --border:#E8E4DC;
   --card-bg:#fff;
-  --nav-bg:rgba(250,250,245,0.88);
-  --results-bg:linear-gradient(135deg,#2D2A26 0%,#3D3833 100%);
-  --results-fg:#FAFAF5;
-  --results-mid:#C4B89C;
-  --results-dim:#A09A92;
-  --results-card-bg:rgba(255,255,255,.04);
-  --results-card-border:rgba(196,184,156,.15);
+  --nav-bg:rgba(250,250,245,0.9);
   --theirs-bg:#F5F3EE;
-  --noise-blend:multiply;
-  --noise-opacity:0.02;
+  --plate:linear-gradient(165deg,#F1ECE2,#E0D8C8);
 }
-
 [data-theme="dark"]{
   --bg:#141416;
   --fg:#DCDCDC;
   --fg-mid:#B8B8BD;
-  --fg-dim:#888890;
+  --fg-dim:#8E8E96;
   --accent:#9090C0;
   --accent-warm:#C4A876;
   --accent-green:#8FA87A;
   --border:#2A2A2E;
   --card-bg:rgba(22,22,26,0.8);
-  --nav-bg:rgba(18,18,22,0.9);
-  --results-bg:linear-gradient(135deg,#0C0C0E 0%,#1A1A1E 100%);
-  --results-fg:#F0F0F0;
-  --results-mid:#C4B89C;
-  --results-dim:#888890;
-  --results-card-bg:rgba(255,255,255,.04);
-  --results-card-border:rgba(200,200,200,.08);
+  --nav-bg:rgba(18,18,22,0.92);
   --theirs-bg:rgba(28,28,32,0.6);
-  --noise-blend:screen;
-  --noise-opacity:0.015;
+  --plate:linear-gradient(165deg,#4A4135,#303037);
 }
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);overflow-x:hidden;color:var(--fg);font-family:'Inter',-apple-system,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;line-height:1.14;letter-spacing:-.01em}
+h1{font-size:clamp(2.6rem,6vw,4.6rem)}
+h2{font-size:clamp(1.9rem,3.4vw,2.7rem);margin-bottom:1.4rem}
+h3{font-size:1.35rem;margin-bottom:.5rem}
+p{color:var(--fg-mid)}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent-warm);outline-offset:3px}
+.container{max-width:1080px;margin:0 auto;padding:0 2.5rem}
+section{padding:7.5rem 0;border-bottom:1px solid var(--border)}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-warm);margin-bottom:1.4rem}
+.lede{font-size:1.02rem;max-width:62ch;line-height:1.7}
 
-body{
-  background:var(--bg);
-  color:var(--fg);
-  font-family:'Inter',sans-serif;
-  font-weight:400;
-  line-height:1.6;
-  font-size:16px;
-  overflow-x:hidden;
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s}
+nav.scrolled{border-bottom-color:var(--border)}
+.nav-inner{max-width:1080px;margin:0 auto;padding:1rem 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem}
+.brand{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.13em;text-transform:uppercase;white-space:nowrap}
+.brand span{color:var(--fg-dim);text-transform:none;letter-spacing:.02em}
+.nav-links{display:flex;gap:1.6rem;align-items:center;font-size:.8rem;color:var(--fg-mid)}
+.nav-links a:hover{color:var(--fg)}
+.nav-right{display:flex;gap:1rem;align-items:center;font-size:.8rem;white-space:nowrap}
+.nav-right a:hover{color:var(--fg)}
+.theme-toggle{background:none;border:1px solid var(--border);border-radius:50%;width:30px;height:30px;cursor:pointer;color:var(--fg-mid);display:grid;place-items:center;font-size:.8rem;transition:border-color .2s,color .2s}
+.theme-toggle:hover{border-color:var(--fg-dim);color:var(--fg)}
+.burger{display:none;background:none;border:1px solid var(--border);border-radius:4px;width:34px;height:30px;cursor:pointer;color:var(--fg)}
+.burger span{display:block;width:16px;height:1px;background:currentColor;margin:3px auto}
+
+/* drawer */
+.drawer{position:fixed;inset:0;z-index:99;background:var(--bg);padding:5.5rem 2.5rem 2rem;display:flex;flex-direction:column;gap:.3rem;transform:translateY(-100%);transition:transform .28s ease;visibility:hidden}
+.drawer[data-open="true"]{transform:translateY(0);visibility:visible}
+.drawer a{font-family:'Cormorant Garamond',serif;font-size:1.55rem;padding:.55rem 0;border-bottom:1px solid var(--border)}
+.drawer-close{position:absolute;top:1.1rem;right:1.35rem;background:none;border:1px solid var(--border);border-radius:50%;width:36px;height:36px;font-size:1.15rem;line-height:1;color:var(--fg-mid);cursor:pointer}
+.drawer .drawer-meta{margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--fg-dim)}
+
+/* hero */
+.hero{padding:11rem 0 4.5rem;border-bottom:1px solid var(--border)}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-warm);margin-bottom:1.9rem}
+.hero h1{margin-bottom:1.6rem}
+.hero p.sub{font-size:1.08rem;max-width:60ch;line-height:1.7;margin-bottom:2.5rem}
+.cta-row{display:flex;gap:.9rem;flex-wrap:wrap}
+.btn{display:inline-block;padding:.95rem 2rem;font-size:.78rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;border:1px solid var(--fg);color:var(--fg);transition:background .2s,color .2s}
+.btn:hover{background:var(--fg);color:var(--bg)}
+.btn.ghost{border-color:var(--fg-dim);color:var(--fg-mid)}
+.btn.ghost:hover{background:transparent;border-color:var(--fg);color:var(--fg)}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;padding:3.5rem 0}
+.stat{border-left:1px solid var(--border);padding-left:1.5rem}
+.stat:first-child{border-left:none;padding-left:0}
+.stat b{display:block;font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:400;line-height:1;margin-bottom:.5rem}
+.stat span{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;color:var(--fg-mid);line-height:1.6;display:block}
+
+/* grids */
+.cards-3,.work-grid,.callouts,.stack,.sec-grid,.pillars{display:grid;gap:1px;background:var(--border);border:1px solid var(--border)}
+.cards-3,.pillars{grid-template-columns:repeat(3,1fr)}
+.work-grid{grid-template-columns:1fr 1fr}
+.callouts{grid-template-columns:repeat(3,1fr);margin:2.25rem 0 3rem}
+.stack{grid-template-columns:repeat(3,1fr)}
+.sec-grid{grid-template-columns:repeat(3,1fr);margin-top:2.25rem;background:var(--border)}
+.cell{background:var(--bg);padding:2rem}
+.card .num{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.12em;color:var(--accent-warm);display:block;margin-bottom:1.1rem}
+.card p,.pillar p{font-size:.88rem;line-height:1.62}
+
+/* work */
+.work-card{background:var(--bg);padding:2rem;display:flex;flex-direction:column}
+.work-card .client{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-dim);margin-bottom:.7rem}
+.work-card .metric{font-family:'Cormorant Garamond',serif;font-size:1.8rem;line-height:1.18;margin-bottom:.3rem;color:var(--fg)}
+.work-card .role{font-size:.72rem;color:var(--accent-green);font-family:'JetBrains Mono',monospace;margin-bottom:1.1rem}
+.work-card ul{list-style:none;font-size:.86rem;color:var(--fg-mid);line-height:1.6}
+.work-card li{padding-left:1rem;position:relative;margin-bottom:.45rem}
+.work-card li::before{content:"—";position:absolute;left:0;color:var(--fg-dim)}
+.work-card .tag{margin-top:auto;padding-top:1.4rem;font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--fg-dim);letter-spacing:.05em}
+.proof-strip{margin-top:1.75rem;padding-top:1.4rem;border-top:1px solid var(--border);font-size:.84rem}
+.proof-strip strong{color:var(--fg);font-weight:500}
+
+/* finops */
+.callout{background:var(--bg);padding:1.6rem}
+.callout b{display:block;font-family:'Cormorant Garamond',serif;font-size:1.95rem;line-height:1;margin-bottom:.4rem}
+.callout span{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-dim);line-height:1.6;display:block}
+table{width:100%;border-collapse:collapse;font-size:.86rem;margin-bottom:2.75rem}
+th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-dim);padding:.7rem 1rem;border-bottom:1px solid var(--border);font-weight:400}
+td{padding:.8rem 1rem;border-bottom:1px solid var(--border);color:var(--fg-mid)}
+td.before{color:var(--fg-dim);width:42%}
+td.after{color:var(--fg)}
+.stack-col{background:var(--bg);padding:1.4rem}
+.stack-col h4{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-warm);margin-bottom:.7rem;font-weight:400}
+.stack-col p{font-size:.8rem;line-height:1.6}
+
+/* security */
+.sec-card{background:var(--bg);padding:1.6rem}
+.sec-card h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;margin-bottom:.35rem}
+.sec-card p{font-size:.8rem;line-height:1.6}
+
+/* research */
+.rd{background:var(--theirs-bg);border:1px solid var(--border);padding:2.25rem;margin-top:1.75rem}
+.pillars{margin-bottom:2rem}
+.pillar{background:transparent;padding:1.25rem 1.4rem}
+.pillar h4{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-warm);margin-bottom:.5rem;font-weight:400}
+.pillar p{font-size:.82rem;line-height:1.6}
+.flow{margin:1.5rem 0 0;width:100%}
+.flow text{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;fill:var(--fg-dim)}
+.flow .node{fill:none;stroke:var(--border);stroke-width:1}
+.flow .arrow{stroke:var(--fg-mid);stroke-width:1.25}
+.rd-meta{display:flex;gap:1.4rem;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--fg-mid);letter-spacing:.06em;text-transform:uppercase;margin-top:1.4rem}
+
+/* about */
+.about-wrap{display:grid;grid-template-columns:220px 1fr;gap:2.75rem;align-items:start}
+.portrait{position:relative;background:var(--plate);border:1px solid var(--border);border-radius:6px;padding:14px 14px 0;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+.portrait img{width:100%;display:block}
+.about-wrap p{font-size:.94rem;line-height:1.75;max-width:58ch}
+.about-wrap p + p{margin-top:.9rem}
+.creds{margin-top:1.5rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--fg-mid);letter-spacing:.04em;line-height:1.95;list-style:none}
+.creds li{padding-left:.9rem;position:relative}
+.creds li::before{content:"·";position:absolute;left:0;color:var(--accent-warm)}
+
+/* connect + footer */
+.connect{text-align:center;padding-bottom:5.5rem}
+.connect p{max-width:48ch;margin:0 auto 2.25rem}
+footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--fg-mid);border-top:1px solid var(--border)}
+.foot-inner{display:flex;justify-content:space-between;gap:1.25rem;flex-wrap:wrap}
+.foot-inner nav{position:static;background:none;border:none;backdrop-filter:none;display:flex;gap:1rem}
+.foot-inner a{color:var(--fg-mid)}.foot-inner a:hover{color:var(--fg)}
+
+[data-theme="dark"] .portrait{border-color:rgba(196,168,118,.35);box-shadow:0 10px 34px rgba(0,0,0,.45)}
+@media(max-width:900px){
+  .nav-links{display:none}.burger{display:block}.nav-right .hide-sm{display:none}
+  section{padding:5rem 0}.hero{padding:8rem 0 3rem}
+  .stats{grid-template-columns:1fr 1fr;gap:2.25rem}
+  .stat:nth-child(3){border-left:none;padding-left:0}
+  .cards-3,.work-grid,.callouts,.stack,.sec-grid,.pillars{grid-template-columns:1fr}
+  .about-wrap{grid-template-columns:1fr;gap:2rem}
+  .portrait{max-width:200px}
+  .cta-row{width:100%}
+  .btn{flex:1 1 45%;text-align:center;padding-left:1rem;padding-right:1rem}
 }
-
-body::after{
-  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
-  opacity:var(--noise-opacity);
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  background-size:128px 128px;
-  mix-blend-mode:var(--noise-blend);
+@media(max-width:560px){
+  .container,.nav-inner{padding-left:1.35rem;padding-right:1.35rem}
+  .stats{grid-template-columns:1fr}
+  .stat{border-left:none;padding-left:0;border-top:1px solid var(--border);padding-top:1.25rem}
+  .stat:first-child{border-top:none;padding-top:0}
+  .btn{flex:1 1 100%}
+  .nav-inner{gap:.75rem}
+  .brand{font-size:.63rem;letter-spacing:.08em}
+  .nav-right{gap:.7rem;font-size:.74rem}
+  .nav-right>a[href="#connect"]{display:none}
 }
-
-h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:600;color:var(--fg)}
-h1{font-size:3.2rem;line-height:1.1;letter-spacing:0.01em}
-h2{font-size:2.2rem;margin-bottom:1rem}
-h3{font-size:1.3rem}
-.mono{font-family:'JetBrains Mono',monospace}
-
-a{color:var(--accent-warm);text-decoration:none;transition:all .2s}
-a:hover{color:var(--fg)}
-
-.container{max-width:1100px;margin:0 auto;padding:0 2rem}
-.divider{width:100%;max-width:1100px;margin:0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--border) 20%,var(--border) 80%,transparent)}
-
-/* Nav */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:box-shadow .3s}
-nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.04)}
-.nav-inner{max-width:1100px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px}
-.nav-logo{display:flex;align-items:center;gap:10px}
-.nav-logo img{height:32px;width:auto}
-.nav-logo span{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--fg)}
-.nav-links{display:flex;gap:2rem;align-items:center}
-.nav-links a{font-size:.9rem;color:var(--fg-mid);font-weight:400;border-bottom:1.5px solid transparent;padding-bottom:2px;transition:all .2s}
-.nav-links a:hover{color:var(--fg);border-bottom-color:var(--accent-warm)}
-.nav-cta{font-size:.85rem;font-weight:500;color:var(--bg)!important;background:var(--fg);padding:.5rem 1.25rem;border-radius:6px;transition:all .2s;border:1.5px solid var(--fg)}
-.nav-cta:hover{background:transparent;color:var(--fg)!important}
-
-/* Buttons */
-.btn-primary{display:inline-block;font-size:.95rem;font-weight:500;color:var(--bg);background:var(--fg);padding:.75rem 2rem;border-radius:8px;transition:all .2s;border:1.5px solid var(--fg)}
-.btn-primary:hover{background:transparent;color:var(--fg)}
-.btn-secondary{display:inline-block;font-size:.95rem;font-weight:400;color:var(--fg-mid);padding:.75rem 2rem;border-radius:8px;border:1.5px solid var(--border);transition:all .2s}
-.btn-secondary:hover{border-color:var(--fg-mid);color:var(--fg)}
-
-/* Section */
-section{padding:5rem 0}
-.section-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent-warm);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem}
-
-/* Hero */
-.hero{padding:10rem 2rem 6rem;text-align:center;position:relative}
-.hero-badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--accent-warm);letter-spacing:.1em;text-transform:uppercase;padding:.4rem 1rem;border:1px solid var(--border);border-radius:20px;margin-bottom:1.5rem}
-.hero h1{max-width:800px;margin:0 auto}
-.hero p{font-size:1.15rem;color:var(--fg-mid);max-width:660px;margin:1.25rem auto 0;font-weight:300;line-height:1.7}
-.hero-line{width:80px;height:2px;background:linear-gradient(90deg,var(--accent-warm),var(--accent-green));margin:2.5rem auto 0;border-radius:1px}
-.hero-ctas{display:flex;gap:1rem;justify-content:center;margin-top:2.5rem;flex-wrap:wrap}
-
-/* Path chooser */
-.path-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2rem}
-.path-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:2.25rem;transition:all .25s;cursor:pointer}
-.path-card:hover{box-shadow:0 4px 24px rgba(0,0,0,.06)}
-.path-card.path-build{border-left:3px solid var(--accent-green)}
-.path-card.path-harden{border-left:3px solid var(--accent-warm)}
-.path-card .path-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.75rem}
-.path-card.path-build .path-label{color:var(--accent-green)}
-.path-card.path-harden .path-label{color:var(--accent-warm)}
-.path-card h3{margin-bottom:.5rem}
-.path-card p{font-size:.92rem;color:var(--fg-mid);line-height:1.65;margin-bottom:1.25rem}
-.path-card .path-link{font-size:.88rem;font-weight:500}
-
-/* Security grid */
-.sec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.25rem;margin-top:2rem}
-.sec-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:1.5rem;text-align:center}
-.sec-card .sec-icon{font-size:1.5rem;margin-bottom:.5rem}
-.sec-card h4{font-family:'Cormorant Garamond',serif;font-size:1.05rem;margin-bottom:.35rem}
-.sec-card p{font-size:.85rem;color:var(--fg-mid);line-height:1.5}
-
-/* Agent cards */
-.agents-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;margin-top:2rem}
-.agent-card{background:var(--card-bg);border:1px solid var(--border);border-left:3px solid var(--accent-green);border-radius:10px;padding:2rem;transition:all .25s;cursor:pointer}
-.agent-card:hover,.agent-card.active{box-shadow:0 4px 24px rgba(0,0,0,.06);border-color:rgba(107,124,94,.4);border-left-color:var(--accent-green)}
-.agent-card.active{background:#FAFDF8}
-.agent-card .card-number{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent-green);letter-spacing:.06em;margin-bottom:.75rem}
-.agent-card h3{margin-bottom:.5rem}
-.agent-card p{font-size:.9rem;color:var(--fg-mid);line-height:1.6}
-[data-theme="dark"] .agent-card{background:var(--card-bg);border-color:var(--border);border-left-color:var(--accent-green)}
-[data-theme="dark"] .agent-card:hover,[data-theme="dark"] .agent-card.active{box-shadow:0 4px 24px rgba(0,0,0,.3);border-color:rgba(143,168,122,.4);border-left-color:var(--accent-green)}
-[data-theme="dark"] .agent-card.active{background:rgba(143,168,122,.06)}
-
-/* Insight box */
-.insight-box{background:var(--card-bg);border:2px solid var(--border);border-radius:10px;padding:2rem;margin-top:2.5rem;max-width:760px;transition:all .3s}
-.insight-box .insight-title{font-size:1rem;color:var(--fg);font-weight:500;margin-bottom:.5rem;font-family:'Cormorant Garamond',serif;font-size:1.2rem}
-.insight-box .insight-body{font-size:.9rem;color:var(--fg-mid);line-height:1.6;margin:0}
-.insight-box .insight-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent-green);letter-spacing:.06em;margin-bottom:.5rem}
-[data-theme="dark"] .insight-box{background:var(--card-bg);border-color:var(--border)}
-
-/* Ownership grid */
-.own-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.25rem;margin-top:2rem}
-.own-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:1.5rem;text-align:center}
-.own-card .own-icon{font-size:1.5rem;margin-bottom:.5rem}
-.own-card h4{font-family:'Cormorant Garamond',serif;font-size:1.05rem;margin-bottom:.35rem}
-.own-card p{font-size:.85rem;color:var(--fg-mid);line-height:1.5}
-[data-theme="dark"] .own-card{background:var(--card-bg);border-color:var(--border)}
-
-/* Service rows */
-.service-row{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:2.5rem;margin-top:1.5rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start;transition:all .25s}
-.service-row:hover{box-shadow:0 4px 24px rgba(0,0,0,.04)}
-.service-row .service-tag{font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:300;color:var(--border);line-height:1;text-align:right;white-space:nowrap}
-.service-row .service-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-warm);margin-bottom:.5rem}
-.service-row h3{font-size:1.4rem;margin-bottom:.5rem}
-.service-row p{font-size:.92rem;color:var(--fg-mid);line-height:1.65;max-width:700px}
-.service-row .service-price{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--accent-green);margin-top:.75rem}
-
-/* Architecture stats */
-.arch-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin:2.5rem 0}
-.arch-stat{text-align:center}
-.arch-stat .number{font-family:'JetBrains Mono',monospace;font-size:2.8rem;font-weight:500;color:var(--accent-green);line-height:1}
-.arch-stat .label{font-size:.85rem;color:var(--fg-dim);margin-top:.25rem}
-
-/* Results / Case Study */
-.results-banner{background:var(--results-bg);color:var(--results-fg);padding:5rem 0;position:relative;overflow:hidden}
-.results-banner::before{content:'';position:absolute;top:0;right:0;width:400px;height:100%;background:linear-gradient(90deg,transparent,rgba(107,124,94,.08));pointer-events:none}
-.results-banner .container{position:relative;z-index:1}
-.results-banner h2{color:var(--results-fg)}
-.results-banner .section-label{color:var(--accent-green)}
-.results-banner p{color:var(--results-mid)}
-.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2rem;margin:2.5rem 0}
-.stat-card{text-align:center}
-.stat-card .number{font-family:'JetBrains Mono',monospace;font-size:2.8rem;font-weight:500;color:var(--accent-green);line-height:1}
-.stat-card .label{font-size:.85rem;color:var(--results-dim);margin-top:.25rem}
-.case-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.25rem;margin-top:2rem}
-.case-feature{background:var(--results-card-bg);border:1px solid var(--results-card-border);border-radius:8px;padding:1.25rem}
-.case-feature h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--results-fg);margin-bottom:.3rem}
-.case-feature p{font-size:.85rem;color:var(--results-dim);line-height:1.5}
-.case-feature .accent{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--accent-green);margin-top:.4rem}
-
-/* Efficiency table */
-.eff-table{width:100%;border-collapse:collapse;margin-top:1.5rem}
-.eff-table th{font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-dim);padding:.75rem 1rem;text-align:left;border-bottom:2px solid var(--border)}
-.eff-table td{padding:.75rem 1rem;font-size:.9rem;color:var(--fg-mid);border-bottom:1px solid var(--border);vertical-align:top}
-.eff-table .eff-before{color:var(--fg-dim)}
-.eff-table .eff-after{color:var(--fg)}
-
-/* Process steps */
-.process-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2rem;counter-reset:step}
-.process-step{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:1.75rem;position:relative}
-.process-step::before{counter-increment:step;content:counter(step,decimal-leading-zero);font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--accent-warm);letter-spacing:.04em;display:block;margin-bottom:.75rem}
-.process-step h3{font-size:1.15rem;margin-bottom:.4rem}
-.process-step p{font-size:.88rem;color:var(--fg-mid);line-height:1.55}
-
-/* Differentiators */
-.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2rem}
-.diff-card{padding:1.75rem;border-radius:10px}
-.diff-card.theirs{background:var(--theirs-bg);border:1px solid var(--border)}
-.diff-card.ours{background:var(--card-bg);border:2px solid var(--accent-green)}
-.diff-card h3{font-size:1.1rem;margin-bottom:.75rem}
-.diff-card ul{list-style:none;padding:0}
-.diff-card ul li{padding:.35rem 0;font-size:.9rem;color:var(--fg-mid)}
-
-/* CTA */
-.cta-section{text-align:center;padding:6rem 2rem}
-.cta-section h2{font-size:2.5rem;margin-bottom:1rem}
-.cta-section p{font-size:1.05rem;color:var(--fg-mid);max-width:600px;margin:0 auto 2rem}
-
-/* Footer */
-footer{border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;color:var(--fg-dim);font-size:.85rem}
-footer a{color:var(--fg-mid)}
-footer a:hover{color:var(--fg)}
-
-/* Theme toggle */
-.theme-toggle{background:none;border:1.5px solid var(--border);border-radius:8px;padding:.35rem .5rem;cursor:pointer;color:var(--fg-mid);font-size:1rem;line-height:1;transition:all .2s;display:flex;align-items:center;justify-content:center;width:36px;height:36px}
-.theme-toggle:hover{border-color:var(--accent-warm);color:var(--fg)}
-.theme-toggle .icon-sun,.theme-toggle .icon-moon{display:none}
-:root .theme-toggle .icon-moon{display:inline}
-[data-theme="dark"] .theme-toggle .icon-sun{display:inline}
-[data-theme="dark"] .theme-toggle .icon-moon{display:none}
-
-/* Dark mode overrides */
-[data-theme="dark"] nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.3)}
-[data-theme="dark"] .btn-primary{background:var(--fg);color:var(--bg);border-color:var(--fg)}
-[data-theme="dark"] .btn-primary:hover{background:transparent;color:var(--fg)}
-[data-theme="dark"] .nav-cta{background:var(--fg);color:var(--bg)!important;border-color:var(--fg)}
-[data-theme="dark"] .nav-cta:hover{background:transparent;color:var(--fg)!important}
-[data-theme="dark"] .path-card,[data-theme="dark"] .sec-card,[data-theme="dark"] .service-row,[data-theme="dark"] .process-step{background:var(--card-bg);border-color:var(--border)}
-[data-theme="dark"] .path-card:hover,[data-theme="dark"] .service-row:hover{box-shadow:0 4px 24px rgba(0,0,0,.2)}
-[data-theme="dark"] .diff-card.theirs{background:var(--theirs-bg);border-color:var(--border)}
-[data-theme="dark"] .diff-card.ours{background:var(--card-bg);border-color:var(--accent-green)}
-[data-theme="dark"] .nav-logo img{filter:brightness(0) invert(1) opacity(.9)}
-[data-theme="dark"] .service-row .service-tag{color:var(--border)}
-
-/* Responsive */
-@media(max-width:768px){
-  h1{font-size:2.2rem}
-  h2{font-size:1.7rem}
-  .hero{padding:7rem 1.5rem 4rem}
-  .path-grid,.diff-grid{grid-template-columns:1fr}
-  .service-row{grid-template-columns:1fr}
-  .service-row .service-tag{text-align:left;font-size:1.5rem}
-  .arch-stats{grid-template-columns:1fr}
-  .nav-links a:not(.nav-cta){display:none}
-  .stats-row{grid-template-columns:1fr 1fr}
-  .eff-table{font-size:.82rem}
-  .eff-table td,.eff-table th{padding:.5rem .6rem}
-}
+@media(max-width:380px){.container,.nav-inner{padding-left:1.3rem;padding-right:1.3rem}}
 </style>
 </head>
 <body>
 
-<!-- Nav -->
 <nav id="navbar">
-<div class="nav-inner">
-  <a href="#" class="nav-logo">
-    <img src="/logo.png" alt="Birdwork AI">
-    <span>Birdwork AI</span>
-  </a>
-  <div class="nav-links">
-    <a href="#services">What I Do</a>
-    <a href="#security">Security</a>
-    <a href="#results">Results</a>
-    <a href="#contact" class="nav-cta">Book a Call</a>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
-      <span class="icon-moon">🌙</span>
-      <span class="icon-sun">☀️</span>
-    </button>
+  <div class="nav-inner">
+    <a href="#top" class="brand">Tony Bird <span>/ birdwork.ai</span></a>
+    <div class="nav-links">
+      <a href="#work">Work</a><a href="#approach">Approach</a><a href="#finops">FinOps</a><a href="#security">Security</a><a href="#research">R&amp;D</a><a href="#about">About</a>
+    </div>
+    <div class="nav-right">
+      <a href="https://www.linkedin.com/in/anthonymbird/" data-href="linkedin" rel="me" class="hide-sm">LinkedIn</a>
+      <a href="#connect">Connect</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">◐</button>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"><span></span><span></span><span></span></button>
+    </div>
   </div>
-</div>
 </nav>
 
-<!-- Hero -->
-<section class="hero" id="top">
-  <div class="hero-badge">Enterprise AI Architecture · Agentic Systems · Technical Transformation &amp; R&amp;D</div>
-  <h1>AI systems built like infrastructure — not like demos.</h1>
-  <p>Enterprise architecture, technical transformation, and applied R&amp;D. I design, build, and harden production agent fleets — sandboxed, audited, and owned by the team running them.</p>
-  <div class="hero-line"></div>
-  <div class="hero-ctas">
-    <a href="#contact" class="btn-primary">Start a conversation</a>
-    <a href="#results" class="btn-secondary">See the work</a>
+<div class="drawer" id="drawer" data-open="false">
+  <button class="drawer-close" id="drawerClose" aria-label="Close menu">×</button>
+  <a href="#work">Work</a><a href="#approach">Approach</a><a href="#finops">FinOps</a><a href="#security">Security</a><a href="#research">R&amp;D</a><a href="#about">About</a><a href="#connect">Connect</a>
+  <p class="drawer-meta">bird@birdwork.ai · Grand Rapids, MI</p>
+</div>
+
+<header class="hero" id="top">
+  <div class="container">
+    <p class="hero-eyebrow">Enterprise AI Architecture · Agentic Systems · Technical Transformation</p>
+    <h1>Tony Bird</h1>
+    <p class="sub">Designing production multi-agent fleets, zero-trust context systems, and enterprise AI transformations — 40× faster deployments, 50%+ inference savings, and autonomous operations on client infrastructure.</p>
+    <div class="cta-row">
+      <a href="#work" class="btn">Selected Work</a>
+      <a href="#research" class="btn ghost">Architecture &amp; R&amp;D</a>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="stats">
+    <div class="stat"><b>97.5%</b><span>Faster deployment · 480h → 12h</span></div>
+    <div class="stat"><b>50%+</b><span>LLM token FinOps savings</span></div>
+    <div class="stat"><b>5.7M</b><span>Records · 5 agents · 24/7 since Jan</span></div>
+    <div class="stat"><b>$3.5M</b><span>Closed direct C-suite SaaS</span></div>
+  </div>
+</div>
+
+<section id="approach">
+  <div class="container">
+    <p class="section-label">Operating Model</p>
+    <h2>Three ways I work with teams.</h2>
+    <div class="cards-3">
+      <div class="cell card"><span class="num">01</span><h3>Architect &amp; Build</h3><p>Persistent-memory agent fleets, RAG and semantic retrieval, and the data and compute architecture underneath them — on client infrastructure.</p></div>
+      <div class="cell card"><span class="num">02</span><h3>Harden &amp; Optimize</h3><p>Environment isolation, HITL gates, PII redaction, tiered model routing, and context-window discipline.</p></div>
+      <div class="cell card"><span class="num">03</span><h3>Enable &amp; Adopt</h3><p>Technical SOWs, cross-functional workflow integration, and executive change management.</p></div>
+    </div>
   </div>
 </section>
 
-<div class="divider"></div>
+<section id="work">
+  <div class="container">
+    <p class="section-label">Selected Enterprise Work</p>
+    <h2>Systems in production.</h2>
+    <div class="work-grid">
 
-<!-- Personalized Always-On Agents -->
-<section id="agents">
-<div class="container">
-  <div class="section-label">The Core Idea</div>
-  <h2>Personalized always-on agents, one per function</h2>
-  <p style="font-size:1.05rem;color:var(--fg-mid);max-width:760px;line-height:1.7;margin-bottom:1rem">Every team member gets a dedicated agent bound to their role, remembers context, and learns from every interaction — always on, nights, weekends, holidays. As new capabilities ship, each agent inherits them automatically. Your agent workforce compounds in value without retraining.</p>
-  <p style="font-size:.95rem;color:var(--fg-mid);max-width:760px;line-height:1.7;margin-bottom:2rem">Not a generic tool bolted onto a workflow — a custom agentic stack inside your infrastructure, trained on your data, and shaped around how the team actually works.</p>
+      <article class="work-card">
+        <p class="client"><span data-site="client.logistics">Mid-Size 3PL Brokerage</span></p>
+        <p class="metric">5.7M records · 5 agents</p>
+        <p class="role">Interim CTO &amp; AI Systems Architect · 30 days to prod</p>
+        <ul>
+          <li>Deployed five coordinated agents on client infrastructure across sales, marketing, support, and engineering.</li>
+          <li>Slack-native plain-English Salesforce querying with auto-generated charts; authored the data and infrastructure SOW.</li>
+        </ul>
+        <p class="tag">24/7 autonomous since January · zero added headcount</p>
+      </article>
 
-</div>
-</section>
-<div class="divider"></div>
+      <article class="work-card">
+        <p class="client"><span data-site="client.peopleAnalytics">Enterprise People Analytics SaaS</span></p>
+        <p class="metric">97.5% faster (40×)</p>
+        <p class="role">Interim CTO &amp; Product Lead · 480h → 12h</p>
+        <ul>
+          <li>Re-architected build and release pipelines for rapid customer onboarding.</li>
+          <li>Led the product roadmap: interactive org analytics and performance-based pricing.</li>
+        </ul>
+        <p class="tag">Release cycle cut from weeks to a single afternoon</p>
+      </article>
 
-<!-- Meet You Where You Are -->
-<section id="paths">
-<div class="container">
-  <div class="section-label">Any Stage of AI Maturity</div>
-  <h2>Built for the stage you are at.</h2>
-  <div class="path-grid">
-    <a href="#agents" class="path-card path-build" style="text-decoration:none;color:inherit">
-      <div class="path-label">Ready to start</div>
-      <h3>Build an agent fleet</h3>
-      <p>No agents yet? I design, build, and deploy a dedicated fleet — on your infrastructure, trained on your data, running 24/7. From first agent to full fleet.</p>
-      <span class="path-link" style="color:var(--accent-green)">See what agents do →</span>
-    </a>
-    <a href="#services" class="path-card path-harden" style="text-decoration:none;color:inherit">
-      <div class="path-label">Already in motion</div>
-      <h3>Harden &amp; optimize</h3>
-      <p>Running Copilot, Cursor, Claude Code, Replit, or other agentic tools? I make them secure, efficient, and actually adopted — wherever your team is today.</p>
-      <span class="path-link" style="color:var(--accent-warm)">See how I optimize →</span>
-    </a>
+      <article class="work-card">
+        <p class="client"><span data-site="client.commsPayments">Enterprise Communications &amp; Payment Technology</span></p>
+        <p class="metric">Production AI POCs</p>
+        <p class="role">AI Systems Architect · GPU &amp; data orchestration</p>
+        <ul>
+          <li>Built automated ingestion, job orchestration, and applied AI workflows.</li>
+          <li>Evaluated server and GPU topologies across Node.js, Trino, vector DBs, Docker, and Qwen.</li>
+        </ul>
+        <p class="tag">From evaluation matrix to running proof-of-concept</p>
+      </article>
+
+      <article class="work-card">
+        <p class="client">Six Sents Inc.</p>
+        <p class="metric">$3.5M · 10K+ DAU</p>
+        <p class="role">Founder &amp; CEO · 20-person org</p>
+        <ul>
+          <li>Scaled B2B predictive analytics SaaS across major healthcare and enterprise buyers.</li>
+          <li>Owned turnover, churn, and well-being ML, LogRhythm security reporting, and a $925K VC raise.</li>
+        </ul>
+        <p class="tag">Built, sold, and operated the platform end to end</p>
+      </article>
+
+    </div>
+    <p class="proof-strip"><strong>Enterprise payments &amp; quant (contract):</strong> federated data warehouses for a $1B+ payments org, plus an automated time-series algorithmic trading engine.</p>
   </div>
-</div>
 </section>
-<div class="divider"></div>
 
-<!-- Security -->
+<section id="finops">
+  <div class="container">
+    <p class="section-label">Context Engineering &amp; LLM FinOps</p>
+    <h2>Most AI spend is architecture, not usage.</h2>
+    <p class="lede">Token burn is a design outcome. Harness gaps, unbounded context, and frontier-only routing are fixable in days — and measurable on the invoice.</p>
+
+    <div class="callouts">
+      <div class="callout"><b>6×</b><span>Harness gap vs. tuned baseline</span></div>
+      <div class="callout"><b>50%+</b><span>Token savings from routing + caching</span></div>
+      <div class="callout"><b>3 days</b><span>Audit to shipped fix</span></div>
+    </div>
+
+    <table>
+      <thead><tr><th>Dimension</th><th>Untuned</th><th>Engineered</th></tr></thead>
+      <tbody>
+        <tr><td>Model routing</td><td class="before">Every query hits frontier models ($15/MTok)</td><td class="after">Routine queries hit local or mid-tier models ($0–$1/MTok)</td></tr>
+        <tr><td>Context window</td><td class="before">Window at 98% — output quality degrades</td><td class="after">Pruned at 70% — output stays sharp</td></tr>
+        <tr><td>Prompt caching</td><td class="before">None — repeat tokens billed every call</td><td class="after">Enabled — &gt;60% cache hit rate</td></tr>
+      </tbody>
+    </table>
+
+    <div class="stack">
+      <div class="stack-col"><h4>AI / Agents</h4><p>Multi-agent orchestration · context engineering · RAG · vector DBs · Qwen · HITL</p></div>
+      <div class="stack-col"><h4>Data / Backend</h4><p>Python · Pydantic · Node.js · SQL · DuckDB · Trino · .kan</p></div>
+      <div class="stack-col"><h4>Infrastructure</h4><p>GPU compute · Docker · CI/CD · Salesforce · Slack/Teams · LogRhythm</p></div>
+    </div>
+  </div>
+</section>
+
 <section id="security">
-<div class="container">
-  <div class="section-label">Security</div>
-  <h2>Secure by default. Not bolted on after.</h2>
-  <p style="font-size:1.05rem;color:var(--fg-mid);max-width:760px;line-height:1.7;margin-bottom:2rem">AI agents are powerful — but most teams deploy them without thinking about what they can access, leak, or execute. I've spent the last year hardening agent fleets against real threats: supply chain attacks, credential exposure, uncontrolled tool calls, PII leakage.</p>
-
-  <div class="sec-grid">
-    <div class="sec-card">
-      <div class="sec-icon">🔒</div>
-      <h4>Environment Isolation</h4>
-      <p>Every agent runs sandboxed. No cross-contamination between tools, projects, or data sources.</p>
-    </div>
-    <div class="sec-card">
-      <div class="sec-icon">🛡️</div>
-      <h4>Approval Gating</h4>
-      <p>Agents ask before executing sensitive actions. No autonomous access to production without human review.</p>
-    </div>
-    <div class="sec-card">
-      <div class="sec-icon">🔐</div>
-      <h4>Credential Controls</h4>
-      <p>API keys, tokens, and passwords in vaults — never in agent context, never in logs.</p>
-    </div>
-    <div class="sec-card">
-      <div class="sec-icon">👁️</div>
-      <h4>PII Protection</h4>
-      <p>Sensitive data masked before it reaches any model. Customer names, SSNs, financials — redacted by default.</p>
-    </div>
-    <div class="sec-card">
-      <div class="sec-icon">⚡</div>
-      <h4>Controlled Tool Calling</h4>
-      <p>Every tool an agent can use is explicitly allowed. No surprise installs, no unreviewed code execution.</p>
-    </div>
-    <div class="sec-card">
-      <div class="sec-icon">📋</div>
-      <h4>Audit Logging</h4>
-      <p>Full trace of every action every agent takes. Who did what, when, with what data. Compliance-ready.</p>
+  <div class="container">
+    <p class="section-label">Zero-Trust Agentic Security</p>
+    <h2>Secure by default, governed by policy.</h2>
+    <p class="lede">Designed for HIPAA, SOC 2, and regulated governance — every agent capability is scoped, logged, and reversible.</p>
+    <div class="sec-grid">
+      <div class="sec-card"><h4>Environment Isolation</h4><p>Sandboxed execution; no cross-contamination between tools, projects, or data.</p></div>
+      <div class="sec-card"><h4>Approval Gating</h4><p>Human-in-the-loop gates on writes, spend, and irreversible actions.</p></div>
+      <div class="sec-card"><h4>Credential Controls</h4><p>Scoped, short-lived tokens — no standing secrets in prompts or repos.</p></div>
+      <div class="sec-card"><h4>PII Protection</h4><p>Redaction and field-level policy before context reaches a model.</p></div>
+      <div class="sec-card"><h4>Controlled Tool Calling</h4><p>Allowlisted tools with typed arguments and blast-radius limits.</p></div>
+      <div class="sec-card"><h4>Audit Logging</h4><p>Every call, tool use, and approval recorded and replayable.</p></div>
     </div>
   </div>
-</div>
-</section>
-<div class="divider"></div>
-
-<!-- What I Do -->
-<section id="services">
-<div class="container">
-  <div class="section-label">What I Do</div>
-  <h2>Three ways I work with teams.</h2>
-
-  <div class="service-row">
-    <div>
-      <div class="service-label">Build</div>
-      <h3>Agent Fleets</h3>
-      <p>I design and deploy coordinated AI agent fleets on your infrastructure. Each agent owns a function — data queries, operations monitoring, project coordination, customer communication. They share context, learn from each other, and improve every week.</p>
-    </div>
-    <div class="service-tag">BUILD</div>
-  </div>
-
-  <div class="service-row">
-    <div>
-      <div class="service-label">Harden</div>
-      <h3>Security &amp; Optimization</h3>
-      <p>Already running Copilot, Cursor, OpenClaw, or other AI tools? I audit your setup for security gaps and token waste, then lock it down. Sandboxing, credential management, PII protection, prompt caching, model routing.</p>
-    </div>
-    <div class="service-tag">HARDEN</div>
-  </div>
-
-  <div class="service-row">
-    <div>
-      <div class="service-label">Coach</div>
-      <h3>Adoption &amp; Training</h3>
-      <p>The best AI tools fail when the team doesn't use them. I drive adoption through hands-on training, weekly office hours, best-practices coaching, and continuous updates on what's new and what matters for your stack.</p>
-    </div>
-    <div class="service-tag">COACH</div>
-  </div>
-</div>
-</section>
-<div class="divider"></div>
-
-<!-- Ownership -->
-<section id="ownership">
-<div class="container">
-  <div class="section-label">Complete Ownership</div>
-  <h2>Your agents. Your infrastructure. Your rules.</h2>
-  <p style="font-size:1.05rem;color:var(--fg-mid);max-width:760px;line-height:1.7;margin-bottom:.5rem">Every agent in your fleet runs on infrastructure you control. You own the stack, the data, the access privileges, and the code. No vendor holds the keys to your AI workforce — you do.</p>
-  <p style="font-size:.95rem;color:var(--fg-mid);max-width:760px;line-height:1.7;margin-bottom:2rem">Manage your agents using the tools your team already uses. No new dashboards to learn, no proprietary portals to navigate.</p>
-
-  <div class="own-grid">
-    <div class="own-card">
-      <div class="own-icon">💬</div>
-      <h4>Chat Tools</h4>
-      <p>Talk to your agents in Slack, Microsoft Teams, Discord, or any messaging platform your team already lives in.</p>
-    </div>
-    <div class="own-card">
-      <div class="own-icon">📋</div>
-      <h4>Project Management</h4>
-      <p>Agents integrate with Jira, Asana, Linear, Notion — wherever your tasks live. They read tickets, update status, and report progress.</p>
-    </div>
-    <div class="own-card">
-      <div class="own-icon">🔧</div>
-      <h4>Dev &amp; Ops Tools</h4>
-      <p>Git, CI/CD pipelines, cloud consoles. Agents operate through the same toolchain the engineers already use.</p>
-    </div>
-    <div class="own-card">
-      <div class="own-icon">🛡️</div>
-      <h4>Full Access Control</h4>
-      <p>You decide what each agent can see, do, and access. Role-based permissions, audit logs, and kill switches — all under your control.</p>
-    </div>
-    <div class="own-card">
-      <div class="own-icon">🏠</div>
-      <h4>On Your Infrastructure</h4>
-      <p>Agents run on your servers, your cloud, or your laptop. No data leaves your environment. Open-source stack you can inspect and modify.</p>
-    </div>
-    <div class="own-card">
-      <div class="own-icon">🔑</div>
-      <h4>You Own Everything</h4>
-      <p>The code, the models, the configurations, the data. If you move on, the fleet keeps running. Zero lock-in.</p>
-    </div>
-  </div>
-</div>
-</section>
-<div class="divider"></div>
-
-<!-- Architecture Matters -->
-<section id="architecture">
-<div class="container">
-  <div class="section-label">Why Architecture</div>
-  <h2>The tool matters less than how it's configured.</h2>
-  <p style="font-size:1.05rem;color:var(--fg-mid);max-width:760px;line-height:1.7">A Stanford/MIT study found that changing the harness around the same AI model produces a 6× performance gap on identical tasks. Most teams pick a model and hope for the best. I engineer the architecture around it.</p>
-
-  <div class="arch-stats">
-    <div class="arch-stat">
-      <div class="number">6×</div>
-      <div class="label">Performance gap from harness engineering alone</div>
-    </div>
-    <div class="arch-stat">
-      <div class="number">50%+</div>
-      <div class="label">Token savings from proper context management</div>
-    </div>
-    <div class="arch-stat">
-      <div class="number">3 days</div>
-      <div class="label">Average time from audit to first improvement</div>
-    </div>
-  </div>
-
-  <p style="font-size:.95rem;color:var(--fg-mid);max-width:760px;line-height:1.7">I work across the harness landscape — OpenClaw, Cursor, Copilot, Claude Code, Hermes, and custom builds. I know when to use each, how to configure them, and where they break.</p>
-</div>
-</section>
-<div class="divider"></div>
-
-<!-- Results Banner -->
-<div class="results-banner" id="results">
-<div class="container">
-  <div class="section-label">Case Study</div>
-  <h2><span data-site="client.logistics">Mid-Size 3PL Brokerage</span> — Agent Fleet in Production</h2>
-  <p style="max-width:700px;font-size:1.05rem;line-height:1.7">A mid-size logistics brokerage needed to unlock insights from millions of Salesforce records without hiring analysts. I deployed a custom agent fleet — from zero to production in under a month.</p>
-
-  <div class="stats-row">
-    <div class="stat-card">
-      <div class="number">5.7M</div>
-      <div class="label">Records connected &amp; queryable</div>
-    </div>
-    <div class="stat-card">
-      <div class="number">5</div>
-      <div class="label">Coordinated agents in production</div>
-    </div>
-    <div class="stat-card">
-      <div class="number">30</div>
-      <div class="label">Days from kickoff to production</div>
-    </div>
-    <div class="stat-card">
-      <div class="number">24/7</div>
-      <div class="label">Autonomous operation since January</div>
-    </div>
-  </div>
-
-  <div class="case-features">
-    <div class="case-feature">
-      <h4>Natural Language Queries</h4>
-      <p>Team members ask questions in plain English — carrier counts, load volumes, revenue breakdowns — and get instant answers with auto-generated charts.</p>
-      <div class="accent">Slack-native · no training required</div>
-    </div>
-    <div class="case-feature">
-      <h4>Coordinated Agent Fleet</h4>
-      <p>Five agents — data concierge, strategic assistant, ops monitor, project coordinator, and clerk — each assigned to specific roles and sharing context.</p>
-      <div class="accent">Multi-agent · memory-persistent</div>
-    </div>
-    <div class="case-feature">
-      <h4>Fully Owned &amp; Private</h4>
-      <p>The entire fleet runs on the client's own infrastructure. They control the stack, the access, and the data. No vendor dependency.</p>
-      <div class="accent">Zero lock-in · open source</div>
-    </div>
-    <div class="case-feature">
-      <h4>Self-Improving</h4>
-      <p>The fleet audits its own capabilities, captures operational learnings, and propagates improvements. Agents get smarter every week without manual tuning.</p>
-      <div class="accent">3+ months autonomous · zero downtime</div>
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- Token Efficiency -->
-<section id="efficiency">
-<div class="container">
-  <div class="section-label">Efficiency</div>
-  <h2>Stop burning money on API calls.</h2>
-  <p style="font-size:1.05rem;color:var(--fg-mid);max-width:760px;line-height:1.7;margin-bottom:.5rem">Most teams overspend on AI by 5–20×. Wrong model for the task. No prompt caching. Context windows full of stale data. I configure model routing, implement caching, and prune context — so every token counts.</p>
-
-  <table class="eff-table">
-    <thead>
-      <tr><th>Before</th><th>After</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="eff-before">Every query hits frontier models ($15/MTok)</td>
-        <td class="eff-after">Routine queries hit local or mid-tier models ($0–$1/MTok)</td>
-      </tr>
-      <tr>
-        <td class="eff-before">Context window at 98% — output quality degrades</td>
-        <td class="eff-after">Context pruned at 70% — output stays sharp</td>
-      </tr>
-      <tr>
-        <td class="eff-before">No prompt caching — repeat tokens billed every call</td>
-        <td class="eff-after">Cache hit rate &gt;60% — same quality, half the cost</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</section>
-<div class="divider"></div>
-
-<!-- How It Works -->
-<section id="process">
-<div class="container">
-  <div class="section-label">Process</div>
-  <h2>How it starts.</h2>
-  <div class="process-steps">
-    <div class="process-step">
-      <h3>Assessment</h3>
-      <p>A working session, not a pitch — I learn what you're running, what was tried, what broke. You leave with actionable next steps whether or not you hire me.</p>
-    </div>
-    <div class="process-step">
-      <h3>Scope &amp; Build</h3>
-      <p>I scope the engagement — audit, fleet build, or both — deploy within days to weeks depending on complexity, and iterate based on real usage, not a spec doc.</p>
-    </div>
-    <div class="process-step">
-      <h3>Compound</h3>
-      <p>Your agents or tools get better every week. New capabilities ship as they mature. Monthly reviews keep everything aligned with where your business is heading.</p>
-    </div>
-  </div>
-</div>
-</section>
-<div class="divider"></div>
-
-<!-- Differentiator -->
-<section id="compare">
-<div class="container">
-  <div class="section-label">Built Different</div>
-  <h2>How I work differently.</h2>
-  <div class="diff-grid">
-    <div class="diff-card theirs">
-      <h3 style="color:var(--fg-dim)">Typical Vendors</h3>
-      <ul>
-        <li>✕ One-size-fits-all SaaS tools</li>
-        <li>✕ Your data on their servers</li>
-        <li>✕ No security hardening, no audit trail</li>
-        <li>✕ "AI strategy" decks that never ship</li>
-        <li>✕ 6-month timelines, 12-month invoices</li>
-        <li>✕ Lock-in by design</li>
-      </ul>
-    </div>
-    <div class="diff-card ours">
-      <h3 style="color:var(--accent-green)">Birdwork AI</h3>
-      <ul>
-        <li style="color:var(--fg)">→ Configured for your specific stack and tools</li>
-        <li style="color:var(--fg)">→ Everything runs on your infrastructure</li>
-        <li style="color:var(--fg)">→ Security-first: sandboxed, gated, logged</li>
-        <li style="color:var(--fg)">→ Working systems in days to weeks</li>
-        <li style="color:var(--fg)">→ You own the code, the agents, the data</li>
-        <li style="color:var(--fg)">→ I run these tools daily in production</li>
-      </ul>
-    </div>
-  </div>
-</div>
-</section>
-<div class="divider"></div>
-
-<!-- CTA -->
-<!-- Connect -->
-<section class="cta-section" id="contact">
-  <div class="section-label">Connect</div>
-  <h2>Let's talk architecture.</h2>
-  <p>Send what you are building, the stack it runs on, and where it hurts. You get a technical read — gaps, cost exposure, and the shortest path to production — whether or not you hire me.</p>
-  <div style="display:flex;gap:1.25rem;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:1.75rem">
-    <picture>
-      <source srcset="/headshot-portrait.webp" type="image/webp" data-headshot>
-      <img src="/headshot-portrait.png" alt="Tony Bird" data-headshot width="96" height="96" style="width:96px;height:96px;border-radius:50%;border:1px solid var(--border);object-fit:cover" loading="lazy">
-    </picture>
-    <p style="text-align:left;margin:0;font-size:.85rem;color:var(--fg-dim);line-height:1.5"><strong style="color:var(--fg);font-weight:500;font-size:1rem;display:block;margin-bottom:.15rem" data-site="fullName">Tony Bird</strong><span data-site="location">Grand Rapids, MI | US &amp; Remote</span></p>
-  </div>
-  <a href="mailto:bird@birdwork.ai" class="btn-primary" data-href="email" style="font-size:1rem;padding:.85rem 2.5rem">bird@birdwork.ai</a>
-  <p style="margin-top:1.15rem;font-size:.85rem;color:var(--fg-dim)"><a href="https://www.linkedin.com/in/anthonymbird/" data-href="linkedin" rel="me" style="border-bottom:1px solid var(--border);padding-bottom:2px">LinkedIn</a></p>
 </section>
 
-<!-- Footer -->
+<section id="research">
+  <div class="container">
+    <p class="section-label">R&amp;D · B.I. R&amp;D LLC</p>
+    <h2>KNODES &amp; Kore.</h2>
+    <p class="lede">A hypergraph semantic data warehouse and continuous agentic memory, built to eliminate context drift. Every automated action carries HITL auditability, so the system stays defensible in regulated environments.</p>
+
+    <div class="rd">
+      <div class="pillars">
+        <div class="pillar"><h4>Kore &amp; .kan</h4><p>Append-only binary format. Memory that compacts instead of drifting.</p></div>
+        <div class="pillar"><h4>RSMPU</h4><p>Dual graph-tensor representation with consensus over retrieval paths.</p></div>
+        <div class="pillar"><h4>KlosureSpec</h4><p>Semantic closure in Python, Pydantic, and DuckDB — typed, enforced, replayable.</p></div>
+      </div>
+
+      <svg class="flow" viewBox="0 0 720 132" role="img" aria-label="Pipeline: signals, working context, KlosureSpec with human approval, Kore and .kan, KNODES memory, audited actions">
+        <g fill="none">
+          <rect class="node" x="1"   y="38" width="106" height="56" rx="3"/>
+          <rect class="node" x="143" y="38" width="106" height="56" rx="3"/>
+          <rect class="node" x="285" y="28" width="120" height="76" rx="3"/>
+          <rect class="node" x="441" y="38" width="106" height="56" rx="3"/>
+          <rect class="node" x="583" y="38" width="106" height="56" rx="3"/>
+          <path class="arrow" d="M107 66h30M249 66h30M405 66h30M547 66h30"/>
+        </g>
+        <text x="54"  y="70" text-anchor="middle">Signals</text>
+        <text x="196" y="70" text-anchor="middle">Context</text>
+        <text x="345" y="56" text-anchor="middle">KlosureSpec</text>
+        <text x="345" y="78" text-anchor="middle" font-size="9" fill="#8B7355">+ HITL</text>
+        <text x="494" y="70" text-anchor="middle">Kore/.kan</text>
+        <text x="636" y="70" text-anchor="middle">KNODES</text>
+        <text x="636" y="118" text-anchor="middle" font-size="9">audited actions</text>
+        <text x="196" y="118" text-anchor="middle" font-size="9">working</text>
+      </svg>
+      <p class="rd-meta"><span>Audit-replayable</span><span>Regulated-env shaped</span><span>Model-agnostic</span><span>Open research</span></p>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <p class="section-label">About</p>
+    <div class="about-wrap">
+      <div class="portrait">
+        <picture>
+          <source srcset="/headshot-portrait.webp" type="image/webp" data-headshot>
+          <img src="/headshot-portrait.png" alt="Tony Bird" data-headshot width="220" height="220" loading="lazy">
+        </picture>
+      </div>
+      <div>
+        <h2>Architecture for the part after the demo.</h2>
+        <p>I am an enterprise AI architect and interim CTO. I have run the whole arc: founding a predictive-analytics SaaS and scaling it to a 20-person org and $3.5M in enterprise contracts, then going in-house to rebuild delivery and ship production agent fleets.</p>
+        <p>The work now is architecture, transformation, and applied R&amp;D — multi-agent systems, zero-trust context, and inference economics for teams that need AI to survive audit and scale.</p>
+        <ul class="creds">
+          <li>12+ years founder and fractional CTO</li>
+          <li>MSU B.S. Computer Engineering, math minor · engineering TA</li>
+          <li>Patent inventor · exited founder</li>
+          <li>20-person org · 10K+ DAU SaaS scale</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="connect" class="connect">
+  <div class="container">
+    <p class="section-label">Connect</p>
+    <h2>Let's talk architecture.</h2>
+    <p>Send what you are building, the stack it runs on, and where it hurts. You get a technical read — gaps, cost exposure, and the shortest path to production.</p>
+    <div class="cta-row" style="justify-content:center">
+      <a href="mailto:bird@birdwork.ai" class="btn" data-href="email">Email Tony</a>
+      <a href="https://www.linkedin.com/in/anthonymbird/" class="btn ghost" data-href="linkedin" rel="me">LinkedIn</a>
+    </div>
+    <p style="margin-top:1.4rem;font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--fg-mid)">
+      <span data-site="location">Grand Rapids, MI · US &amp; Remote</span>
+    </p>
+  </div>
+</section>
+
 <footer>
-<div class="container">
-  <p style="margin-bottom:.5rem">© 2026 Tony Bird · <span data-site="domain">birdwork.ai</span></p>
-  <p style="font-size:.8rem;font-style:italic;color:var(--fg-dim)">Enterprise AI architecture, agentic systems, and applied R&amp;D.</p>
-</div>
+  <div class="container foot-inner">
+    <span>© 2026 Tony Bird · birdwork.ai</span>
+    <div class="foot-inner" style="display:flex;gap:1rem">
+      <a href="#work">Work</a><a href="#approach">Approach</a><a href="#finops">FinOps</a><a href="#security">Security</a><a href="#research">R&amp;D</a><a href="#about">About</a>
+    </div>
+  </div>
 </footer>
 
 <script>
-// ---- SITE CONFIG (single source for runtime-rendered fields) ----
 const SITE = {
   FULL_NAME: 'Tony Bird',
   SITE_DOMAIN: 'birdwork.ai',
   EMAIL: 'bird@birdwork.ai',
-  LOCATION: 'Grand Rapids, MI | US & Remote',
+  LOCATION: 'Grand Rapids, MI · US & Remote',
   LINKEDIN_URL: 'https://www.linkedin.com/in/anthonymbird/',
   CLIENTS: {
     logistics: 'Mid-Size 3PL Brokerage',
-    peopleAnalytics: 'Enterprise People Analytics SaaS Platform',
-    commsPayments: 'Enterprise Communications & Payment Technology Provider'
+    peopleAnalytics: 'Enterprise People Analytics SaaS',
+    commsPayments: 'Enterprise Communications & Payment Technology'
   },
   HEADSHOT_PATH: '/headshot-portrait.webp',
   HEADSHOT_FALLBACK: '/headshot-portrait.png'
@@ -679,35 +459,37 @@ function renderSite(){
     if(key === 'email') el.href = 'mailto:' + SITE.EMAIL;
     if(key === 'linkedin') el.href = SITE.LINKEDIN_URL;
   });
-  document.querySelectorAll('[data-email-text]').forEach(el=>{ el.textContent = SITE.EMAIL; });
-  document.documentElement.dataset.siteReady = 'true';
 }
 renderSite();
-// ---- end SITE CONFIG ----
-// Theme toggle
-const themeToggle=document.getElementById('themeToggle');
-const savedTheme=localStorage.getItem('birdwork-theme');
-if(savedTheme){document.documentElement.setAttribute('data-theme',savedTheme)}
-else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches){document.documentElement.setAttribute('data-theme','dark')}
-themeToggle.addEventListener('click',()=>{
-  const current=document.documentElement.getAttribute('data-theme');
-  const next=current==='dark'?'light':'dark';
-  if(next==='light'){document.documentElement.removeAttribute('data-theme')}
-  else{document.documentElement.setAttribute('data-theme','dark')}
-  localStorage.setItem('birdwork-theme',next);
+
+const themeToggle = document.getElementById('themeToggle');
+const savedTheme = localStorage.getItem('birdwork-theme');
+if(savedTheme){document.documentElement.setAttribute('data-theme', savedTheme)}
+else if(window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches){document.documentElement.setAttribute('data-theme','dark')}
+themeToggle.addEventListener('click', ()=>{
+  const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+  if(dark) document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme','dark');
+  localStorage.setItem('birdwork-theme', dark ? 'light' : 'dark');
 });
 
-// Nav scroll
-const nav=document.getElementById('navbar');
-window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>20)});
+const nav = document.getElementById('navbar');
+const onScroll = ()=> nav.classList.toggle('scrolled', window.scrollY > 12);
+window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
 
-
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}
-  });
+const drawer = document.getElementById('drawer');
+const burger = document.getElementById('burger');
+function setDrawer(open){
+  drawer.dataset.open = open ? 'true' : 'false';
+  burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+burger.addEventListener('click', ()=> setDrawer(drawer.dataset.open !== 'true'));
+document.getElementById('drawerClose').addEventListener('click', ()=> setDrawer(false));
+drawer.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> setDrawer(false)));
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape' && drawer.dataset.open === 'true'){ setDrawer(false); burger.focus(); }
 });
 </script>
 </body>
