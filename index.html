@@ -152,7 +152,10 @@ nav.scrolled{border-bottom-color:var(--border)}
 .work-card{background:var(--bg);padding:2rem;display:flex;flex-direction:column}
 .work-card.wide{grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;column-gap:2.5rem;align-items:start}
 .work-card.wide .tag{grid-column:1/-1;margin-top:.2rem;padding-top:0}
+.work-card.wide .wide-b ul{display:grid;grid-template-columns:1fr 1fr;column-gap:1.6rem;align-items:start}
+.work-card.wide .wide-b li{margin-bottom:0}
 @media(max-width:900px){.work-card.wide{grid-column:auto;grid-template-columns:1fr;gap:1rem}}
+@media(max-width:520px){.work-card.wide .wide-b ul{grid-template-columns:1fr;row-gap:.45rem}}
 .work-card .client{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-dim);margin-bottom:.7rem}
 .work-card .metric{font-family:'JetBrains Mono',monospace;font-size:1.02rem;font-weight:500;letter-spacing:-.01em;line-height:1.45;margin-bottom:.4rem;color:var(--fg);text-wrap:balance}
 .work-card .role{font-size:.72rem;color:var(--accent-warm);font-family:'JetBrains Mono',monospace;margin-bottom:1.1rem}
@@ -363,9 +366,9 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
         <div class="wide-a">
           <p class="client">Enterprise Payments &amp; Quant (Contract)</p>
           <p class="metric">$1B+ Payments Org <span class="nw">· Quant Trading</span></p>
-          <p class="role">Data Architecture &amp; Applied AI</p>
         </div>
         <div class="wide-b">
+          <p class="role">Data Architecture &amp; Applied AI</p>
           <ul>
             <li>Federated data warehouses across a $1B+ payments org.</li>
             <li>Automated time-series algorithmic trading engine.</li>
