@@ -105,6 +105,9 @@ nav.scrolled{border-bottom-color:var(--border)}
 
 /* work */
 .work-card{background:var(--bg);padding:2rem;display:flex;flex-direction:column}
+.work-card.wide{grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;column-gap:2.5rem;align-items:start}
+.work-card.wide .tag{grid-column:1/-1;margin-top:.2rem;padding-top:0}
+@media(max-width:900px){.work-card.wide{grid-template-columns:1fr;gap:1rem}}
 .work-card .client{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-dim);margin-bottom:.7rem}
 .work-card .metric{font-family:'Cormorant Garamond',serif;font-size:1.62rem;line-height:1.22;margin-bottom:.35rem;color:var(--fg);text-wrap:balance}
 .work-card .role{font-size:.72rem;color:var(--accent-green);font-family:'JetBrains Mono',monospace;margin-bottom:1.1rem}
@@ -112,8 +115,6 @@ nav.scrolled{border-bottom-color:var(--border)}
 .work-card li{padding-left:1.15rem;position:relative;margin-bottom:.45rem}
 .work-card li::before{content:"—";position:absolute;left:0;color:var(--fg-dim)}
 .work-card .tag{margin-top:auto;padding-top:1.4rem;font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--fg-dim);letter-spacing:.05em}
-.proof-strip{margin-top:1.75rem;padding-top:1.4rem;border-top:1px solid var(--border);font-size:.84rem}
-.proof-strip strong{color:var(--fg);font-weight:500}
 
 /* finops */
 .callout{background:var(--bg);padding:1.6rem}
@@ -203,7 +204,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
   <div class="nav-inner">
     <a href="#top" class="brand">Tony Bird <span>/ birdwork.ai</span></a>
     <div class="nav-links">
-      <a href="#work">Work</a><a href="#approach">Approach</a><a href="#finops">FinOps</a><a href="#security">Security</a><a href="#research">R&amp;D</a><a href="#about">About</a>
+      <a href="#work">Work</a><a href="#approach">Approach</a><a href="#finops">Context Engineering</a><a href="#security">Security</a><a href="#research">R&amp;D</a><a href="#about">About</a>
     </div>
     <div class="nav-right">
       <a href="https://www.linkedin.com/in/anthonymbird/" data-href="linkedin" rel="me" class="hide-sm">LinkedIn</a>
@@ -216,7 +217,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
 <div class="drawer" id="drawer" data-open="false">
   <button class="drawer-close" id="drawerClose" aria-label="Close menu">×</button>
-  <a href="#work">Work</a><a href="#approach">Approach</a><a href="#finops">FinOps</a><a href="#security">Security</a><a href="#research">R&amp;D</a><a href="#about">About</a><a href="#connect">Connect</a>
+  <a href="#work">Work</a><a href="#approach">Approach</a><a href="#finops">Context Engineering</a><a href="#security">Security</a><a href="#research">R&amp;D</a><a href="#about">About</a><a href="#connect">Connect</a>
   <p class="drawer-meta">bird@birdwork.ai · Grand Rapids, MI</p>
 </div>
 
@@ -236,7 +237,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
   <div class="stats">
     <div class="stat"><b>97.5%</b><span>Faster deployment · 480h → 12h</span></div>
     <div class="stat"><b>50%+</b><span>LLM token FinOps savings</span></div>
-    <div class="stat"><b>5.7M</b><span>Records · 5 agents · 24/7 since Jan</span></div>
+    <div class="stat"><b>15M</b><span>Records · 5 agents · 24/7 since Jan</span></div>
     <div class="stat"><b>$3.5M</b><span>Closed direct C-suite SaaS</span></div>
   </div>
 </div>
@@ -261,7 +262,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
       <article class="work-card">
         <p class="client"><span data-site="client.logistics">Mid-Size 3PL Brokerage</span></p>
-        <p class="metric">5.7M Records · 5 Agents · <span class="nw">30 Days to Prod</span> · <span class="nw">24/7 Since Jan</span></p>
+        <p class="metric">15M Records · 5 Agents · <span class="nw">30 Days to Prod</span> · <span class="nw">24/7 Since Jan</span></p>
         <p class="role">Interim CTO &amp; AI Systems Architect</p>
         <ul>
           <li>Deployed five coordinated agents on client infrastructure across sales, marketing, support, and engineering.</li>
@@ -304,14 +305,27 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
         <p class="tag">Built, sold, and operated the platform end to end</p>
       </article>
 
+      <article class="work-card wide">
+        <div class="wide-a">
+          <p class="client">Enterprise Payments &amp; Quant (Contract)</p>
+          <p class="metric">$1B+ Payments Org · Quant Trading</p>
+          <p class="role">Data Architecture &amp; Applied AI</p>
+        </div>
+        <div class="wide-b">
+          <ul>
+            <li>Federated data warehouses across a $1B+ payments org.</li>
+            <li>Automated time-series algorithmic trading engine.</li>
+          </ul>
+        </div>
+        <p class="tag">Contract engagements · both shipped</p>
+      </article>
     </div>
-    <p class="proof-strip"><strong>Enterprise Payments &amp; Quant (Contract):</strong> Federated data warehouses for a $1B+ payments org and an automated time-series algorithmic trading engine.</p>
   </div>
 </section>
 
 <section id="finops">
   <div class="container">
-    <p class="section-label">Context Engineering &amp; LLM FinOps</p>
+    <p class="section-label">Context Engineering</p>
     <h2>Most AI spend is architecture, not usage.</h2>
     <p class="lede">Token burn is a design outcome. Harness gaps, unbounded context, and frontier-only routing are fixable in days — and measurable on the invoice.</p>
 
@@ -357,17 +371,17 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 <section id="research">
   <div class="container">
     <p class="section-label">R&amp;D · B.I. R&amp;D LLC</p>
-    <h2>KNODES &amp; Kore.</h2>
+    <h2>KNODES &amp; KORE</h2>
     <p class="lede">A hypergraph semantic data warehouse and continuous agentic memory, built to eliminate context drift. Every automated action carries HITL auditability, so the system stays defensible in regulated environments.</p>
 
     <div class="rd">
       <div class="pillars">
-        <div class="pillar"><h4>Kore &amp; .kan Binary Format</h4><p>Append-only memory that compacts instead of drifting.</p></div>
+        <div class="pillar"><h4>KORE &amp; .kan Binary Format</h4><p>Append-only memory that compacts instead of drifting.</p></div>
         <div class="pillar"><h4>RSMPU</h4><p>Dual graph-tensor representation resolved by consensus.</p></div>
         <div class="pillar"><h4>KlosureSpec</h4><p>Semantic closure in Python, Pydantic, and DuckDB.</p></div>
       </div>
 
-      <svg class="flow" viewBox="0 0 720 132" role="img" aria-label="Pipeline: signals, working context, KlosureSpec with human approval, Kore .kan format, KNODES memory, audited actions">
+      <svg class="flow" viewBox="0 0 720 132" role="img" aria-label="Pipeline: signals, working context, KlosureSpec with human approval, KORE .kan format, KNODES memory, audited actions">
                 <g fill="none">
           <rect class="node" x="1"   y="28" width="96" height="76" rx="3"/>
           <rect class="node" x="125" y="28" width="96" height="76" rx="3"/>
@@ -382,14 +396,14 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
         <text x="173" y="70" text-anchor="middle">Context</text>
         <text x="297" y="64" text-anchor="middle" font-size="10">KlosureSpec</text>
         <text x="297" y="78" text-anchor="middle" font-size="9" fill="#8B7355">+ HITL</text>
-        <text x="421" y="70" text-anchor="middle">Kore/.kan</text>
+        <text x="421" y="70" text-anchor="middle">KORE/.kan</text>
         <text x="545" y="70" text-anchor="middle">KNODES</text>
         <text x="669" y="64" text-anchor="middle" font-size="9">Audited</text>
         <text x="669" y="78" text-anchor="middle" font-size="9">Actions</text>
         <text x="173" y="118" text-anchor="middle" font-size="9">working</text>
         <text x="545" y="118" text-anchor="middle" font-size="9">memory</text>
       </svg>
-      <svg class="flow flow-v" viewBox="0 0 352 386" role="img" aria-label="Pipeline: signals, working context, KlosureSpec with human approval, Kore .kan format, KNODES memory, audited actions">
+      <svg class="flow flow-v" viewBox="0 0 352 386" role="img" aria-label="Pipeline: signals, working context, KlosureSpec with human approval, KORE .kan format, KNODES memory, audited actions">
         <g fill="none">
           <rect class="node" x="20" y="4"   width="312" height="46" rx="3"/>
           <rect class="node" x="20" y="70"  width="312" height="46" rx="3"/>
@@ -404,7 +418,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
         <text x="176" y="99" text-anchor="middle">Working Context</text>
         <text x="176" y="157" text-anchor="middle">KlosureSpec</text>
         <text x="176" y="173" text-anchor="middle" font-size="10" fill="#8B7355">+ HITL</text>
-        <text x="176" y="231" text-anchor="middle">Kore/.kan</text>
+        <text x="176" y="231" text-anchor="middle">KORE/.kan</text>
         <text x="176" y="297" text-anchor="middle">KNODES Memory</text>
         <text x="176" y="363" text-anchor="middle">Audited Actions</text>
       </svg>
@@ -455,7 +469,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
   <div class="container foot-inner">
     <span>© 2026 Tony Bird · birdwork.ai</span>
     <div class="foot-inner" style="display:flex;gap:1rem">
-      <a href="#work">Work</a><a href="#approach">Approach</a><a href="#finops">FinOps</a><a href="#security">Security</a><a href="#research">R&amp;D</a><a href="#about">About</a>
+      <a href="#work">Work</a><a href="#approach">Approach</a><a href="#finops">Context Engineering</a><a href="#security">Security</a><a href="#research">R&amp;D</a><a href="#about">About</a>
     </div>
   </div>
 </footer>
