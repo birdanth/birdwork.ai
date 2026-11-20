@@ -20,7 +20,7 @@
   --card-bg:#fff;
   --nav-bg:rgba(250,250,245,0.9);
   --theirs-bg:#F5F3EE;
-  --plate:linear-gradient(165deg,#F1ECE2,#E0D8C8);
+  --portrait-bg:#F0EAE0;
 }
 [data-theme="dark"]{
   --bg:#141416;
@@ -34,7 +34,7 @@
   --card-bg:rgba(22,22,26,0.8);
   --nav-bg:rgba(18,18,22,0.92);
   --theirs-bg:rgba(28,28,32,0.6);
-  --plate:linear-gradient(165deg,#4A4135,#303037);
+  --portrait-bg:#141416;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -150,8 +150,11 @@ td.after{color:var(--fg)}
 
 /* about */
 .about-wrap{display:grid;grid-template-columns:220px 1fr;gap:2.75rem;align-items:start}
-.portrait{position:relative;background:var(--plate);border:1px solid var(--border);border-radius:6px;padding:14px 14px 0;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
-.portrait img{width:100%;display:block}
+.portrait{width:220px;height:220px;border-radius:50%;overflow:hidden;background:var(--portrait-bg);border:1px solid var(--border);flex:none}
+.portrait img{width:100%;height:100%;display:block;object-fit:cover}
+.portrait .hs-dark{display:none}
+[data-theme="dark"] .portrait .hs-dark{display:block}
+[data-theme="dark"] .portrait .hs-light{display:none}
 .about-wrap p{font-size:.94rem;line-height:1.75;max-width:58ch}
 .about-wrap p + p{margin-top:.9rem}
 .creds{margin-top:1.5rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--fg-mid);letter-spacing:.04em;line-height:1.95;list-style:none}
@@ -166,7 +169,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 .foot-inner nav{position:static;background:none;border:none;backdrop-filter:none;display:flex;gap:1rem}
 .foot-inner a{color:var(--fg-mid)}.foot-inner a:hover{color:var(--fg)}
 
-[data-theme="dark"] .portrait{border-color:rgba(196,168,118,.35);box-shadow:0 10px 34px rgba(0,0,0,.45)}
+[data-theme="dark"] .portrait{border-color:rgba(196,168,118,.32);box-shadow:0 8px 26px rgba(0,0,0,.4)}
 @media(max-width:900px){
   .nav-links{display:none}.burger{display:block}.nav-right .hide-sm{display:none}
   section{padding:5rem 0}.hero{padding:8rem 0 3rem}
@@ -174,7 +177,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
   .stat:nth-child(3){border-left:none;padding-left:0}
   .cards-3,.work-grid,.callouts,.stack,.sec-grid,.pillars{grid-template-columns:1fr}
   .about-wrap{grid-template-columns:1fr;gap:2rem}
-  .portrait{max-width:200px}
+  .portrait{width:180px;height:180px;margin:0 auto}
   .cta-row{width:100%}
   .btn{flex:1 1 45%;text-align:center;padding-left:1rem;padding-right:1rem}
 }
@@ -415,10 +418,8 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
     <p class="section-label">About</p>
     <div class="about-wrap">
       <div class="portrait">
-        <picture>
-          <source srcset="/headshot-portrait.webp" type="image/webp" data-headshot>
-          <img src="/headshot-portrait.png" alt="Tony Bird" data-headshot width="220" height="220" loading="lazy">
-        </picture>
+        <img class="hs hs-light" data-headshot="light" src="/headshot-circle-light.jpg" alt="Tony Bird" width="220" height="220" loading="lazy">
+        <img class="hs hs-dark" data-headshot="dark" src="/headshot-circle-dark.jpg" alt="" width="220" height="220" loading="lazy">
       </div>
       <div>
         <h2>Architecture for the part after the demo.</h2>
@@ -471,8 +472,8 @@ const SITE = {
     peopleAnalytics: 'Enterprise People Analytics SaaS',
     commsPayments: 'Enterprise Communications & Payment Technology'
   },
-  HEADSHOT_PATH: '/headshot-portrait.webp',
-  HEADSHOT_FALLBACK: '/headshot-portrait.png'
+  HEADSHOT_PATH: '/headshot-circle-light.jpg',
+  HEADSHOT_DARK: '/headshot-circle-dark.jpg'
 };
 function renderSite(){
   document.querySelectorAll('[data-site]').forEach(el=>{
@@ -481,8 +482,7 @@ function renderSite(){
     if(val) el.textContent = val;
   });
   document.querySelectorAll('[data-headshot]').forEach(el=>{
-    if(el.tagName === 'SOURCE') el.srcset = SITE.HEADSHOT_PATH;
-    else el.src = SITE.HEADSHOT_PATH;
+    el.src = el.dataset.headshot === 'dark' ? SITE.HEADSHOT_DARK : SITE.HEADSHOT_PATH;
   });
   document.querySelectorAll('[data-href]').forEach(el=>{
     const key = el.dataset.href;
