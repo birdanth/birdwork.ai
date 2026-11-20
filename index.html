@@ -99,16 +99,17 @@ nav.scrolled{border-bottom-color:var(--border)}
 .stack{grid-template-columns:repeat(3,1fr)}
 .sec-grid{grid-template-columns:repeat(3,1fr);margin-top:2.25rem;background:var(--border)}
 .cell{background:var(--bg);padding:2rem}
+.nw{white-space:nowrap}
 .card .num{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.12em;color:var(--accent-warm);display:block;margin-bottom:1.1rem}
 .card p,.pillar p{font-size:.88rem;line-height:1.62}
 
 /* work */
 .work-card{background:var(--bg);padding:2rem;display:flex;flex-direction:column}
 .work-card .client{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-dim);margin-bottom:.7rem}
-.work-card .metric{font-family:'Cormorant Garamond',serif;font-size:1.8rem;line-height:1.18;margin-bottom:.3rem;color:var(--fg)}
+.work-card .metric{font-family:'Cormorant Garamond',serif;font-size:1.62rem;line-height:1.22;margin-bottom:.35rem;color:var(--fg);text-wrap:balance}
 .work-card .role{font-size:.72rem;color:var(--accent-green);font-family:'JetBrains Mono',monospace;margin-bottom:1.1rem}
 .work-card ul{list-style:none;font-size:.86rem;color:var(--fg-mid);line-height:1.6}
-.work-card li{padding-left:1rem;position:relative;margin-bottom:.45rem}
+.work-card li{padding-left:1.15rem;position:relative;margin-bottom:.45rem}
 .work-card li::before{content:"—";position:absolute;left:0;color:var(--fg-dim)}
 .work-card .tag{margin-top:auto;padding-top:1.4rem;font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--fg-dim);letter-spacing:.05em}
 .proof-strip{margin-top:1.75rem;padding-top:1.4rem;border-top:1px solid var(--border);font-size:.84rem}
@@ -139,9 +140,12 @@ td.after{color:var(--fg)}
 .pillar h4{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-warm);margin-bottom:.5rem;font-weight:400}
 .pillar p{font-size:.82rem;line-height:1.6}
 .flow{margin:1.5rem 0 0;width:100%}
+.flow-v{display:none}
+.flow-v text{font-size:12px}
 .flow text{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;fill:var(--fg-dim)}
-.flow .node{fill:none;stroke:var(--border);stroke-width:1}
+.flow .node{fill:none;stroke:var(--fg-dim);stroke-width:1;stroke-opacity:.55}
 .flow .arrow{stroke:var(--fg-mid);stroke-width:1.25}
+.flow marker path{stroke:var(--fg-mid);stroke-width:1.25}
 .rd-meta{display:flex;gap:1.4rem;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--fg-mid);letter-spacing:.06em;text-transform:uppercase;margin-top:1.4rem}
 
 /* about */
@@ -180,6 +184,8 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
   .stat{border-left:none;padding-left:0;border-top:1px solid var(--border);padding-top:1.25rem}
   .stat:first-child{border-top:none;padding-top:0}
   .btn{flex:1 1 100%}
+  .flow{display:none}.flow-v{display:block}
+  .rd{padding:1.4rem 1.1rem}
   .nav-inner{gap:.75rem}
   .brand{font-size:.63rem;letter-spacing:.08em}
   .nav-right{gap:.7rem;font-size:.74rem}
@@ -215,7 +221,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
   <div class="container">
     <p class="hero-eyebrow">Enterprise AI Architecture · Agentic Systems · Technical Transformation</p>
     <h1>Tony Bird</h1>
-    <p class="sub">Designing production multi-agent fleets, zero-trust context systems, and enterprise AI transformations — 40× faster deployments, 50%+ inference savings, and autonomous operations on client infrastructure.</p>
+    <p class="sub">Designing production multi-agent fleets, zero-trust context systems, and enterprise AI transformations—delivering 40× faster deployments, 50%+ inference savings, and autonomous operations on client infrastructure.</p>
     <div class="cta-row">
       <a href="#work" class="btn">Selected Work</a>
       <a href="#research" class="btn ghost">Architecture &amp; R&amp;D</a>
@@ -252,19 +258,20 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
       <article class="work-card">
         <p class="client"><span data-site="client.logistics">Mid-Size 3PL Brokerage</span></p>
-        <p class="metric">5.7M records · 5 agents</p>
-        <p class="role">Interim CTO &amp; AI Systems Architect · 30 days to prod</p>
+        <p class="metric">5.7M Records · 5 Agents · <span class="nw">30 Days to Prod</span> · <span class="nw">24/7 Since Jan</span></p>
+        <p class="role">Interim CTO &amp; AI Systems Architect</p>
         <ul>
           <li>Deployed five coordinated agents on client infrastructure across sales, marketing, support, and engineering.</li>
-          <li>Slack-native plain-English Salesforce querying with auto-generated charts; authored the data and infrastructure SOW.</li>
+          <li>Slack-native plain-English Salesforce querying with auto-generated charts.</li>
+          <li>Authored the data and infrastructure SOW.</li>
         </ul>
         <p class="tag">24/7 autonomous since January · zero added headcount</p>
       </article>
 
       <article class="work-card">
         <p class="client"><span data-site="client.peopleAnalytics">Enterprise People Analytics SaaS</span></p>
-        <p class="metric">97.5% faster (40×)</p>
-        <p class="role">Interim CTO &amp; Product Lead · 480h → 12h</p>
+        <p class="metric">97.5% (40×) Faster Deployment · <span class="nw">480h → 12h</span></p>
+        <p class="role">Interim CTO &amp; Product Lead</p>
         <ul>
           <li>Re-architected build and release pipelines for rapid customer onboarding.</li>
           <li>Led the product roadmap: interactive org analytics and performance-based pricing.</li>
@@ -274,8 +281,8 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
       <article class="work-card">
         <p class="client"><span data-site="client.commsPayments">Enterprise Communications &amp; Payment Technology</span></p>
-        <p class="metric">Production AI POCs</p>
-        <p class="role">AI Systems Architect · GPU &amp; data orchestration</p>
+        <p class="metric">Production AI POCs · GPU &amp; Data Orchestration</p>
+        <p class="role">AI Systems Architect</p>
         <ul>
           <li>Built automated ingestion, job orchestration, and applied AI workflows.</li>
           <li>Evaluated server and GPU topologies across Node.js, Trino, vector DBs, Docker, and Qwen.</li>
@@ -285,8 +292,8 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
       <article class="work-card">
         <p class="client">Six Sents Inc.</p>
-        <p class="metric">$3.5M · 10K+ DAU</p>
-        <p class="role">Founder &amp; CEO · 20-person org</p>
+        <p class="metric">$3.5M C-Suite Contracts · <span class="nw">10K+ DAU</span> · <span class="nw">20-Person Org</span></p>
+        <p class="role">Founder &amp; CEO</p>
         <ul>
           <li>Scaled B2B predictive analytics SaaS across major healthcare and enterprise buyers.</li>
           <li>Owned turnover, churn, and well-being ML, LogRhythm security reporting, and a $925K VC raise.</li>
@@ -295,7 +302,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
       </article>
 
     </div>
-    <p class="proof-strip"><strong>Enterprise payments &amp; quant (contract):</strong> federated data warehouses for a $1B+ payments org, plus an automated time-series algorithmic trading engine.</p>
+    <p class="proof-strip"><strong>Enterprise Payments &amp; Quant (Contract):</strong> Federated data warehouses for a $1B+ payments org and an automated time-series algorithmic trading engine.</p>
   </div>
 </section>
 
@@ -352,30 +359,53 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
     <div class="rd">
       <div class="pillars">
-        <div class="pillar"><h4>Kore &amp; .kan</h4><p>Append-only binary format. Memory that compacts instead of drifting.</p></div>
-        <div class="pillar"><h4>RSMPU</h4><p>Dual graph-tensor representation with consensus over retrieval paths.</p></div>
-        <div class="pillar"><h4>KlosureSpec</h4><p>Semantic closure in Python, Pydantic, and DuckDB — typed, enforced, replayable.</p></div>
+        <div class="pillar"><h4>Kore &amp; .kan Binary Format</h4><p>Append-only memory that compacts instead of drifting.</p></div>
+        <div class="pillar"><h4>RSMPU</h4><p>Dual graph-tensor representation resolved by consensus.</p></div>
+        <div class="pillar"><h4>KlosureSpec</h4><p>Semantic closure in Python, Pydantic, and DuckDB.</p></div>
       </div>
 
-      <svg class="flow" viewBox="0 0 720 132" role="img" aria-label="Pipeline: signals, working context, KlosureSpec with human approval, Kore and .kan, KNODES memory, audited actions">
-        <g fill="none">
-          <rect class="node" x="1"   y="38" width="106" height="56" rx="3"/>
-          <rect class="node" x="143" y="38" width="106" height="56" rx="3"/>
-          <rect class="node" x="285" y="28" width="120" height="76" rx="3"/>
-          <rect class="node" x="441" y="38" width="106" height="56" rx="3"/>
-          <rect class="node" x="583" y="38" width="106" height="56" rx="3"/>
-          <path class="arrow" d="M107 66h30M249 66h30M405 66h30M547 66h30"/>
+      <svg class="flow" viewBox="0 0 720 132" role="img" aria-label="Pipeline: signals, working context, KlosureSpec with human approval, Kore .kan format, KNODES memory, audited actions">
+                <g fill="none">
+          <rect class="node" x="1"   y="28" width="96" height="76" rx="3"/>
+          <rect class="node" x="125" y="28" width="96" height="76" rx="3"/>
+          <rect class="node" x="249" y="28" width="96" height="76" rx="3"/>
+          <rect class="node" x="373" y="28" width="96" height="76" rx="3"/>
+          <rect class="node" x="497" y="28" width="96" height="76" rx="3"/>
+          <rect class="node" x="621" y="28" width="96" height="76" rx="3"/>
+          <path class="arrow" d="M99 66h22M223 66h22M347 66h22M471 66h22M595 66h22"/>
+          <path class="arrow" d="M117 62l5 4-5 4M241 62l5 4-5 4M365 62l5 4-5 4M489 62l5 4-5 4M613 62l5 4-5 4"/>
         </g>
-        <text x="54"  y="70" text-anchor="middle">Signals</text>
-        <text x="196" y="70" text-anchor="middle">Context</text>
-        <text x="345" y="56" text-anchor="middle">KlosureSpec</text>
-        <text x="345" y="78" text-anchor="middle" font-size="9" fill="#8B7355">+ HITL</text>
-        <text x="494" y="70" text-anchor="middle">Kore/.kan</text>
-        <text x="636" y="70" text-anchor="middle">KNODES</text>
-        <text x="636" y="118" text-anchor="middle" font-size="9">audited actions</text>
-        <text x="196" y="118" text-anchor="middle" font-size="9">working</text>
+        <text x="49"  y="70" text-anchor="middle">Signals</text>
+        <text x="173" y="70" text-anchor="middle">Context</text>
+        <text x="297" y="64" text-anchor="middle" font-size="10">KlosureSpec</text>
+        <text x="297" y="78" text-anchor="middle" font-size="9" fill="#8B7355">+ HITL</text>
+        <text x="421" y="70" text-anchor="middle">Kore/.kan</text>
+        <text x="545" y="70" text-anchor="middle">KNODES</text>
+        <text x="669" y="64" text-anchor="middle" font-size="9">Audited</text>
+        <text x="669" y="78" text-anchor="middle" font-size="9">Actions</text>
+        <text x="173" y="118" text-anchor="middle" font-size="9">working</text>
+        <text x="545" y="118" text-anchor="middle" font-size="9">memory</text>
       </svg>
-      <p class="rd-meta"><span>Audit-replayable</span><span>Regulated-env shaped</span><span>Model-agnostic</span><span>Open research</span></p>
+      <svg class="flow flow-v" viewBox="0 0 352 386" role="img" aria-label="Pipeline: signals, working context, KlosureSpec with human approval, Kore .kan format, KNODES memory, audited actions">
+        <g fill="none">
+          <rect class="node" x="20" y="4"   width="312" height="46" rx="3"/>
+          <rect class="node" x="20" y="70"  width="312" height="46" rx="3"/>
+          <rect class="node" x="20" y="136" width="312" height="46" rx="3"/>
+          <rect class="node" x="20" y="202" width="312" height="46" rx="3"/>
+          <rect class="node" x="20" y="268" width="312" height="46" rx="3"/>
+          <rect class="node" x="20" y="334" width="312" height="46" rx="3"/>
+          <path class="arrow" d="M176 52v14M176 118v14M176 184v14M176 250v14M176 316v14"/>
+          <path class="arrow" d="M170 61l6 6 6-6M170 127l6 6 6-6M170 193l6 6 6-6M170 259l6 6 6-6M170 325l6 6 6-6"/>
+        </g>
+        <text x="176" y="33" text-anchor="middle">Signals</text>
+        <text x="176" y="99" text-anchor="middle">Working Context</text>
+        <text x="176" y="157" text-anchor="middle">KlosureSpec</text>
+        <text x="176" y="173" text-anchor="middle" font-size="10" fill="#8B7355">+ HITL</text>
+        <text x="176" y="231" text-anchor="middle">Kore/.kan</text>
+        <text x="176" y="297" text-anchor="middle">KNODES Memory</text>
+        <text x="176" y="363" text-anchor="middle">Audited Actions</text>
+      </svg>
+      <p class="rd-meta"><span>Audit-replayable</span>·<span>Regulated-env shaped</span>·<span>Model-agnostic</span>·<span>Open research</span></p>
     </div>
   </div>
 </section>
@@ -396,8 +426,8 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
         <p>The work now is architecture, transformation, and applied R&amp;D — multi-agent systems, zero-trust context, and inference economics for teams that need AI to survive audit and scale.</p>
         <ul class="creds">
           <li>12+ years founder and fractional CTO</li>
-          <li>MSU B.S. Computer Engineering, math minor · engineering TA</li>
-          <li>Patent inventor · exited founder</li>
+          <li>MSU B.S. Computer Engineering + Math minor &amp; Engineering TA</li>
+          <li>Patent inventor &amp; exited founder</li>
           <li>20-person org · 10K+ DAU SaaS scale</li>
         </ul>
       </div>
