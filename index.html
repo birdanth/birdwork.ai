@@ -144,7 +144,12 @@ nav.scrolled{border-bottom-color:var(--border)}
 .stack{grid-template-columns:repeat(3,1fr)}
 .sec-grid{grid-template-columns:repeat(3,1fr);margin-top:2.25rem;background:var(--border)}
 .cell{background:var(--bg);padding:2rem}
+.cell.card{display:flex;flex-direction:column}
 .nw{white-space:nowrap}
+.card-proof{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-mid);margin-top:auto;padding-top:.9rem;border-top:1px solid var(--border);line-height:1.7}
+.card-proof ul{list-style:none}
+.card-proof li{padding-left:1rem;position:relative;margin-bottom:.2rem}
+.card-proof li::before{content:"—";position:absolute;left:0;color:var(--fg-dim)}
 .card .num{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.12em;color:var(--accent-warm);display:block;margin-bottom:1.1rem}
 .card p,.pillar p{font-size:.88rem;line-height:1.62}
 
@@ -304,9 +309,9 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
     <p class="section-label">Operating Model</p>
     <h2>Three ways I work with teams.</h2>
     <div class="cards-3">
-      <div class="cell card"><span class="num">01</span><h3>Architect &amp; Build</h3><p>Persistent-memory agent fleets, RAG and semantic retrieval, and the data and compute architecture underneath them — on client infrastructure.</p></div>
-      <div class="cell card"><span class="num">02</span><h3>Harden &amp; Optimize</h3><p>Environment isolation, HITL gates, PII redaction, tiered model routing, and context-window discipline.</p></div>
-      <div class="cell card"><span class="num">03</span><h3>Enable &amp; Adopt</h3><p>Technical SOWs, cross-functional workflow integration, and executive change management.</p></div>
+      <div class="cell card"><span class="num">01</span><h3>Architect &amp; Build</h3><p>Persistent-memory agent fleets, RAG and semantic retrieval, and the data and compute architecture underneath them — on client infrastructure.</p><div class="card-proof"><ul><li>30-day kickoff to production</li><li>50%+ token savings</li><li>Zero-downtime cutover</li></ul></div></div>
+      <div class="cell card"><span class="num">02</span><h3>Harden &amp; Optimize</h3><p>Environment isolation, HITL gates, PII redaction, tiered model routing, and context-window discipline.</p><div class="card-proof"><ul><li>97.5% faster cutover</li><li>480 hrs → 12 hrs</li><li>HITL gates stayed intact</li></ul></div></div>
+      <div class="cell card"><span class="num">03</span><h3>Enable &amp; Teach</h3><p>Architecture reviews, semantic handoff docs, and role-tailored curriculum for engineers, analysts, and executives — whiteboard to working forked code.</p><div class="card-proof"><ul><li>Onboarding &amp; workshops</li><li>Exec readouts &amp; briefs</li><li>Paired build sessions</li></ul></div></div>
     </div>
   </div>
 </section>
