@@ -1,0 +1,220 @@
+# birdwork.ai — content + micro-layout manifest
+# ---------------------------------------------------------------------------
+# This file is the site. Edit values here, run `node scripts/build.mjs`,
+# and index.html is regenerated. Nothing else needs touching for copy, list,
+# label or spacing changes.
+#
+# Rules of the file:
+#   * one level of nesting per concept; lists are `- ` blocks or [a, b]
+#   * `·` separators live inside the value, not in the markup
+#   * HTML entities are allowed where the markup needs them (&amp; &thinsp;)
+#   * any value containing " #" must be quoted (comments start at " #")
+#   * `label` drives the navbar link AND the section heading
+#     `nav_label` (optional) overrides the navbar link only
+#     `eyebrow` is the small uppercase line above the heading
+#   * `layout.<element>.<prop>` maps to the CSS custom property --<element>-<prop>
+#     (use _ in the element name for a breakpoint variant, e.g. section_mobile)
+#     props: m mt mb ml mr p pt pb pl pr py px gap
+#     values: 0 xs sm md lg xl 2xl (0, .5rem, 1rem, 1.5rem, 2.25rem, 3.5rem, 5rem)
+#     or a raw CSS length
+# ---------------------------------------------------------------------------
+
+site:
+  full_name: Tony Bird
+  domain: birdwork.ai
+  email: bird@birdwork.ai
+  location: Grand Rapids, MI · US & Remote
+  linkedin_url: https://www.linkedin.com/in/anthonymbird/
+  headshot_light: /headshot-circle-light.jpg
+  headshot_dark: /headshot-circle-dark.jpg
+  clients:
+    logistics: Mid-Size 3PL Brokerage
+    people_analytics: Culturebie
+    comms_payments: Nordis Technologies
+
+seo:
+  title: Tony Bird | AI Architecture, Semantic Systems &amp; Technical Enablement
+  description: I design and build production AI systems, semantic data architectures, and the technical training teams need to use them. Twelve years as a computer engineer, founder, and Fractional CTO. I still write the code and still run the whiteboard.
+  og_image_alt: Tony Bird — AI Systems Architect, Semantics and Technical Enablement, birdwork.ai
+  twitter_image_alt: Tony Bird | AI Architecture, Semantic Systems &amp; Technical Enablement
+  job_title: AI Systems Architect, Semantics & Technical Enablement
+  university: Michigan State University
+
+nav:
+  brand_bold: TONY
+  brand_thin: birdwork.ai
+  connect:
+    section: connect
+    href: "#connect"
+  links:
+    - {section: cases, href: "#case-studies"}
+    - {section: work, href: "#operating-model"}
+    - {section: finops, href: "#context-finops", class: nav-ctx}
+    - {section: security, href: "#security"}
+    - {section: rd, href: "#research"}
+    - {section: about, href: "#about"}
+  drawer_meta: bird@birdwork.ai · Grand Rapids, MI
+
+hero:
+  tags: [AI Architecture, Semantic Systems, Technical Enablement]
+  h1: Tony Bird's Work
+  sub: I design and build production AI systems, semantic data architectures, and the technical training teams need to use them. Twelve years as a computer engineer, founder, and Fractional CTO. I still write the code and still run the whiteboard.
+  ctas:
+    - {label: VIEW PRODUCTION CASE STUDIES, href: "#case-studies", class: btn}
+    - {label: EXPLORE SEMANTICS &amp; R&amp;D, href: "#research", class: btn ghost}
+
+stats:
+  items:
+    - {b: 30 Days, span: Kickoff to 24/7 prod · 5 agents · 5.7M Salesforce records}
+    - {b: 50%+, span: LLM FinOps savings · 68% prompt cache hit rate}
+    - {b: 97.5%, span: Faster enterprise deploy · 480h to 12h}
+    - {b: $3.5M, span: Direct C-suite SaaS closed · 10K+ DAU}
+
+work:
+  label: How I Work
+  eyebrow: How It Works
+  lead: Build it cleanly. Make it safe and cheap to run. Teach the team to own it.
+  cards:
+    - num: "01"
+      title: Build — Agentic &amp; Semantic Systems
+      body: Multi-agent workflows, RAG, formal ontologies, and client-owned data pipelines built for real production traffic.
+      proof: [30-day kickoff to production, 50%+ token savings, Zero-downtime cutover]
+    - num: "02"
+      title: Harden — Security &amp; Unit Economics
+      body: Environment isolation, PII redaction, human-in-the-loop gates, tiered model routing, and context pruning. Lower inference spend and fewer production failures.
+      proof: [97.5% faster cutover, 480 hrs → 12 hrs, HITL gates stayed intact]
+    - num: "03"
+      title: Teach — Curriculum, Workshops &amp; Adoption
+      body: Technical curricula, hands-on workshops, SOPs, and playbooks written by the engineer who built the stack. Developers and operators understand what they run.
+      proof: [Onboarding &amp; workshops, Exec readouts &amp; briefs, Paired build sessions]
+
+cases:
+  label: Systems in production.
+  nav_label: Case Studies
+  eyebrow: Selected Enterprise Work
+  items:
+    - kind: lead
+      client_fallback: Mid-Size 3PL Brokerage
+      client_key: client.logistics
+      role: Interim CTO &amp; AI Systems Architect
+      body: Five coordinated agents on client infrastructure, giving non-technical staff plain-English Slack queries over live CRM and ops data. Authored the data and infrastructure SOW.
+    - kind: full
+      client_fallback: Enterprise People Analytics SaaS
+      client_key: client.peopleAnalytics
+      metric: 97.5% (40×) Faster Deployment
+      metric_tail: · 480h → 12h
+      role: Interim CTO &amp; Product Lead
+      bullets:
+        - Re-architected build and release pipelines for rapid customer onboarding.
+        - "Led the product roadmap: interactive org analytics and performance-based pricing."
+      tag: Release cycle cut from weeks to a single afternoon
+    - kind: full
+      client_fallback: Enterprise Communications &amp; Payment Technology
+      client_key: client.commsPayments
+      metric: Production AI POCs · GPU &amp; Data Orchestration
+      role: AI Systems Architect
+      bullets:
+        - Built automated ingestion, job orchestration, and applied AI workflows.
+        - Evaluated server and GPU topologies across Node.js, Trino, vector DBs, Docker, and Qwen.
+      tag: From evaluation matrix to running proof-of-concept
+    - kind: full
+      client_fallback: Six Sents Inc.
+      metric: $3.5M C-Suite Contracts
+      metric_tail: · 10K+ DAU · 20-Person Org
+      role: Founder &amp; CEO
+      bullets:
+        - Scaled B2B predictive analytics SaaS across major healthcare and enterprise buyers.
+        - Owned turnover, churn, and well-being ML, LogRhythm security reporting, and a $925K VC raise.
+      tag: Built, sold, and operated the platform end to end
+    - kind: wide
+      client_fallback: $1B+ Payments Organization (Contract)
+      metric: $1B+ Payments Org
+      metric_tail: · Quant Trading
+      role: Data Architecture &amp; Applied AI
+      bullets:
+        - Federated data warehouses across a $1B+ payments org.
+        - Automated time-series algorithmic trading engine.
+      tag: Contract engagements · both shipped
+
+finops:
+  label: Context Engineering &amp; LLM FinOps
+  nav_label: Context FinOps
+  eyebrow: Context Engineering
+  lead: Measured production improvements across model routing, context budgets, and prompt caching.
+
+stack:
+  columns:
+    - h4: AI / Agents
+      p: Multi-agent orchestration · context engineering · RAG · GraphRAG · formal ontologies · LLM evaluation · Qwen · HITL
+    - h4: Data / Backend
+      p: Python · Pydantic · Rust · Node.js · SQL · DuckDB · Trino · vector DBs
+    - h4: Infrastructure
+      p: GPU compute · Docker · CI/CD · Salesforce · Slack/Teams · LogRhythm
+
+security:
+  label: Secure by default, governed by policy.
+  nav_label: Security
+  eyebrow: Zero-Trust Agentic Security
+  lead: Designed for HIPAA, SOC 2, and regulated governance — every agent capability is scoped, logged, and reversible.
+
+rd:
+  label: Knodes &amp; Kore
+  nav_label: R&amp;D
+  eyebrow: R&amp;D · B.I. R&amp;D LLC
+  lead: Long-running AI systems degrade in production. Context windows bloat, reasoning drifts across sessions, and teams lose auditability when schemas or models change. Knodes and Kore solve those long-term system management and performance problems at the data layer.
+  meta: [Audit-replayable, Regulated-env shaped, Model-agnostic, Open research]
+
+about:
+  label: Systems, Teaching, and Code.
+  nav_label: About
+  eyebrow: About
+  paras:
+    - Enterprise AI architect, interim CTO, and technical educator. Twelve-plus years as a founder and fractional CTO, including a 20-person organization and $3.5M in enterprise SaaS contracts. I rebuild delivery and ship production agent systems.
+  creds:
+    - head: Background
+      body: B.S. in Computer Engineering with a Mathematics minor from Michigan State University, where I worked as a College of Engineering Teaching Assistant. I still teach STEM and foundational math independently. Explaining hard systems in plain English is half the job.
+    - head: Beyond Software
+      body: Based in Grand Rapids, Michigan. I founded and sold a 20-person residential construction company, invented and patented a biodegradable packaging process (Hyge, exited via buyout), and wrote enterprise software for Michigan organizations including Dow, BISSELL, Delta Dental, and Jackson National Life.
+    - head: Working Style
+      body: I stay in the architecture and the code, skip committee theater, and spend most of my time advising, teaching, and shipping systems that hold up in production.
+  ctas:
+    - {label: Email Tony, href: "mailto:bird@birdwork.ai", class: btn, data_href: email}
+    - {label: Connect on LinkedIn, href: https://www.linkedin.com/in/anthonymbird/, class: btn ghost, data_href: linkedin}
+
+connect:
+  label: Work Together
+  nav_label: Connect
+  eyebrow: Connect
+  body: Open to Principal or Founding AI Architecture roles, AI Curriculum and Enablement leadership, and focused fractional advisory work. Remote or West Michigan. Send a note with what you are trying to build or fix.
+  ctas:
+    - {label: Email Tony, href: "mailto:bird@birdwork.ai", class: btn, data_href: email}
+    - {label: Connect on LinkedIn, href: https://www.linkedin.com/in/anthonymbird/, class: btn ghost, data_href: linkedin}
+  meta: [Grand Rapids, MI · US &amp; Remote, © 2026 Tony Bird, birdwork.ai]
+
+footer:
+  blurb: Tony Bird — AI Architecture &amp; Technical Enablement · birdwork.ai
+  meta: [Available for new engagements, © 2026 Tony Bird]
+
+# ---------------------------------------------------------------- spacing ---
+# Current live values, expressed as custom properties. Change a token (xs sm md
+# lg xl 2xl) or drop in a raw length; the CSS consumes --section-element-prop.
+layout:
+  section: {py: 8.5rem}
+  section_mobile: {py: 5rem}
+  h2: {mb: 1.4rem}
+  section_label: {mb: 1.4rem}
+  lede: {mb: 0}
+  work_grid: {mt: 0}
+  cards3: {mt: 0}
+  stack: {mt: 0}
+  stats: {py: xl, gap: 2rem}
+  stats_mobile: {gap: 2.25rem}
+  rd: {mt: 1.75rem}
+  rd_meta: {mt: 1.4rem}
+  diagram_wrap: {mt: 2.6rem}
+  about_wrap: {gap: 2.75rem}
+  about_wrap_mobile: {gap: 2rem}
+  connect: {pb: 5.5rem}
+  hero_eyebrow: {mb: 1.9rem}
+  hero_h1: {mb: 1.6rem}
+  hero_sub: {mb: 2.5rem}

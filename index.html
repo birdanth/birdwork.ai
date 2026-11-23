@@ -277,6 +277,49 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
   .nav-right>a[href="#connect"]{display:none}
 }
 @media(max-width:380px){.container,.nav-inner{padding-left:1.3rem;padding-right:1.3rem}}
+
+/* --- layout manifest: every value below is a --prop with the old literal as its
+   fallback, so the manifest is additive and nothing shifts until you edit it. --- */
+:root{
+  --section-py: 8.5rem;
+  --section-mobile-py: 5rem;
+  --h2-mb: 1.4rem;
+  --section-label-mb: 1.4rem;
+  --lede-mb: 0;
+  --work-grid-mt: 0;
+  --cards3-mt: 0;
+  --stack-mt: 0;
+  --stats-py: 3.5rem;
+  --stats-gap: 2rem;
+  --stats-mobile-gap: 2.25rem;
+  --rd-mt: 1.75rem;
+  --rd-meta-mt: 1.4rem;
+  --diagram-wrap-mt: 2.6rem;
+  --about-wrap-gap: 2.75rem;
+  --about-wrap-mobile-gap: 2rem;
+  --connect-pb: 5.5rem;
+  --hero-eyebrow-mb: 1.9rem;
+  --hero-h1-mb: 1.6rem;
+  --hero-sub-mb: 2.5rem;
+}
+section{padding-top:var(--section-py,8.5rem);padding-bottom:var(--section-py,8.5rem)}
+h2{margin-bottom:var(--h2-mb,1.4rem)}
+.section-label{margin-bottom:var(--section-label-mb,1.4rem)}
+.lede{margin-bottom:var(--lede-mb,0)}
+.work-grid{margin-top:var(--work-grid-mt,0)}
+.cards-3{margin-top:var(--cards3-mt,0)}
+.stack{margin-top:var(--stack-mt,0)}
+.stats{padding:var(--stats-py,3.5rem) 0;gap:var(--stats-gap,2rem)}
+.rd{margin-top:var(--rd-mt,1.75rem)}
+.rd-meta{margin-top:var(--rd-meta-mt,1.4rem)}
+.diagram-wrap{margin-top:var(--diagram-wrap-mt,2.6rem)}
+.about-wrap{gap:var(--about-wrap-gap,2.75rem)}
+.connect{padding-bottom:var(--connect-pb,5.5rem)}
+.hero-eyebrow{margin-bottom:var(--hero-eyebrow-mb,1.9rem)}
+.hero h1{margin-bottom:var(--hero-h1-mb,1.6rem)}
+.hero p.sub{margin-bottom:var(--hero-sub-mb,2.5rem)}
+.idbadge{position:absolute;top:0;left:0;transform:translateY(-105%);font-family:'JetBrains Mono',monospace;font-size:9px;line-height:1.6;letter-spacing:.03em;padding:0 5px;background:var(--accent-warm);color:#fff;border-radius:3px;pointer-events:none;z-index:9;white-space:nowrap}
+@media(max-width:900px){section{padding-top:var(--section-mobile-py,5rem);padding-bottom:var(--section-mobile-py,5rem)}.stats{gap:var(--stats-mobile-gap,2.25rem)}.about-wrap{gap:var(--about-wrap-mobile-gap,2rem)}}
 </style>
 </head>
 <body>
@@ -306,9 +349,9 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
 <header class="hero" id="hero">
   <div class="container">
-    <p class="hero-eyebrow">AI Architecture · Semantic Systems · Technical Enablement</p>
-    <h1>Tony Bird's Work</h1>
-    <p class="sub">I design and build production AI systems, semantic data architectures, and the technical training teams need to use them. Twelve years as a computer engineer, founder, and Fractional CTO. I still write the code and still run the whiteboard.</p>
+    <p class="hero-eyebrow" data-key="hero.tags">AI Architecture · Semantic Systems · Technical Enablement</p>
+    <h1 data-key="hero.h1">Tony Bird's Work</h1>
+    <p class="sub" data-key="hero.sub">I design and build production AI systems, semantic data architectures, and the technical training teams need to use them. Twelve years as a computer engineer, founder, and Fractional CTO. I still write the code and still run the whiteboard.</p>
     <div class="cta-row">
       <a href="#case-studies" class="btn">VIEW PRODUCTION CASE STUDIES</a>
       <a href="#research" class="btn ghost">EXPLORE SEMANTICS &amp; R&amp;D</a>
@@ -320,9 +363,9 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
 <section id="operating-model">
   <div class="container">
-    <p class="section-label">How It Works</p>
-    <h2>How I Work</h2>
-    <p class="lede">Build it cleanly. Make it safe and cheap to run. Teach the team to own it.</p>
+    <p class="section-label" data-key="work.eyebrow">How It Works</p>
+    <h2 data-key="work.label">How I Work</h2>
+    <p class="lede" data-key="work.lead">Build it cleanly. Make it safe and cheap to run. Teach the team to own it.</p>
     <div class="cards-3">
       <div class="cell card"><span class="num">01</span><h3>Build — Agentic &amp; Semantic Systems</h3><p>Multi-agent workflows, RAG, formal ontologies, and client-owned data pipelines built for real production traffic.</p><div class="card-proof"><ul><li>30-day kickoff to production</li><li>50%+ token savings</li><li>Zero-downtime cutover</li></ul></div></div>
       <div class="cell card"><span class="num">02</span><h3>Harden — Security &amp; Unit Economics</h3><p>Environment isolation, PII redaction, human-in-the-loop gates, tiered model routing, and context pruning. Lower inference spend and fewer production failures.</p><div class="card-proof"><ul><li>97.5% faster cutover</li><li>480 hrs → 12 hrs</li><li>HITL gates stayed intact</li></ul></div></div>
@@ -333,8 +376,8 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
 <section id="case-studies">
   <div class="container">
-    <p class="section-label">Selected Enterprise Work</p>
-    <h2>Systems in production.</h2>
+    <p class="section-label" data-key="cases.eyebrow">Selected Enterprise Work</p>
+    <h2 data-key="cases.label">Systems in production.</h2>
     <div class="work-grid">
 
       <figure class="diagram-wrap"><svg class="diagram diagram-light" data-fig="01l" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 410" role="img" aria-label="Production 5-Agent Fleet Architecture on Client Infrastructure">
@@ -620,7 +663,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
       <article class="work-card">
         <p class="client">Six Sents Inc.</p>
-        <p class="metric">$3.5M C-Suite Contracts <span class="nw">· 10K+ DAU</span> <span class="nw">· 20-Person Org</span></p>
+        <p class="metric">$3.5M C-Suite Contracts <span class="nw">· 10K+ DAU · 20-Person Org</span></p>
         <p class="role">Founder &amp; CEO</p>
         <ul>
           <li>Scaled B2B predictive analytics SaaS across major healthcare and enterprise buyers.</li>
@@ -643,15 +686,26 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
         </div>
         <p class="tag">Contract engagements · both shipped</p>
       </article>
+
+    </div>
+        <div class="wide-b">
+          <p class="role">Data Architecture &amp; Applied AI</p>
+          <ul>
+            <li>Federated data warehouses across a $1B+ payments org.</li>
+            <li>Automated time-series algorithmic trading engine.</li>
+          </ul>
+        </div>
+        <p class="tag">Contract engagements · both shipped</p>
+      </article>
     </div>
   </div>
 </section>
 
 <section id="context-finops">
   <div class="container">
-    <p class="section-label">Context Engineering</p>
-    <h2>Context Engineering &amp; LLM FinOps</h2>
-    <p class="lede">Measured production improvements across model routing, context budgets, and prompt caching.</p>
+    <p class="section-label" data-key="finops.eyebrow">Context Engineering</p>
+    <h2 data-key="finops.label">Context Engineering &amp; LLM FinOps</h2>
+    <p class="lede" data-key="finops.lead">Measured production improvements across model routing, context budgets, and prompt caching.</p>
 
     <figure class="diagram-wrap"><svg class="diagram diagram-light" data-fig="02l" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 370" role="img" aria-label="Context Engineering and LLM FinOps Measured Production Improvements">
 
@@ -861,9 +915,9 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
 <section id="security">
   <div class="container">
-    <p class="section-label">Zero-Trust Agentic Security</p>
-    <h2>Secure by default, governed by policy.</h2>
-    <p class="lede">Designed for HIPAA, SOC 2, and regulated governance — every agent capability is scoped, logged, and reversible.</p>
+    <p class="section-label" data-key="security.eyebrow">Zero-Trust Agentic Security</p>
+    <h2 data-key="security.label">Secure by default, governed by policy.</h2>
+    <p class="lede" data-key="security.lead">Designed for HIPAA, SOC 2, and regulated governance — every agent capability is scoped, logged, and reversible.</p>
     <figure class="diagram-wrap"><svg class="diagram diagram-light" data-fig="03l" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 320" role="img" aria-label="Six-Layer Zero-Trust Agentic Security Pipeline">
 
   <style>
@@ -1076,9 +1130,9 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
 <section id="research">
   <div class="container">
-    <p class="section-label">R&amp;D · B.I. R&amp;D LLC</p>
-    <h2>Knodes &amp; Kore</h2>
-    <p class="lede">Long-running AI systems degrade in production. Context windows bloat, reasoning drifts across sessions, and teams lose auditability when schemas or models change. Knodes and Kore solve those long-term system management and performance problems at the data layer.</p>
+    <p class="section-label" data-key="rd.eyebrow">R&amp;D · B.I. R&amp;D LLC</p>
+    <h2 data-key="rd.label">Knodes &amp; Kore</h2>
+    <p class="lede" data-key="rd.lead">Long-running AI systems degrade in production. Context windows bloat, reasoning drifts across sessions, and teams lose auditability when schemas or models change. Knodes and Kore solve those long-term system management and performance problems at the data layer.</p>
 
 
 
@@ -1125,7 +1179,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
         <text x="176" y="297" text-anchor="middle">KNODES Memory</text>
         <text x="176" y="363" text-anchor="middle">Audited Actions</text>
       </svg>
-      <p class="rd-meta"><span>Audit-replayable</span>·<span>Regulated-env shaped</span>·<span>Model-agnostic</span>·<span>Open research</span></p>
+      <p class="rd-meta" data-key="rd.meta"><span>Audit-replayable</span>·<span>Regulated-env shaped</span>·<span>Model-agnostic</span>·<span>Open research</span></p>
     
 
     <figure class="diagram-wrap"><svg class="diagram diagram-light" data-fig="04l" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 410" role="img" aria-label="Knodes and Kore Semantic Data Layer Solving Production AI Decay">
@@ -1318,14 +1372,14 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
 <section id="about">
   <div class="container">
-    <p class="section-label">About</p>
+    <p class="section-label" data-key="about.eyebrow">About</p>
     <div class="about-wrap">
       <div class="portrait">
         <img class="hs hs-light" data-headshot="light" src="/headshot-circle-light.jpg" alt="Tony Bird" width="220" height="220" loading="lazy">
         <img class="hs hs-dark" data-headshot="dark" src="/headshot-circle-dark.jpg" alt="" width="220" height="220" loading="lazy">
       </div>
       <div>
-        <h2>Systems, Teaching, and Code.</h2>
+        <h2 data-key="about.label">Systems, Teaching, and Code.</h2>
         <p>Enterprise AI architect, interim CTO, and technical educator. Twelve-plus years as a founder and fractional CTO, including a 20-person organization and $3.5M in enterprise SaaS contracts. I rebuild delivery and ship production agent systems.</p>
         <ul class="creds">
           <li><strong>Background</strong>: B.S. in Computer Engineering with a Mathematics minor from Michigan State University, where I worked as a College of Engineering Teaching Assistant. I still teach STEM and foundational math independently. Explaining hard systems in plain English is half the job.</li>
@@ -1343,15 +1397,15 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
 <section id="connect" class="connect">
   <div class="container">
-    <p class="section-label">Connect</p>
-    <h2>Work Together</h2>
-    <p>Open to Principal or Founding AI Architecture roles, AI Curriculum and Enablement leadership, and focused fractional advisory work. Remote or West Michigan. Send a note with what you are trying to build or fix.</p>
+    <p class="section-label" data-key="connect.eyebrow">Connect</p>
+    <h2 data-key="connect.label">Work Together</h2>
+    <p data-key="connect.body">Open to Principal or Founding AI Architecture roles, AI Curriculum and Enablement leadership, and focused fractional advisory work. Remote or West Michigan. Send a note with what you are trying to build or fix.</p>
     <div class="cta-row" style="justify-content:center">
       <a href="mailto:bird@birdwork.ai" class="btn" data-href="email">Email Tony</a>
       <a href="https://www.linkedin.com/in/anthonymbird/" class="btn ghost" data-href="linkedin" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
     </div>
     <p class="connect-meta" style="margin-top:1.4rem;font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--fg-mid);text-align:center">
-      <span class="nw" data-site="location">Grand Rapids, MI · US &amp; Remote</span> · <span class="nw">© 2026 Tony Bird</span> · <span class="nw">birdwork.ai</span>
+      <span class="nw" data-site="location">Grand Rapids</span> · <span class="nw">MI · US &amp; Remote</span> · <span class="nw">© 2026 Tony Bird</span>
     </p>
   </div>
 </section>
@@ -1370,20 +1424,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 </footer>
 
 <script>
-const SITE = {
-  FULL_NAME: 'Tony Bird',
-  SITE_DOMAIN: 'birdwork.ai',
-  EMAIL: 'bird@birdwork.ai',
-  LOCATION: 'Grand Rapids, MI · US & Remote',
-  LINKEDIN_URL: 'https://www.linkedin.com/in/anthonymbird/',
-  CLIENTS: {
-    logistics: 'Mid-Size 3PL Brokerage',
-    peopleAnalytics: 'Culturebie',
-    commsPayments: 'Nordis Technologies'
-  },
-  HEADSHOT_PATH: '/headshot-circle-light.jpg',
-  HEADSHOT_DARK: '/headshot-circle-dark.jpg'
-};
+const SITE = {"FULL_NAME":"Tony Bird","SITE_DOMAIN":"birdwork.ai","EMAIL":"bird@birdwork.ai","LOCATION":"Grand Rapids, MI · US & Remote","LINKEDIN_URL":"https://www.linkedin.com/in/anthonymbird/","HEADSHOT_PATH":"/headshot-circle-light.jpg","HEADSHOT_DARK":"/headshot-circle-dark.jpg","CLIENTS":{"logistics":"Mid-Size 3PL Brokerage","peopleAnalytics":"Culturebie","commsPayments":"Nordis Technologies"}};
 function renderSite(){
   document.querySelectorAll('[data-site]').forEach(el=>{
     const key = el.dataset.site;
@@ -1465,6 +1506,18 @@ document.addEventListener('keydown', e=>{
   panel.addEventListener('click',close);
   zoom.addEventListener('click',function(e){ if(e.target===zoom) close(); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+})();
+</script>
+<script>
+// ?ids=1 paints the YAML key of every editable block (zero effect otherwise)
+(function(){
+  if(!/[?&]ids=1(?:&|$)/.test(location.search)) return;
+  document.querySelectorAll('[data-key]').forEach(function(el){
+    if(getComputedStyle(el).position === 'static') el.style.position = 'relative';
+    var b = document.createElement('span');
+    b.className = 'idbadge'; b.textContent = el.getAttribute('data-key'); b.setAttribute('aria-hidden','true');
+    el.appendChild(b);
+  });
 })();
 </script>
 </body>
