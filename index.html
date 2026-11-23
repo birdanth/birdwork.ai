@@ -90,7 +90,7 @@ a{color:inherit;text-decoration:none}
 a:focus-visible,button:focus-visible{outline:2px solid var(--accent-warm);outline-offset:3px}
 .container{max-width:1080px;margin:0 auto;padding:0 2.5rem}
 section{padding:8.5rem 0;border-bottom:1px solid var(--border);scroll-margin-top:5.25rem}
-#top{scroll-margin-top:0}
+#hero{scroll-margin-top:0}
 .section-label{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-warm);margin-bottom:1.4rem}
 .lede{font-size:1.02rem;max-width:62ch;line-height:1.7}
 
@@ -256,9 +256,9 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
 <nav id="navbar">
   <div class="nav-inner">
-    <a href="#top" class="brand">Tony Bird <span>/ birdwork.ai</span></a>
+    <a href="#hero" class="brand">Tony Bird <span>/ birdwork.ai</span></a>
     <div class="nav-links">
-      <a href="#work">Work</a><a href="#approach">Approach</a><a href="#finops" class="nav-ctx">Context Eng.</a><a href="#security">Security</a><a href="#research">R&amp;D</a><a href="#about">About</a>
+      <a href="#case-studies">Work</a><a href="#operating-model">Approach</a><a href="#context-finops" class="nav-ctx">Context Eng.</a><a href="#security">Security</a><a href="#research">R&amp;D</a><a href="#about">About</a>
     </div>
     <div class="nav-right">
       <a href="https://www.linkedin.com/in/anthonymbird/" data-href="linkedin" rel="me" class="hide-sm">LinkedIn</a>
@@ -271,19 +271,19 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
 <div class="drawer" id="drawer" data-open="false">
   <button class="drawer-close" id="drawerClose" aria-label="Close menu">×</button>
-  <a href="#work">Work</a><a href="#approach">Approach</a><a href="#finops" class="nav-ctx">Context Eng.</a><a href="#security">Security</a><a href="#research">R&amp;D</a><a href="#about">About</a><a href="#connect">Connect</a>
+  <a href="#case-studies">Work</a><a href="#operating-model">Approach</a><a href="#context-finops" class="nav-ctx">Context Eng.</a><a href="#security">Security</a><a href="#research">R&amp;D</a><a href="#about">About</a><a href="#connect">Connect</a>
   <p class="drawer-meta">bird@birdwork.ai · Grand Rapids, MI</p>
 </div>
 
 <main id="main" tabindex="-1">
 
-<header class="hero" id="top">
+<header class="hero" id="hero">
   <div class="container">
     <p class="hero-eyebrow">Enterprise AI Architecture · Agentic Systems · Technical Transformation</p>
     <h1>Tony Bird</h1>
     <p class="sub">Designing production multi-agent fleets, zero-trust context systems, and enterprise AI transformations—delivering 40× faster deployments, 50%+ inference savings, and autonomous operations on client infrastructure.</p>
     <div class="cta-row">
-      <a href="#work" class="btn">Selected Work</a>
+      <a href="#case-studies" class="btn">Selected Work</a>
       <a href="#research" class="btn ghost">Architecture &amp; R&amp;D</a>
     </div>
   </div>
@@ -293,13 +293,13 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
   <div class="stats">
     <div class="stat"><b>97.5%</b><span>Faster deploy · 480h→12h</span></div>
     <div class="stat"><b>50%+</b><span>LLM token FinOps savings</span></div>
-    <div class="stat"><b>15M</b><span>Records · 5 agents · 24/7</span></div>
+    <div class="stat"><b>5.7M</b><span>Salesforce records · 5 agents · 24/7</span></div>
     <div class="stat"><b>$3.5M</b><span>C-suite SaaS closed</span></div>
   </div>
 </div>
 <div class="rule"></div>
 
-<section id="approach">
+<section id="operating-model">
   <div class="container">
     <p class="section-label">Operating Model</p>
     <h2>Three ways I work with teams.</h2>
@@ -311,7 +311,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
   </div>
 </section>
 
-<section id="work">
+<section id="case-studies">
   <div class="container">
     <p class="section-label">Selected Enterprise Work</p>
     <h2>Systems in production.</h2>
@@ -319,14 +319,14 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
       <article class="work-card">
         <p class="client"><span data-site="client.logistics">Mid-Size 3PL Brokerage</span></p>
-        <p class="metric">15M Records <span class="nw">· 5 Agents</span> <span class="nw">· 30 Days to Prod</span> · 24/7 Since Jan</p>
+        <p class="metric">5.7M Salesforce Records <span class="nw">· 5 Agents</span> <span class="nw">· 30 Days to Prod</span> · 24/7 Since Jan</p>
         <p class="role">Interim CTO &amp; AI Systems Architect</p>
         <ul>
           <li>Deployed five coordinated agents on client infrastructure across sales, marketing, support, and engineering.</li>
-          <li>Slack-native plain-English Salesforce querying with auto-generated charts.</li>
+          <li>Slack-native plain-English querying across 5.7M Salesforce records, charts auto-generated.</li>
           <li>Authored the data and infrastructure SOW.</li>
         </ul>
-        <p class="tag">24/7 autonomous since January · zero added headcount</p>
+        <p class="tag">30 days from kickoff to 24/7 production · 3+ months zero downtime</p>
       </article>
 
       <article class="work-card">
@@ -364,7 +364,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
       <article class="work-card wide">
         <div class="wide-a">
-          <p class="client">Enterprise Payments &amp; Quant (Contract)</p>
+          <p class="client">$1B+ Payments Organization (Contract)</p>
           <p class="metric">$1B+ Payments Org <span class="nw">· Quant Trading</span></p>
         </div>
         <div class="wide-b">
@@ -380,14 +380,14 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
   </div>
 </section>
 
-<section id="finops">
+<section id="context-finops">
   <div class="container">
     <p class="section-label">Context Engineering</p>
     <h2>Most AI spend is architecture, not usage.</h2>
     <p class="lede">Token burn is a design outcome. Harness gaps, unbounded context, and frontier-only routing are fixable in days — and measurable on the invoice.</p>
 
     <div class="callouts">
-      <div class="callout"><b>6×</b><span>Harness gap vs. tuned baseline</span></div>
+      <div class="callout"><b>30 Days</b><span>Rapid transition from architecture kickoff to autonomous multi-agent operation</span></div>
       <div class="callout"><b>50%+</b><span>Token savings from routing + caching</span></div>
       <div class="callout"><b>3 days</b><span>Audit to shipped fix</span></div>
     </div>
@@ -396,9 +396,9 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
     <table>
       <thead><tr><th>Dimension</th><th>Untuned</th><th>Engineered</th></tr></thead>
       <tbody>
-        <tr><td>Model routing</td><td class="before">Every query hits frontier models ($15/MTok)</td><td class="after">Routine queries hit local or mid-tier models ($0–$1/MTok)</td></tr>
+        <tr><td>Model routing</td><td class="before">Every query hits frontier models ($15/MTok)</td><td class="after">Routine queries hit local or mid-tier models — $15/MTok → $0–$1/MTok</td></tr>
         <tr><td>Context window</td><td class="before">Window at 98% — output quality degrades</td><td class="after">Pruned at 70% — output stays sharp</td></tr>
-        <tr><td>Prompt caching</td><td class="before">None — repeat tokens billed every call</td><td class="after">Enabled — &gt;60% cache hit rate</td></tr>
+        <tr><td>Prompt caching</td><td class="before">None — repeat tokens billed every call</td><td class="after">Enabled — 68% cache hit rate</td></tr>
       </tbody>
     </table>
     </div>
@@ -516,7 +516,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
     <p>Send what you are building, the stack it runs on, and where it hurts. You get a technical read — gaps, cost exposure, and the shortest path to production.</p>
     <div class="cta-row" style="justify-content:center">
       <a href="mailto:bird@birdwork.ai" class="btn" data-href="email">Email Tony</a>
-      <a href="https://www.linkedin.com/in/anthonymbird/" class="btn ghost" data-href="linkedin" rel="me">LinkedIn</a>
+      <a href="https://www.linkedin.com/in/anthonymbird/" class="btn ghost" data-href="linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     </div>
     <p style="margin-top:1.4rem;font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--fg-mid)">
       <span data-site="location">Grand Rapids, MI · US &amp; Remote</span>
@@ -530,7 +530,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
   <div class="container foot-inner">
     <span>© 2026 Tony Bird · birdwork.ai</span>
     <div class="foot-inner" style="display:flex;gap:1rem">
-      <a href="#work">Work</a><a href="#approach">Approach</a><a href="#finops" class="nav-ctx">Context Eng.</a><a href="#security">Security</a><a href="#research">R&amp;D</a><a href="#about">About</a>
+      <a href="#case-studies">Work</a><a href="#operating-model">Approach</a><a href="#context-finops" class="nav-ctx">Context Eng.</a><a href="#security">Security</a><a href="#research">R&amp;D</a><a href="#about">About</a>
     </div>
   </div>
 </footer>
@@ -543,9 +543,9 @@ const SITE = {
   LOCATION: 'Grand Rapids, MI · US & Remote',
   LINKEDIN_URL: 'https://www.linkedin.com/in/anthonymbird/',
   CLIENTS: {
-    logistics: 'Mid-Size 3PL Brokerage',
-    peopleAnalytics: 'Enterprise People Analytics SaaS',
-    commsPayments: 'Enterprise Communications & Payment Technology'
+    logistics: '3PL Logistics Brokerage',
+    peopleAnalytics: 'Culturebie',
+    commsPayments: 'Nordis Technologies'
   },
   HEADSHOT_PATH: '/headshot-circle-light.jpg',
   HEADSHOT_DARK: '/headshot-circle-dark.jpg'
