@@ -12,8 +12,9 @@
 #   * `label` drives the navbar link AND the section heading
 #     `nav_label` (optional) overrides the navbar link only
 #     `eyebrow` is the small uppercase line above the heading
-#   * `layout.<element>.<prop>` maps to the CSS custom property --<element>-<prop>
-#     (use _ in the element name for a breakpoint variant, e.g. section_mobile)
+#   * `layout.<path>.<prop>` maps to the CSS custom property `--<path>-<prop>`
+#     (nest as needed: `layout.work.lead.mb` -> `--work-lead-mb`;
+#      use _ in a name for a breakpoint variant, e.g. section_mobile)
 #     props: m mt mb ml mr p pt pb pl pr py px gap
 #     values: 0 xs sm md lg xl 2xl (0, .5rem, 1rem, 1.5rem, 2.25rem, 3.5rem, 5rem)
 #     or a raw CSS length
@@ -218,3 +219,5 @@ layout:
   hero_eyebrow: {mb: 1.9rem}
   hero_h1: {mb: 1.6rem}
   hero_sub: {mb: 2.5rem}
+  work:
+    lead: {mb: xs}

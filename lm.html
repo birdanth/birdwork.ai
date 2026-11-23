@@ -1,0 +1,5 @@
+<html><body><iframe id=f src="/index.html" style="width:1280px;height:900px;border:0"></iframe>
+<script>const f=document.getElementById('f');f.onload=()=>{try{const d=f.contentDocument,w=f.contentWindow;
+const g=s=>w.getComputedStyle(d.querySelector(s)).marginBottom;
+document.title='workLead='+g('#operating-model .lede')+' rdLead='+g('#research .lede')+' finLead='+g('#context-finops .lede')+' var='+(w.getComputedStyle(d.documentElement).getPropertyValue('--work-lead-mb').trim()||'EMPTY');
+}catch(e){document.title='ERR '+e.message;}};</script></body></html>

@@ -246,21 +246,28 @@ function render(nodes, ctx, partials, out) {
 /* ----------------------------------------------------------------- layout ---
    layout.<section>.<el>.<prop> -> --<section>-<el>-<prop> on :root.           */
 
-function layoutCss(layout) {
-  const decls = [];
-  for (const [element, props] of Object.entries(layout || {})) {
-    if (props === null || typeof props !== 'object') {
-      throw new BuildError(`layout.${element}: expected {prop: value}, got "${props}"`);
+function layoutCss(layout, prefix = [], decls = []) {
+  for (const [key, value] of Object.entries(layout || {})) {
+    if (value === null || typeof value !== 'object') {
+      throw new BuildError(`layout.${[...prefix, key].join('.')}: expected {prop: value}, got "${value}"`);
     }
-    for (const [prop, raw] of Object.entries(props)) {
+    // a map whose keys are all layout props is the leaf; otherwise it is a path
+    const keys = Object.keys(value);
+    if (!keys.length || !keys.every((k) => k === 'show' || LAYOUT_PROPS.includes(k))) {
+      layoutCss(value, [...prefix, key], decls);
+      continue;
+    }
+    const name = [...prefix, key].map(slug).join('-');
+    const where = [...prefix, key].join('.');
+    for (const [prop, raw] of Object.entries(value)) {
       if (prop === 'show') continue;
       if (!LAYOUT_PROPS.includes(prop)) {
-        throw new BuildError(`layout.${element}.${prop}: unknown property (use ${LAYOUT_PROPS.join('/')})`);
+        throw new BuildError(`layout.${where}.${prop}: unknown property (use ${LAYOUT_PROPS.join('/')})`);
       }
-      decls.push(`  --${slug(element)}-${prop}: ${spacingValue(raw, `${element}.${prop}`)};`);
+      decls.push(`  --${name}-${prop}: ${spacingValue(raw, `${where}.${prop}`)};`);
     }
   }
-  return decls.length ? `:root{\n${decls.join('\n')}\n}` : '';
+  return prefix.length ? undefined : decls.length ? `:root{\n${decls.join('\n')}\n}` : '';
 }
 
 function spacingValue(raw, where) {

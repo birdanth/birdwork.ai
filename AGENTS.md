@@ -57,9 +57,10 @@ Never hardcode a nav label in the template — it resolves from the section.
 
 ### Spacing
 Micro-layout lives in `layout:` at the bottom of the YAML, one custom property
-per entry (`--element-prop`). Prefer a scale token; a raw CSS length is allowed
-for values that are already live. Layout is additive: each `var()` carries the
-old literal as its fallback, so nothing shifts until a token is edited.
+per entry; the key path becomes the property name (`work.lead.mb` ->
+`--work-lead-mb`). Prefer a scale token; a raw CSS length is allowed for values
+that are already live. Layout is additive: each `var()` carries the old literal
+as its fallback, so nothing shifts until a token is edited.
 
 ### CLI
     node scripts/build.mjs           # validate + write index.html
