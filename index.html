@@ -193,7 +193,7 @@ td.after{color:var(--fg)}
 /* research */
 .rd{background:var(--theirs-bg);border:1px solid var(--border);padding:2.25rem;margin-top:1.75rem}
 .pillars{margin-bottom:2rem}
-.pillar{background:transparent;padding:1.25rem 1.4rem}
+.pillar{background:var(--bg);padding:1.25rem 1.4rem}
 .pillar h4{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-warm);margin-bottom:.5rem;font-weight:400}
 .pillar p{font-size:.82rem;line-height:1.6}
 .flow{margin:1.5rem 0 0;width:100%}
@@ -203,6 +203,8 @@ td.after{color:var(--fg)}
 .flow .node{fill:none;stroke:var(--fg-dim);stroke-width:1;stroke-opacity:.55}
 .flow .arrow{stroke:var(--fg-mid);stroke-width:1.25}
 .flow marker path{stroke:var(--fg-mid);stroke-width:1.25}
+.rd-link{color:var(--fg);font-weight:500;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px;text-decoration-color:var(--accent-warm)}
+.rd-link:hover{text-decoration-thickness:2px}
 .rd-meta{display:flex;gap:1.4rem;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--fg-mid);letter-spacing:.06em;text-transform:uppercase;margin-top:1.4rem}
 
 /* about */
@@ -435,14 +437,14 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 <section id="research">
   <div class="container">
     <p class="section-label">R&amp;D · B.I. R&amp;D LLC</p>
-    <h2>KNODES &amp; KORE</h2>
-    <p class="lede">A hypergraph semantic data warehouse and continuous agentic memory, built to eliminate context drift. Every automated action carries HITL auditability, so the system stays defensible in regulated environments.</p>
+    <h2>Semantics &amp; Knowledge Systems R&amp;D</h2>
+    <p class="lede">Semantics and knowledge systems are the current R&amp;D track. B.I. R&amp;D LLC (somewhat ironically named) is the corpus where KNODES and KORE were designed and where the semantics harness runs live: public repo at <a class="rd-link" href="https://github.com/birdanth/KNODES" target="_blank" rel="noopener noreferrer">github.com/birdanth/KNODES</a>, private and public reps share the same architecture and weekly test loop.</p>
 
     <div class="rd">
       <div class="pillars">
-        <div class="pillar"><h4>KORE &amp; .kan Binary Format</h4><p>Append-only memory that compacts instead of drifting.</p></div>
-        <div class="pillar"><h4>RSMPU</h4><p>Dual graph-tensor representation resolved by consensus.</p></div>
-        <div class="pillar"><h4>KlosureSpec</h4><p>Semantic closure in Python, Pydantic, and DuckDB.</p></div>
+        <div class="pillar"><h4>KNODES</h4><p>Public, open-source semantic memory — importable package, iterative implementation, reproducible weekly test loop, derived from the client fleet.</p></div>
+        <div class="pillar"><h4>KORE &amp; KlosureSpec</h4><p>.kan binaries, semantic closure, and the semantics harness. Ingests into Python/Pydantic/DuckDB with append-only compaction.</p></div>
+        <div class="pillar"><h4>RSMPU</h4><p>Dual graph-tensor representation resolved by consensus, keeping retrieval scored against both edges and distance.</p></div>
       </div>
 
       <svg class="flow" viewBox="0 0 720 132" role="img" aria-label="Pipeline: signals, working context, KlosureSpec with human approval, KORE .kan format, KNODES memory, audited actions">
