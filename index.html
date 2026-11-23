@@ -130,6 +130,7 @@ nav.scrolled{border-bottom-color:var(--border)}
 
 /* stats */
 .rule{border-bottom:1px solid var(--border)}
+.wide-stats{grid-column:1/-1;background:var(--bg)}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;padding:3.5rem 0}
 .stat{border-left:1px solid var(--border);padding-left:1.5rem;display:flex;flex-direction:column}
 .stat:first-child{border-left:none;padding-left:0}
@@ -288,7 +289,6 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
       <a href="#case-studies">Case Studies</a><a href="#operating-model">How I Work</a><a href="#context-finops" class="nav-ctx">Context FinOps</a><a href="#security">Security</a><a href="#research">R&amp;D</a><a href="#about">About</a>
     </div>
     <div class="nav-right">
-      <a href="https://www.linkedin.com/in/anthonymbird/" data-href="linkedin" rel="me" class="hide-sm">LinkedIn</a>
       <a href="#connect">Connect</a>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark theme" aria-pressed="false">◐</button>
       <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"><span></span><span></span><span></span></button>
@@ -316,14 +316,6 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
   </div>
 </header>
 
-<div class="container">
-  <div class="stats">
-    <div class="stat"><b>30 Days</b><span>Kickoff to 24/7 prod · 5 agents · 5.7M Salesforce records</span></div>
-    <div class="stat"><b>50%+</b><span>LLM FinOps savings · 68% prompt cache hit rate</span></div>
-    <div class="stat"><b>97.5%</b><span>Faster enterprise deploy · 480h to 12h</span></div>
-    <div class="stat"><b>$3.5M</b><span>Direct C-suite SaaS closed · 10K+ DAU</span></div>
-  </div>
-</div>
 <div class="rule"></div>
 
 <section id="operating-model">
@@ -590,6 +582,13 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
     <text x="760" y="34" font-family="'JetBrains Mono', 'Liberation Mono', ui-monospace, monospace" fill="#B5AEA5" font-size="9.5" letter-spacing="1">PII MASKED · VAULTED KEYS</text>
   </g>
 </svg></figure>
+
+      <div class="stats wide-stats">
+    <div class="stat"><b>30 Days</b><span>Kickoff to 24/7 prod · 5 agents · 5.7M Salesforce records</span></div>
+    <div class="stat"><b>50%+</b><span>LLM FinOps savings · 68% prompt cache hit rate</span></div>
+    <div class="stat"><b>97.5%</b><span>Faster enterprise deploy · 480h to 12h</span></div>
+    <div class="stat"><b>$3.5M</b><span>Direct C-suite SaaS closed · 10K+ DAU</span></div>
+      </div>
 
       <article class="work-card">
         <p class="client"><span data-site="client.logistics">Mid-Size 3PL Brokerage</span></p>
@@ -1081,6 +1080,54 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
     <h2>Knodes &amp; Kore</h2>
     <p class="lede">Long-running AI systems degrade in production. Context windows bloat, reasoning drifts across sessions, and teams lose auditability when schemas or models change. Knodes and Kore solve those long-term system management and performance problems at the data layer.</p>
 
+
+
+    <div class="rd">
+
+      <svg class="flow" viewBox="0 0 720 132" role="img" aria-label="Pipeline: signals, working context, KlosureSpec with human approval, KORE .kan format, KNODES memory, audited actions">
+                <g fill="none">
+          <rect class="node" x="1"   y="28" width="96" height="76" rx="3"/>
+          <rect class="node" x="125" y="28" width="96" height="76" rx="3"/>
+          <rect class="node" x="249" y="28" width="96" height="76" rx="3"/>
+          <rect class="node" x="373" y="28" width="96" height="76" rx="3"/>
+          <rect class="node" x="497" y="28" width="96" height="76" rx="3"/>
+          <rect class="node" x="621" y="28" width="96" height="76" rx="3"/>
+          <path class="arrow" d="M99 66h22M223 66h22M347 66h22M471 66h22M595 66h22"/>
+          <path class="arrow" d="M117 62l5 4-5 4M241 62l5 4-5 4M365 62l5 4-5 4M489 62l5 4-5 4M613 62l5 4-5 4"/>
+        </g>
+        <text x="49"  y="70" text-anchor="middle">Signals</text>
+        <text x="173" y="70" text-anchor="middle">Context</text>
+        <text x="297" y="64" text-anchor="middle" font-size="10">KlosureSpec</text>
+        <text x="297" y="78" text-anchor="middle" font-size="9" fill="#8B7355">+ HITL</text>
+        <text x="421" y="70" text-anchor="middle">KORE/.kan</text>
+        <text x="545" y="70" text-anchor="middle">KNODES</text>
+        <text x="669" y="64" text-anchor="middle" font-size="9">Audited</text>
+        <text x="669" y="78" text-anchor="middle" font-size="9">Actions</text>
+        <text x="173" y="118" text-anchor="middle" font-size="9">working</text>
+        <text x="545" y="118" text-anchor="middle" font-size="9">memory</text>
+      </svg>
+      <svg class="flow flow-v" viewBox="0 0 352 386" role="img" aria-label="Pipeline: signals, working context, KlosureSpec with human approval, KORE .kan format, KNODES memory, audited actions">
+        <g fill="none">
+          <rect class="node" x="20" y="4"   width="312" height="46" rx="3"/>
+          <rect class="node" x="20" y="70"  width="312" height="46" rx="3"/>
+          <rect class="node" x="20" y="136" width="312" height="46" rx="3"/>
+          <rect class="node" x="20" y="202" width="312" height="46" rx="3"/>
+          <rect class="node" x="20" y="268" width="312" height="46" rx="3"/>
+          <rect class="node" x="20" y="334" width="312" height="46" rx="3"/>
+          <path class="arrow" d="M176 52v14M176 118v14M176 184v14M176 250v14M176 316v14"/>
+          <path class="arrow" d="M170 61l6 6 6-6M170 127l6 6 6-6M170 193l6 6 6-6M170 259l6 6 6-6M170 325l6 6 6-6"/>
+        </g>
+        <text x="176" y="33" text-anchor="middle">Signals</text>
+        <text x="176" y="99" text-anchor="middle">Working Context</text>
+        <text x="176" y="157" text-anchor="middle">KlosureSpec</text>
+        <text x="176" y="173" text-anchor="middle" font-size="10" fill="#8B7355">+ HITL</text>
+        <text x="176" y="231" text-anchor="middle">KORE/.kan</text>
+        <text x="176" y="297" text-anchor="middle">KNODES Memory</text>
+        <text x="176" y="363" text-anchor="middle">Audited Actions</text>
+      </svg>
+      <p class="rd-meta"><span>Audit-replayable</span>·<span>Regulated-env shaped</span>·<span>Model-agnostic</span>·<span>Open research</span></p>
+    
+
     <figure class="diagram-wrap"><svg class="diagram diagram-light" data-fig="04l" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 410" role="img" aria-label="Knodes and Kore Semantic Data Layer Solving Production AI Decay">
 
   <style>
@@ -1265,51 +1312,6 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
   <text x="550" y="340" font-family="'Inter', 'Liberation Sans', -apple-system, BlinkMacSystemFont, sans-serif" fill="#F2EFE9" font-size="12" font-weight="600">Formal Domain Ontologies · GraphRAG &amp; Vector Hybrid</text>
   <text x="550" y="355" font-family="'Inter', 'Liberation Sans', -apple-system, BlinkMacSystemFont, sans-serif" fill="#B5AEA5" font-size="10.5">Consistent entity definitions across model upgrades + Knodes Academy modules</text>
 </svg></figure>
-
-    <div class="rd">
-
-      <svg class="flow" viewBox="0 0 720 132" role="img" aria-label="Pipeline: signals, working context, KlosureSpec with human approval, KORE .kan format, KNODES memory, audited actions">
-                <g fill="none">
-          <rect class="node" x="1"   y="28" width="96" height="76" rx="3"/>
-          <rect class="node" x="125" y="28" width="96" height="76" rx="3"/>
-          <rect class="node" x="249" y="28" width="96" height="76" rx="3"/>
-          <rect class="node" x="373" y="28" width="96" height="76" rx="3"/>
-          <rect class="node" x="497" y="28" width="96" height="76" rx="3"/>
-          <rect class="node" x="621" y="28" width="96" height="76" rx="3"/>
-          <path class="arrow" d="M99 66h22M223 66h22M347 66h22M471 66h22M595 66h22"/>
-          <path class="arrow" d="M117 62l5 4-5 4M241 62l5 4-5 4M365 62l5 4-5 4M489 62l5 4-5 4M613 62l5 4-5 4"/>
-        </g>
-        <text x="49"  y="70" text-anchor="middle">Signals</text>
-        <text x="173" y="70" text-anchor="middle">Context</text>
-        <text x="297" y="64" text-anchor="middle" font-size="10">KlosureSpec</text>
-        <text x="297" y="78" text-anchor="middle" font-size="9" fill="#8B7355">+ HITL</text>
-        <text x="421" y="70" text-anchor="middle">KORE/.kan</text>
-        <text x="545" y="70" text-anchor="middle">KNODES</text>
-        <text x="669" y="64" text-anchor="middle" font-size="9">Audited</text>
-        <text x="669" y="78" text-anchor="middle" font-size="9">Actions</text>
-        <text x="173" y="118" text-anchor="middle" font-size="9">working</text>
-        <text x="545" y="118" text-anchor="middle" font-size="9">memory</text>
-      </svg>
-      <svg class="flow flow-v" viewBox="0 0 352 386" role="img" aria-label="Pipeline: signals, working context, KlosureSpec with human approval, KORE .kan format, KNODES memory, audited actions">
-        <g fill="none">
-          <rect class="node" x="20" y="4"   width="312" height="46" rx="3"/>
-          <rect class="node" x="20" y="70"  width="312" height="46" rx="3"/>
-          <rect class="node" x="20" y="136" width="312" height="46" rx="3"/>
-          <rect class="node" x="20" y="202" width="312" height="46" rx="3"/>
-          <rect class="node" x="20" y="268" width="312" height="46" rx="3"/>
-          <rect class="node" x="20" y="334" width="312" height="46" rx="3"/>
-          <path class="arrow" d="M176 52v14M176 118v14M176 184v14M176 250v14M176 316v14"/>
-          <path class="arrow" d="M170 61l6 6 6-6M170 127l6 6 6-6M170 193l6 6 6-6M170 259l6 6 6-6M170 325l6 6 6-6"/>
-        </g>
-        <text x="176" y="33" text-anchor="middle">Signals</text>
-        <text x="176" y="99" text-anchor="middle">Working Context</text>
-        <text x="176" y="157" text-anchor="middle">KlosureSpec</text>
-        <text x="176" y="173" text-anchor="middle" font-size="10" fill="#8B7355">+ HITL</text>
-        <text x="176" y="231" text-anchor="middle">KORE/.kan</text>
-        <text x="176" y="297" text-anchor="middle">KNODES Memory</text>
-        <text x="176" y="363" text-anchor="middle">Audited Actions</text>
-      </svg>
-      <p class="rd-meta"><span>Audit-replayable</span>·<span>Regulated-env shaped</span>·<span>Model-agnostic</span>·<span>Open research</span></p>
     </div>
   </div>
 </section>
