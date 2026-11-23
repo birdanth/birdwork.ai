@@ -98,9 +98,9 @@ section{padding:8.5rem 0;border-bottom:1px solid var(--border);scroll-margin-top
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s}
 nav.scrolled{border-bottom-color:var(--border)}
 .nav-inner{max-width:1080px;margin:0 auto;padding:1rem 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem}
-.brand{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.13em;text-transform:uppercase;white-space:nowrap}
-.brand span{color:var(--fg-dim);text-transform:none;letter-spacing:.02em}
-.nav-links{display:flex;gap:1.6rem;align-items:center;font-size:.8rem;color:var(--fg-mid)}
+.brand{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.13em;text-transform:uppercase;white-space:nowrap;font-weight:600}
+.brand span{color:var(--fg-dim);text-transform:none;letter-spacing:.02em;font-size:.88em;font-weight:400}
+.nav-links{display:flex;flex:1;justify-content:center;gap:1.6rem;align-items:center;font-size:.8rem;color:var(--fg-mid)}
 .nav-links a,.nav-right a{white-space:nowrap}
 .nav-links a:hover{color:var(--fg)}
 .nav-right{display:flex;gap:1rem;align-items:center;font-size:.8rem;white-space:nowrap}
@@ -119,8 +119,8 @@ nav.scrolled{border-bottom-color:var(--border)}
 
 /* hero */
 .hero{padding:11rem 0 4.5rem;border-bottom:1px solid var(--border)}
-.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-warm);margin-bottom:1.9rem}
-.hero h1{margin-bottom:1.6rem}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.19em;text-transform:uppercase;color:var(--accent-warm);margin-bottom:1.9rem}
+.hero h1{margin-bottom:1.6rem;font-style:italic}
 .hero p.sub{font-size:1.08rem;max-width:60ch;line-height:1.7;margin-bottom:2.5rem}
 .cta-row{display:flex;gap:.9rem;flex-wrap:wrap}
 .btn{display:inline-block;padding:.95rem 2rem;font-size:.78rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;border:1px solid var(--fg);background:var(--fg);color:var(--bg);transition:opacity .2s}
@@ -268,11 +268,10 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
 <nav id="navbar">
   <div class="nav-inner">
-    <a href="#hero" class="brand">Tony Bird <span>/ birdwork.ai</span></a>
+    <a href="#hero" class="brand">TONY<span>&thinsp;&thinsp;birdwork.ai</span></a>
     <div class="nav-links">
       <a href="#case-studies">Case Studies</a><a href="#operating-model">How I Work</a><a href="#context-finops" class="nav-ctx">Context FinOps</a><a href="#security">Security</a><a href="#research">R&amp;D</a><a href="#about">About</a>
     </div>
-    <div class="foot-meta"><span>Available for new engagements</span><span>© 2026 Tony Bird</span></div>
     <div class="nav-right">
       <a href="https://www.linkedin.com/in/anthonymbird/" data-href="linkedin" rel="me" class="hide-sm">LinkedIn</a>
       <a href="#connect">Connect</a>
@@ -293,11 +292,11 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 <header class="hero" id="hero">
   <div class="container">
     <p class="hero-eyebrow">AI Architecture · Semantic Systems · Technical Enablement</p>
-    <h1>Tony Bird</h1>
+    <h1>Tony Bird's Work</h1>
     <p class="sub">I design and build production AI systems, semantic data architectures, and the technical training teams need to use them. Twelve years as a computer engineer, founder, and Fractional CTO. I still write the code and still run the whiteboard.</p>
     <div class="cta-row">
-      <a href="#case-studies" class="btn">View Production Case Studies</a>
-      <a href="#research" class="btn ghost">Explore Semantics &amp; R&amp;D</a>
+      <a href="#case-studies" class="btn">VIEW PRODUCTION CASE STUDIES</a>
+      <a href="#research" class="btn ghost">EXPLORE SEMANTICS &amp; R&amp;D</a>
     </div>
   </div>
 </header>
@@ -314,7 +313,7 @@ footer{padding:1.6rem 0 2rem;font-family:'JetBrains Mono',monospace;font-size:.7
 
 <section id="operating-model">
   <div class="container">
-    <p class="section-label">Operating Model</p>
+    <p class="section-label">How It Works</p>
     <h2>How I Work</h2>
     <p class="lede">Build it cleanly. Make it safe and cheap to run. Teach the team to own it.</p>
     <div class="cards-3">
