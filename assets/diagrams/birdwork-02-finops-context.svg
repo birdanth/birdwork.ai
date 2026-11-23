@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 370" width="1040" height="370" role="img" aria-label="Context Engineering and LLM FinOps Measured Production Improvements">
+
+  <style>
+    .bw-serif { font-family: 'Cormorant Garamond', 'Liberation Serif', Georgia, serif; }
+    .bw-sans  { font-family: 'Inter', 'Liberation Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
+    .bw-mono  { font-family: 'JetBrains Mono', 'Liberation Mono', ui-monospace, monospace; }
+  </style>
+
+
+  <defs>
+    <marker id="arr-dark" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#2D2A26"/>
+    </marker>
+    <marker id="arr-bronze" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#8B7355"/>
+    </marker>
+    <marker id="arr-indigo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#3A3A6A"/>
+    </marker>
+    <pattern id="hatch-bronze" width="6" height="6" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#8B7355" stroke-width="1.2" stroke-opacity="0.45" />
+    </pattern>
+  </defs>
+
+  <rect class="bw-canvas" x="0" y="0" width="1040" height="370" fill="#FAF9F6" stroke="#DDD8CE" stroke-width="1"/>
+
+  <!-- Header -->
+  <text class="bw-mono bw-bronze" x="32" y="34" fill="#8B7355" font-size="10.5" letter-spacing="2.2">FIG 02 · CONTEXT ENGINEERING &amp; LLM FINOPS BENCHMARKS</text>
+  <text class="bw-mono bw-mid" x="1008" y="34" fill="#6B6560" font-size="10" text-anchor="end" letter-spacing="1.2">BEFORE VS. AFTER PRODUCTION TUNING</text>
+  <line class="bw-rule" x1="32" y1="48" x2="1008" y2="48" stroke="#DDD8CE" stroke-width="1"/>
+
+  <!-- PANEL 1: MODEL ROUTING -->
+  <rect class="bw-card" x="32" y="68" width="308" height="270" fill="#FAF9F6" stroke="#DDD8CE" stroke-width="1"/>
+  <text class="bw-mono bw-bronze" x="52" y="96" fill="#8B7355" font-size="10" letter-spacing="1.5">01 / TIERED MODEL ROUTING</text>
+  <text class="bw-sans bw-ink" x="52" y="118" fill="#2D2A26" font-size="13.5" font-weight="600">Routine Query Inference Cost</text>
+  <line x1="52" y1="132" x2="320" y2="132" stroke="#DDD8CE" stroke-width="1"/>
+
+  <text class="bw-mono bw-mid" x="52" y="158" fill="#6B6560" font-size="10">BASELINE · FRONTIER ONLY</text>
+  <text class="bw-mono bw-ink" x="320" y="158" fill="#2D2A26" font-size="11" font-weight="600" text-anchor="end">$15 / MTok</text>
+  <rect x="52" y="168" width="268" height="24" fill="#DDD8CE"/>
+  <rect x="52" y="168" width="268" height="24" fill="url(#hatch-bronze)"/>
+
+  <text class="bw-mono bw-indigo" x="52" y="220" fill="#3A3A6A" font-size="10">TUNED · TIERED ROUTE</text>
+  <text class="bw-mono bw-indigo" x="320" y="220" fill="#3A3A6A" font-size="11" font-weight="600" text-anchor="end">$0–$1 / MTok</text>
+  <rect x="52" y="230" width="268" height="24" fill="#F3F0E9" stroke="#DDD8CE" stroke-width="1"/>
+  <rect x="52" y="230" width="18" height="24" fill="#3A3A6A"/>
+
+  <line x1="52" y1="280" x2="320" y2="280" stroke="#DDD8CE" stroke-width="1"/>
+  <text class="bw-serif bw-ink" x="52" y="308" fill="#2D2A26" font-size="24" font-weight="600">Up to 93% Less</text>
+  <text class="bw-sans bw-mid" x="52" y="325" fill="#6B6560" font-size="11">Frontier models reserved for hard tasks</text>
+
+  <!-- PANEL 2: CONTEXT WINDOW DISCIPLINE -->
+  <rect class="bw-card" x="366" y="68" width="308" height="270" fill="#FAF9F6" stroke="#DDD8CE" stroke-width="1"/>
+  <text class="bw-mono bw-bronze" x="386" y="96" fill="#8B7355" font-size="10" letter-spacing="1.5">02 / CONTEXT WINDOW DISCIPLINE</text>
+  <text class="bw-sans bw-ink" x="386" y="118" fill="#2D2A26" font-size="13.5" font-weight="600">Active Window Utilization</text>
+  <line x1="386" y1="132" x2="654" y2="132" stroke="#DDD8CE" stroke-width="1"/>
+
+  <text class="bw-mono bw-mid" x="386" y="158" fill="#6B6560" font-size="10">UNPRUNED · BLOATED &amp; DRIFTING</text>
+  <text class="bw-mono bw-ink" x="654" y="158" fill="#2D2A26" font-size="11" font-weight="600" text-anchor="end">98%</text>
+  <rect x="386" y="168" width="268" height="24" fill="#F3F0E9" stroke="#DDD8CE" stroke-width="1"/>
+  <rect x="386" y="168" width="262" height="24" fill="#8B7355" fill-opacity="0.32"/>
+  <rect x="386" y="168" width="262" height="24" fill="url(#hatch-bronze)"/>
+
+  <text class="bw-mono bw-ink" x="386" y="220" fill="#2D2A26" font-size="10">PRUNED · HIGH-SIGNAL CONTEXT</text>
+  <text class="bw-mono bw-ink" x="654" y="220" fill="#2D2A26" font-size="11" font-weight="600" text-anchor="end">70%</text>
+  <rect x="386" y="230" width="268" height="24" fill="#F3F0E9" stroke="#DDD8CE" stroke-width="1"/>
+  <rect x="386" y="230" width="188" height="24" fill="#2D2A26"/>
+  <line x1="574" y1="224" x2="574" y2="260" stroke="#8B7355" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text class="bw-mono bw-bronze" x="614" y="246" fill="#6E5840" font-size="9" font-weight="600" text-anchor="middle">30% FREE</text>
+
+  <line x1="386" y1="280" x2="654" y2="280" stroke="#DDD8CE" stroke-width="1"/>
+  <text class="bw-serif bw-ink" x="386" y="308" fill="#2D2A26" font-size="24" font-weight="600">98% → 70%</text>
+  <text class="bw-sans bw-mid" x="386" y="325" fill="#6B6560" font-size="11">Stops silent accuracy decay in long runs</text>
+
+  <!-- PANEL 3: PROMPT CACHING & NET SPEND -->
+  <rect class="bw-card-strong" x="700" y="68" width="308" height="270" fill="#FAF9F6" stroke="#2D2A26" stroke-width="1.25"/>
+  <text class="bw-mono bw-bronze" x="720" y="96" fill="#8B7355" font-size="10" letter-spacing="1.5">03 / CACHING &amp; NET SPEND</text>
+  <text class="bw-sans bw-ink" x="720" y="118" fill="#2D2A26" font-size="13.5" font-weight="600">Measured Production Outcome</text>
+  <line x1="720" y1="132" x2="988" y2="132" stroke="#DDD8CE" stroke-width="1"/>
+
+  <text class="bw-mono bw-indigo" x="720" y="160" fill="#3A3A6A" font-size="10">PREFIX-STABLE PROMPT CACHE</text>
+  <text class="bw-mono bw-indigo" x="988" y="160" fill="#3A3A6A" font-size="11.5" font-weight="600" text-anchor="end">68% HIT</text>
+  <g transform="translate(720, 170)">
+    <rect x="0"   y="0" width="23" height="18" fill="#3A3A6A"/>
+    <rect x="27"  y="0" width="23" height="18" fill="#3A3A6A"/>
+    <rect x="54"  y="0" width="23" height="18" fill="#3A3A6A"/>
+    <rect x="81"  y="0" width="23" height="18" fill="#3A3A6A"/>
+    <rect x="108" y="0" width="23" height="18" fill="#3A3A6A"/>
+    <rect x="135" y="0" width="23" height="18" fill="#3A3A6A"/>
+    <rect x="162" y="0" width="18" height="18" fill="#3A3A6A"/>
+    <rect x="180" y="0" width="5"  height="18" fill="#EFECE4" stroke="#DDD8CE" stroke-width="0.8"/>
+    <rect x="189" y="0" width="23" height="18" fill="#EFECE4" stroke="#DDD8CE" stroke-width="0.8"/>
+    <rect x="216" y="0" width="23" height="18" fill="#EFECE4" stroke="#DDD8CE" stroke-width="0.8"/>
+    <rect x="243" y="0" width="25" height="18" fill="#EFECE4" stroke="#DDD8CE" stroke-width="0.8"/>
+  </g>
+  <text class="bw-sans bw-mid" x="720" y="206" fill="#6B6560" font-size="11">Deterministic prefix layout eliminates re-prefill</text>
+
+  <rect class="bw-surface" x="720" y="226" width="268" height="94" fill="#F3F0E9" stroke="#DDD8CE" stroke-width="1"/>
+  <text class="bw-mono bw-mid" x="738" y="252" fill="#6B6560" font-size="9.5" letter-spacing="1.4">SUSTAINED NET LLM SPEND</text>
+  <text class="bw-serif bw-indigo" x="738" y="294" fill="#3A3A6A" font-size="40" font-weight="600">50%+ Lower</text>
+  <text class="bw-sans bw-mid" x="738" y="311" fill="#6B6560" font-size="10.5">Held across 3+ months live traffic</text>
+</svg>
