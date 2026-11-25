@@ -81,8 +81,8 @@ work:
       body: Custom agent harnesses, multi-agent workflows, RAG, formal ontologies, and client-owned data pipelines built for real production traffic.
       proof: [30-day kickoff to production, 50%+ token savings, Zero-downtime cutover]
     - num: "02"
-      title: Harden &amp; Rollout — Security &amp; Unit Economics
-      body: On-prem and always-on OpenClaw fleet deployments, RBAC, container isolation, PII redaction, HITL gates, automated health and redundancy checks, tiered model routing, and context pruning. Lower inference spend and fewer production failures.
+      title: Harden &amp; Rollout — Security &amp; ROI
+      body: On-prem and always-on agentic LLM fleet deployments, RBAC, container isolation, PII redaction, HITL gates, automated health and redundancy checks, tiered model routing, and context pruning. Lower inference spend and fewer production failures.
       proof: [97.5% faster cutover, 480 hrs → 12 hrs, HITL gates stayed intact]
     - num: "03"
       title: Teach — Curriculum, Workshops &amp; Adoption
