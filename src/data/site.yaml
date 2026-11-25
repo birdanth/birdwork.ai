@@ -59,7 +59,7 @@ nav:
 hero:
   tags: [AI Systems, Knowledge Ontologies, Innovation Enablement]
   h1: Tony Bird's Work
-  sub: I design, build, &amp; rollout production AI systems, knowledge architectures, and train teams who need to use them. Twelve years as a computer engineer, founder, and Fractional CTO. I love to take things from whiteboard to scoreboard.
+  sub: I design, build, &amp; rollout production AI systems, custom agent harnesses, knowledge architectures, and train teams who need to use them. Twelve years as a computer engineer, founder, and Fractional CTO. I love to take things from whiteboard to scoreboard.
   ctas:
     - {label: VIEW CASE STUDIES, href: "#case-studies", class: btn}
     - {label: EXPLORE SEMANTICS, href: "#research", class: btn ghost}
@@ -78,11 +78,11 @@ work:
   cards:
     - num: "01"
       title: Design &amp; Build — Agentic &amp; Semantic Systems
-      body: Multi-agent workflows, RAG, formal ontologies, and client-owned data pipelines built for real production traffic.
+      body: Custom agent harnesses, multi-agent workflows, RAG, formal ontologies, and client-owned data pipelines built for real production traffic.
       proof: [30-day kickoff to production, 50%+ token savings, Zero-downtime cutover]
     - num: "02"
       title: Harden &amp; Rollout — Security &amp; Unit Economics
-      body: Environment isolation, PII redaction, human-in-the-loop gates, tiered model routing, and context pruning. Lower inference spend and fewer production failures.
+      body: On-prem and always-on OpenClaw fleet deployments, RBAC, container isolation, PII redaction, HITL gates, automated health and redundancy checks, tiered model routing, and context pruning. Lower inference spend and fewer production failures.
       proof: [97.5% faster cutover, 480 hrs → 12 hrs, HITL gates stayed intact]
     - num: "03"
       title: Teach — Curriculum, Workshops &amp; Adoption
@@ -98,7 +98,7 @@ cases:
       client_fallback: Mid-Size 3PL Brokerage
       client_key: client.logistics
       role: Interim CTO &amp; AI Systems Architect
-      body: Five coordinated agents on client infrastructure, giving non-technical staff plain-English Slack queries over live CRM and ops data. Authored the data and infrastructure SOW.
+      body: Five always-on agents running inside a custom harness on client infrastructure, with RBAC, automated health and redundancy checks, and giving non-technical staff plain-English Slack queries over live CRM and ops data. Authored the data and infrastructure SOW.
     - kind: full
       client_fallback: Enterprise People Analytics SaaS
       client_key: client.peopleAnalytics
@@ -146,17 +146,17 @@ finops:
 stack:
   columns:
     - h4: AI / Agents
-      p: Multi-agent orchestration · context engineering · RAG · GraphRAG · formal ontologies · LLM evaluation · Qwen · HITL
+      p: Multi-agent orchestration · context engineering · RAG · GraphRAG · formal ontologies · LLM evaluation · Qwen · HITL · Agent harness engineering
     - h4: Data / Backend
       p: Python · Pydantic · Rust · Node.js · SQL · DuckDB · Trino · vector DBs
     - h4: Infrastructure
-      p: GPU compute · Docker · CI/CD · Salesforce · Slack/Teams · LogRhythm
+      p: GPU compute · Docker · CI/CD · Salesforce · Slack/Teams · LogRhythm · OpenClaw (on-prem / always-on) · RBAC &amp; failover checks
 
 security:
   label: Secure by default, governed by policy.
   nav_label: Security
   eyebrow: Zero-Trust Agentic Security
-  lead: Designed for HIPAA, SOC 2, and regulated governance — every agent capability is scoped, logged, and reversible.
+  lead: Built for HIPAA, SOC 2, and regulated governance. Every agent runs with RBAC, scoped permissions, automated health and redundancy checks, and full audit logs.
 
 rd:
   label: Knodes &amp; Kore
